@@ -20,40 +20,26 @@
       method="post">
     <div class="col-3">
         <input type="hidden" th:field="*{id}" />
+        <input type="hidden" th:field="*{username}" />
+        <input type="hidden" th:field="*{password}" />
     </div>
 
     <div>
-        <div th:swtich:="${appUser.userCategories.business}">
-            <input th:case="business" type="checkbox" name="business" value="business" checked> Business<br>
-            <input th:case="" type="checkbox" name="business" value=""> Business<br>
-        </div>
-        <div th:swtich:="${appUser.userCategories.entertainment}">
-            <input th:case="entertainment" type="checkbox" name="entertainment" value="entertainment" checked> Entertainment<br>
-            <input th:case="" type="checkbox" name="entertainment" value=""> Entertainment<br>
-        </div>
-        <div th:swtich:="${appUser.userCategories.general}">
-            <input th:case="general" type="checkbox" name="general" value="general" checked> General<br>
-            <input th:case="" type="checkbox" name="general" value=""> General<br>
-        </div>
-        <div th:swtich:="${appUser.userCategories.health}">
-            <input th:case="health" type="checkbox" name="health" value="health" checked> Health<br>
-            <input th:case="" type="checkbox" name="health" value=""> Health<br>
-        </div>
-        <div th:swtich:="${appUser.userCategories.science}">
-            <input th:case="false" type="checkbox" name="science" value="science" checked> Science<br>
-            <input th:case="" type="checkbox" name="science" value=""> Science<br>
-        </div>
-        <div th:swtich:="${appUser.userCategories.sports}">
-            <input th:case="sports" type="checkbox" name="sports" value="sports" checked> Sports<br>
-            <input th:case="" type="checkbox" name="sports" value=""> Sports<br>
-        </div>
-        <div th:swtich:="${appUser.userCategories.technology}">
-            <input th:case="technology" type="checkbox" name="technology" value="technology" checked> Technology<br>
-            <input th:case="" type="checkbox" name="technology" value=""> Technology<br>
-        </div>
-
+        <div th:if="${appUser.business} == 'business'"><input  type="checkbox" th:name="${appUser.business}" th:value="business" checked> Business<br></div>
+        <div th:if="${appUser.business} == null"><input  type="checkbox" th:name="${appUser.business}" th:value="business"> Business<br></div>
+        <div th:if="${appUser.entertainment} == 'entertainment'"><input  type="checkbox" th:name="${entertainment}" th:value="entertainment" checked> entertainment<br></div>
+        <div th:if="${appUser.entertainment} == ''"><input  type="checkbox" th:name="${entertainment}" th:value="entertainment" > entertainment<br></div>
+        <div th:if="${appUser.general} == 'general'"><input  type="checkbox" th:name="${general}" th:value="general" checked> general<br></div>
+        <div th:if="${appUser.general} == ''"><input  type="checkbox" th:name="${general}" th:value="general" > general<br></div>
+        <div th:if="${appUser.health} == 'health'"><input  type="checkbox" th:name="${health}" th:value="health" checked> health<br></div>
+        <div th:if="${appUser.health} == ''"><input  type="checkbox" th:name="${health}" th:value="health" > health<br></div>
+        <div th:if="${appUser.science} == 'science'"><input  type="checkbox" th:name="${science}" th:value="science" checked> science<br></div>
+        <div th:if="${appUser.science} == ''"><input  type="checkbox" th:name="${science}" th:value="science" > science<br></div>
+        <div th:if="${appUser.sports} == 'sports'"><input  type="checkbox" th:name="${sports}" th:value="sports" checked> sports<br></div>
+        <div th:if="${appUser.sports} == ''"><input  type="checkbox" th:name="${sports}" th:value="sports" > sports<br></div>
+        <div th:if="${appUser.technology} == 'technology'"><input  type="checkbox" th:name="${technology}" th:value="technology" checked> technology<br></div>
+        <div th:if="${appUser.technology} == ''"><input  type="checkbox" th:name="${technology}" th:value="technology" > technology<br></div>
     </div>
-    <br/>
 
     <div class="col-3">
         <button type="submit" class="btn btn-primary">Submit</button>
