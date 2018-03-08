@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html lang="en" xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.tymeleaf.org/thymeleaf-extras-springsecurity4" >
+
+<head>
+    <meta charset="UTF-8"/>
+    <title>Home Page</title>
+</head>
+<body>
+
+<form th:action="@{/appuserform}" method="post" th:object="${appuser}">
+
+    <input type="text" th:field="*{username}" placeholder="Enter name"/>
+
+    <input type="email" th:field="*{userEmail}"  placeholder="Enter e-mail"/>
+
+    <input type="password" th:field="*{password}" placeholder="password"/>
+
+    <input type="submit" value="Register"/>
+
+</form>
+
+</body>
+</html>
