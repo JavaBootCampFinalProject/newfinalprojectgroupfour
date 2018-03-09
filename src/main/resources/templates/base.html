@@ -22,9 +22,17 @@
                 <a class="nav-link" href="/userpage">Your News</a>
             </li>
             <li class="nav-appItem " sec:authorize="isAuthenticated()">
-                <a class="nav-link" href="/addusercategories">Add interests and tags</a>
+                <a class="nav-link" href="/addusertopics">Add interests and tags</a>
             </li>
-
+            <li class="nav-appItem " sec:authorize="isAuthenticated()">
+                <a class="nav-link" href="/addusercategories">Add categories</a>
+            </li>
+            <li class="nav-appItem " sec:authorize="isAuthenticated()">
+                <a class="nav-link" href="/categorynews">Sorted News</a>
+            </li>
+            <li class="nav-appItem " sec:authorize="isAuthenticated()">
+                <a class="nav-link" href="/userinfopage">UserPage</a>
+            </li>
 
 
             <li class="nav-appItem dropdown">

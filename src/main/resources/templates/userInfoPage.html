@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.w3.org/1999/xhtml">
+<head>
+    <meta charset="UTF-8"/>
+    <title>Title</title>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+</head>
+<body>
+
+<div th:replace="base::navlinks"></div>
+<table class="table" title="Books Table" >
+    <thead>
+    <tr>
+        <th>Item Title</th>
+        <th>Lost By</th>
+        <th>Item Type</th>
+        <th>Item Description</th>
+        <th>Change Status</th>
+    </tr>
+    </thead>
+    <tbody>
+    <tr th:each="category : ${user.appCatagory}">
+
+
+        <td th:text="${category.catagoryName}"></td>
+
+        <td><a th:href="@{/removeCategory/{id}(id=${category.id})}">Remove Category</a></td>
+    </tr>
+
+    <tr th:each="topic : ${user.interests}">
+
+
+        <td th:text="${topic.interestName}"></td>
+
+        <td><a th:href="@{/removeTopic/{id}(id=${topic.id})}">Remove Category</a></td>
+
+
+    </tr>
+    </tbody>
+</table>
+</body>
+</html>

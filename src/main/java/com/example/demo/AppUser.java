@@ -4,7 +4,6 @@ package com.example.demo;
 import org.hibernate.validator.constraints.NotEmpty;
 
 import javax.persistence.*;
-import javax.persistence.criteria.CriteriaBuilder;
 import java.util.HashSet;
 import java.util.Set;
 
@@ -31,8 +30,8 @@ public class AppUser {
     @ManyToMany(fetch = FetchType.EAGER)
     private Set<AppRole> roles;
 
-/*    @ManyToMany(fetch = FetchType.EAGER)
-    private  Set<Catagories> catagories;*/
+    @ManyToMany(fetch = FetchType.EAGER)
+    private  Set<AppCatagory> appCatagory;
 
     public void removeRole(AppRole role) {
         this.roles.remove(role);
@@ -50,11 +49,17 @@ public class AppUser {
         this.interests.add(interests);
     }
 
+    public void removeappCatagory(AppCatagory appCatagory){
+        this.appCatagory.remove(appCatagory);
+    }
+
+    public void addappCatagory(AppCatagory appCatagory){
+        this.appCatagory.add(appCatagory);
+    }
+
     public AppUser() {
         this.roles = new HashSet<>();
-/*
-        this.catagories = new HashSet<>();
-*/
+        this.appCatagory = new HashSet<>();
         this.interests = new HashSet<>();
     }
 
@@ -107,20 +112,19 @@ public class AppUser {
         this.roles = roles;
     }
 
-
-    /*public Set<Catagories> getCatagories() {
-        return catagories;
-    }
-
-    public void setCatagories(Set<Catagories> catagories) {
-        this.catagories = catagories;
-    }*/
-
     public Set<Interests> getInterests() {
         return interests;
     }
 
     public void setInterests(Set<Interests> interests) {
         this.interests = interests;
+    }
+
+    public Set<AppCatagory> getAppCatagory() {
+        return appCatagory;
+    }
+
+    public void setAppCatagory(Set<AppCatagory> appCatagory) {
+        this.appCatagory = appCatagory;
     }
 }

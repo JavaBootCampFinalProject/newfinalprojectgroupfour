@@ -12,27 +12,18 @@
 <body>
 
 <div th:replace="base::navlinks"></div>
-
 <form action = "#"
-      th:action="@{/addusercategories}"
+      th:action="@{/addusertopics}"
       th:object="${item}"
       method="post">
     <input type="hidden" th:field="*{id}" />
 
+    Item Name : <input type="text" th:field="*{interestName}" />
+    <span th:if="${#fields.hasErrors('interestName')}"
+          th:errors="*{interestName}"></span><br />
 
-    <select name="catagoryName">
-        <p>Add User Categories</p>
-        <option th:value="business" th:text="business"></option>
-        <option th:value="entertainment" th:text="entertainment"></option>
-        <option th:value="general" th:text="general"></option>
-        <option th:value="health" th:text="health"></option>
-        <option th:value="science" th:text="science"></option>
-        <option th:value="sports" th:text="sports"></option>
-        <option th:value="technology" th:text="technology"></option>
-        </div>
-    </select>
 
     <input type="submit" values="Submit" />
 </form>
-</>
+</body>
 </html>
