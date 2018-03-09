@@ -19,14 +19,13 @@
                 <a class="nav-link" href="/">Main Page</a>
             </li>
             <li class="nav-appItem " sec:authorize="isAuthenticated()">
-                <a class="nav-link" href="/userpage">Your Found Items</a>
+                <a class="nav-link" href="/userpage">Your News</a>
             </li>
-            <li class="nav-appItem " sec:authorize="hasAnyAuthority('ADMIN')">
-                <a class="nav-link" href="/foundadminpage">All found items</a>
+            <li class="nav-appItem " sec:authorize="isAuthenticated()">
+                <a class="nav-link" href="/addusercategories">Add interests and tags</a>
             </li>
-            <li class="nav-appItem " sec:authorize="hasAnyAuthority('ADMIN')">
-                <a class="nav-link" href="/adminpage">Admin Page</a>
-            </li>
+
+
 
             <li class="nav-appItem dropdown">
 

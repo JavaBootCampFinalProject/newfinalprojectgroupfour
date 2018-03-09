@@ -4,6 +4,7 @@ package com.example.demo;
 import org.hibernate.validator.constraints.NotEmpty;
 
 import javax.persistence.*;
+import javax.persistence.criteria.CriteriaBuilder;
 import java.util.HashSet;
 import java.util.Set;
 
@@ -24,22 +25,14 @@ public class AppUser {
 
     private String fullName;
 
-    private String Search;
-
+    @ManyToMany(fetch = FetchType.EAGER)
+    private Set<Interests> interests;
 
     @ManyToMany(fetch = FetchType.EAGER)
     private Set<AppRole> roles;
 
     @ManyToMany(fetch = FetchType.EAGER)
-    private Set<UserCategories> category;
-
-    public void addCategory(UserCategories categories) {
-        this.category.add(categories);
-    }
-
-    public void removeRole(UserCategories categories) {
-        this.category.remove(categories);
-    }
+    private  Set<Catagories> catagories;
 
     public void removeRole(AppRole role) {
         this.roles.remove(role);
@@ -49,9 +42,18 @@ public class AppUser {
         this.roles.add(role);
     }
 
+    public void removeIntrest(Interests interests){
+        this.roles.remove(interests);
+    }
+
+    public void addInterest(Interests interests){
+        this.roles.remove(interests);
+    }
+
     public AppUser() {
         this.roles = new HashSet<>();
-        this.category = new HashSet<>();
+        this.catagories = new HashSet<>();
+        this.interests = new HashSet<>();
     }
 
 
@@ -104,21 +106,19 @@ public class AppUser {
     }
 
 
-    public Set<UserCategories> getCategory() {
-        return category;
+    public Set<Catagories> getCatagories() {
+        return catagories;
     }
 
-    public void setCategory(Set<UserCategories> category) {
-        this.category = category;
+    public void setCatagories(Set<Catagories> catagories) {
+        this.catagories = catagories;
     }
 
-    public String getSearch() {
-        return Search;
+    public Set<Interests> getInterests() {
+        return interests;
     }
 
-    public void setSearch(AppUser user) {
-        Search = search;
-        if user.getCategory().
-        business entertainment general health science sports technology
+    public void setInterests(Set<Interests> interests) {
+        this.interests = interests;
     }
 }

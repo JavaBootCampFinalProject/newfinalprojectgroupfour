@@ -13,9 +13,6 @@ public class DataLoader implements CommandLineRunner {
     @Autowired
     AppUserRepository appUserRepository;
 
-    @Autowired
-    UserCatagoriesRepository userCatagoriesRepository;
-
 
     @Override
     public void run(String... strings) throws Exception {
