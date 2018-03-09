@@ -10,6 +10,7 @@ import org.springframework.web.client.RestTemplate;
 
 
 import javax.validation.Valid;
+import java.util.Set;
 
 @Controller
 public class MainController {
@@ -19,8 +20,13 @@ public class MainController {
     @Autowired
     AppUserRepository appUserRepository;
 
+/*
     @Autowired
     CategoriesRepository    categoriesRepository;
+*/
+
+    @Autowired
+    IntrestsRepository intrestsRepository;
 
 
     @RequestMapping("/")
@@ -35,8 +41,14 @@ public class MainController {
     public String catagoryPage(Model model, Authentication authentication) {
         AppUser user = appUserRepository.findAppUserByUsername(authentication.getName());
         RestTemplate restTemplate = new RestTemplate();
-        News news = restTemplate.getForObject("https://newsapi.org/v2/everything?" + "test" + "&apiKey=895d727e71cf4321a9bbcf319375aa47", News.class);
-        model.addAttribute("news", news);
+        News newsStore = new News();
+        for(Interests interests : user.getInterests()) { //Loops through the users to check for "user" Found Item, and upon finding it sets the item as a found item.
+            News news = restTemplate.getForObject("https://newsapi.org/v2/everything?q=" + interests.getInterestName() + "&sortBy=publishedAt&apiKey=895d727e71cf4321a9bbcf319375aa47", News.class);
+            for (Articles articles : news.getArticles()) {
+                newsStore.addArticles(articles);
+            }
+        }
+        model.addAttribute("news", newsStore);
         return "frontPage";
     }
 
@@ -63,8 +75,28 @@ public class MainController {
         }
         return "redirect:/";
     }
+    @GetMapping("/addusercategories")
+    public String addusercategories(Model model) {
 
-    @RequestMapping("/addusercategories")
+        model.addAttribute("item", new Interests());
+
+        return "categories";
+    }
+
+
+    @PostMapping("/addusercategories")
+    public String addusercategories(@Valid @ModelAttribute("item") Interests item,
+                                BindingResult result, Model model, Authentication auth) {
+
+        if (result.hasErrors())
+            return "categories";
+        intrestsRepository.save(item);
+        AppUser currentuser= appUserRepository.findAppUserByUsername(auth.getName());
+        currentuser.addInterest(item);
+        appUserRepository.save(currentuser);
+        return "redirect:/";
+    }
+/*    @RequestMapping("/addusercategories")
     public String userCatagories(Model model, Authentication authentication){
         AppUser appUser = appUserRepository.findAppUserByUsername(authentication.getName());
         Interests interests = new Interests();
@@ -80,7 +112,7 @@ public class MainController {
         }
         appUserRepository.save(appUser);
         return "redirect:/";
-    }
+    }*/
 
    /* @RequestMapping(value="/processusercatagories",method= RequestMethod.POST) //Retrieves the user information from the html page and processes it into the repository
     public String processUserCatagories(@Valid @ModelAttribute("appUser") AppUser appUser, BindingResult result, Model model){

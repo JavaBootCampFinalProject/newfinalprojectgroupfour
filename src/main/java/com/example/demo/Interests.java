@@ -10,10 +10,10 @@ public class Interests {
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
 
-    private String interest;
+    private String interestName;
 
     @ManyToMany(mappedBy = "interests")
-    private Set<AppUser> interests;
+    private Set<AppUser> userIntrests;
 
 
     public Long getId() {
@@ -24,19 +24,19 @@ public class Interests {
         this.id = id;
     }
 
-    public String getInterest() {
-        return interest;
+    public String getInterestName() {
+        return interestName;
     }
 
-    public void setInterest(String interest) {
-        this.interest = interest;
+    public void setInterestName(String interestName) {
+        this.interestName = interestName;
     }
 
-    public Set<AppUser> getInterests() {
-        return interests;
+    public Set<AppUser> getUserIntrests() {
+        return userIntrests;
     }
 
-    public void setInterests(Set<AppUser> interests) {
-        this.interests = interests;
+    public void setUserIntrests(Set<AppUser> userIntrests) {
+        this.userIntrests = userIntrests;
     }
 }

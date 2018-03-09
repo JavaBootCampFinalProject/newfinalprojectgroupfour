@@ -31,8 +31,8 @@ public class AppUser {
     @ManyToMany(fetch = FetchType.EAGER)
     private Set<AppRole> roles;
 
-    @ManyToMany(fetch = FetchType.EAGER)
-    private  Set<Catagories> catagories;
+/*    @ManyToMany(fetch = FetchType.EAGER)
+    private  Set<Catagories> catagories;*/
 
     public void removeRole(AppRole role) {
         this.roles.remove(role);
@@ -43,16 +43,18 @@ public class AppUser {
     }
 
     public void removeIntrest(Interests interests){
-        this.roles.remove(interests);
+        this.interests.remove(interests);
     }
 
     public void addInterest(Interests interests){
-        this.roles.remove(interests);
+        this.interests.add(interests);
     }
 
     public AppUser() {
         this.roles = new HashSet<>();
+/*
         this.catagories = new HashSet<>();
+*/
         this.interests = new HashSet<>();
     }
 
@@ -106,13 +108,13 @@ public class AppUser {
     }
 
 
-    public Set<Catagories> getCatagories() {
+    /*public Set<Catagories> getCatagories() {
         return catagories;
     }
 
     public void setCatagories(Set<Catagories> catagories) {
         this.catagories = catagories;
-    }
+    }*/
 
     public Set<Interests> getInterests() {
         return interests;

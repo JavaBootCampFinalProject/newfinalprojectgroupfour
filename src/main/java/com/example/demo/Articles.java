@@ -3,6 +3,7 @@ package com.example.demo;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 
 import java.lang.reflect.Array;
+import java.util.HashSet;
 
 @JsonIgnoreProperties(ignoreUnknown = true)
 public class Articles {
@@ -13,7 +14,8 @@ public class Articles {
     private String publishedAt;
     private Source source;
 
-    public String getAuthor() {
+
+      public String getAuthor() {
         return author;
     }
 
