@@ -33,11 +33,11 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
 
         http
                 .formLogin().failureUrl("/login?error")
-                .defaultSuccessUrl("/userpage")
+                .defaultSuccessUrl("/topicnews")
                 .loginPage("/login")
                 .permitAll()
                 .and()
-                .logout().logoutRequestMatcher(new AntPathRequestMatcher("/logout")).logoutSuccessUrl("/login?logout")
+                .logout().logoutRequestMatcher(new AntPathRequestMatcher("/logout")).logoutSuccessUrl("/")
                 .permitAll();
 
         http.csrf().disable();

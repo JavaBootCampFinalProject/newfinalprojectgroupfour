@@ -18,7 +18,7 @@
       method="post">
     <input type="hidden" th:field="*{id}" />
 
-    Item Name : <input type="text" th:field="*{interestName}" />
+    Enter a Topic you'd like to see news on here: <input type="text" th:field="*{interestName}" />
     <span th:if="${#fields.hasErrors('interestName')}"
           th:errors="*{interestName}"></span><br />
 

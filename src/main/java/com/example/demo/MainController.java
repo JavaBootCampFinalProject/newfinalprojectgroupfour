@@ -9,6 +9,7 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.client.RestTemplate;
 
 
+import javax.servlet.http.HttpServletRequest;
 import javax.validation.Valid;
 
 @Controller
@@ -24,7 +25,7 @@ public class MainController {
 
 
     @Autowired
-    IntrestsRepository intrestsRepository;
+    InterestsRepository interestsRepository;
 
 
     @RequestMapping("/")
@@ -35,12 +36,12 @@ public class MainController {
         return "frontPage";
     }
 
-    @RequestMapping("/userpage")
+    @RequestMapping("/topicnews")
     public String topicPage(Model model, Authentication authentication) {
-        AppUser user = appUserRepository.findAppUserByUsername(authentication.getName());
+        AppUser appUser = appUserRepository.findAppUserByUsername(authentication.getName());
         RestTemplate restTemplate = new RestTemplate();
         News newsStore = new News();
-        for (Interests interests : user.getInterests()) { //Loops through the users to check for "user" Found Item, and upon finding it sets the item as a found item.
+        for (Interests interests : appUser.getInterests()) { //Loops through the users to check for "user" Found Item, and upon finding it sets the item as a found item.
             News news = restTemplate.getForObject("https://newsapi.org/v2/top-headlines?q=" + interests.getInterestName() + "&sortBy=publishedAt&apiKey=895d727e71cf4321a9bbcf319375aa47", News.class);
             for (Articles articles : news.getArticles()) {
                 newsStore.addArticles(articles);
@@ -52,10 +53,10 @@ public class MainController {
 
     @RequestMapping("/categorynews")
     public String catagoryPage(Model model, Authentication authentication) {
-        AppUser user = appUserRepository.findAppUserByUsername(authentication.getName());
+        AppUser appUser = appUserRepository.findAppUserByUsername(authentication.getName());
         RestTemplate restTemplate = new RestTemplate();
         News newsStore = new News();
-        for (AppCatagory appCatagory : user.getAppCatagory()) { //Loops through the users to check for "user" Found Item, and upon finding it sets the item as a found item.
+        for (AppCatagory appCatagory : appUser.getAppCatagory()) {
             News news = restTemplate.getForObject("https://newsapi.org/v2/top-headlines?country=us&category=" + appCatagory.getCatagoryName() + "&apiKey=895d727e71cf4321a9bbcf319375aa47", News.class);
             for (Articles articles : news.getArticles()) {
                 newsStore.addArticles(articles);
@@ -66,31 +67,33 @@ public class MainController {
     }
 
     @GetMapping("/login")
-    public String login(Model model) {
+    public String login() {
         return "login";
     }
 
     @GetMapping("/userinfopage") //The admin page contains all items and several commands that only the admin has
     public String userInfoPage(Model model, Authentication authentication) {
-        model.addAttribute("user", appUserRepository.findAppUserByUsername(authentication.getName()));
+        model.addAttribute("appUser", appUserRepository.findAppUserByUsername(authentication.getName()));
         return "userInfoPage";
     }
 
-    @RequestMapping("/removeTopic/{id}") //This swaps the status of an item from lost to found via the admin page and then returns there (Find a way to save position on the page?)
+    @RequestMapping("/removeTopic/{id}")
+    //This swaps the status of an item from lost to found via the admin page and then returns there (Find a way to save position on the page?)
     public String removeTopic(@PathVariable("id") long id, Model model, Authentication auth) {
-        AppUser currentuser = appUserRepository.findAppUserByUsername(auth.getName());
-        currentuser.removeIntrest(intrestsRepository.findOne(id));
-        appUserRepository.save(currentuser);
-        model.addAttribute("user", currentuser);
+        AppUser appUser = appUserRepository.findAppUserByUsername(auth.getName());
+        appUser.removeIntrest(interestsRepository.findOne(id));
+        appUserRepository.save(appUser);
+        model.addAttribute("appUser", appUser);
         return "userInfoPage";
     }
 
-    @RequestMapping("/removeCategory/{id}") //This swaps the status of an item from lost to found via the admin page and then returns there (Find a way to save position on the page?)
+    @RequestMapping("/removeCategory/{id}")
+    //This swaps the status of an item from lost to found via the admin page and then returns there (Find a way to save position on the page?)
     public String removeCategory(@PathVariable("id") long id, Model model, Authentication auth) {
-        AppUser currentuser = appUserRepository.findAppUserByUsername(auth.getName());
-        currentuser.removeappCatagory(categoriesRepository.findOne(id));
-        appUserRepository.save(currentuser);
-        model.addAttribute("user", currentuser);
+        AppUser appUser = appUserRepository.findAppUserByUsername(auth.getName());
+        appUser.removeappCatagory(categoriesRepository.findOne(id));
+        appUserRepository.save(appUser);
+        model.addAttribute("appUser", appUser);
         return "userInfoPage";
     }
 
@@ -115,7 +118,6 @@ public class MainController {
 
     @GetMapping("/addusertopics")
     public String addusertopics(Model model) {
-
         model.addAttribute("item", new Interests());
         return "topic";
     }
@@ -123,15 +125,15 @@ public class MainController {
 
     @PostMapping("/addusertopics")
     public String addusertopics(@Valid @ModelAttribute("item") Interests item,
-                                BindingResult result, Model model, Authentication auth) {
+                                BindingResult result, Authentication auth) {
 
         if (result.hasErrors())
             return "topic";
-        intrestsRepository.save(item);
-        AppUser currentuser = appUserRepository.findAppUserByUsername(auth.getName());
-        currentuser.addInterest(item);
-        appUserRepository.save(currentuser);
-        return "redirect:/";
+        interestsRepository.save(item);
+        AppUser appUser = appUserRepository.findAppUserByUsername(auth.getName());
+        appUser.addInterest(item);
+        appUserRepository.save(appUser);
+        return "redirect:/userinfopage";
     }
 
     @GetMapping("/addusercategories")
@@ -144,16 +146,24 @@ public class MainController {
 
     @PostMapping("/addusercategories")
     public String addusercategories(@Valid @ModelAttribute("item") AppCatagory item,
-                                    BindingResult result, Model model, Authentication auth) {
+                                    BindingResult result, Authentication auth) {
 
         if (result.hasErrors())
             return "categories";
         categoriesRepository.save(item);
-        AppUser currentuser = appUserRepository.findAppUserByUsername(auth.getName());
-        currentuser.addappCatagory(item);
-        appUserRepository.save(currentuser);
-        return "redirect:/";
+        AppUser appUser = appUserRepository.findAppUserByUsername(auth.getName());
+        appUser.addappCatagory(item);
+        appUserRepository.save(appUser);
+        return "redirect:/userinfopage";
     }
 
+    @PostMapping("/search")
+    public String search(HttpServletRequest request, Model model) {
 
+        String searchString = request.getParameter("search");
+        RestTemplate restTemplate = new RestTemplate();
+        News news = restTemplate.getForObject("https://newsapi.org/v2/top-headlines?q=" + searchString + "&sortBy=publishedAt&apiKey=895d727e71cf4321a9bbcf319375aa47", News.class);
+        model.addAttribute("news", news);
+        return "frontPage";
+    }
 }

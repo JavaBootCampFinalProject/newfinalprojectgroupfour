@@ -14,7 +14,6 @@ public class AppRole {
 
 
     @NotEmpty
-    //@Column(unique = true)
     private String roleName;
 
     @ManyToMany(mappedBy = "roles")

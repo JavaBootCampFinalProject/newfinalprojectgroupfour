@@ -15,7 +15,6 @@
     <table class="table" title="Books Table" >
         <thead>
         <tr>
-            <th>Author</th>
             <th>Title</th>
             <th>Description</th>
             <th>Published</th>
@@ -25,14 +24,11 @@
         </thead>
         <tbody>
         <tr th:each="article : ${news.articles}">
-                <td th:text="${article.author}"></td>
-
                 <td>
                     <a th:href="@{{url}(url = ${article.url})}">
                     <span th:text="${article.title}"></span>
                     </a>
                 </td>
-                <td </td></a>
 
                 <td th:text="${article.description}"></td>
 
