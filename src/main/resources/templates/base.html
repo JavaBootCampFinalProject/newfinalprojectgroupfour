@@ -14,45 +14,37 @@
             <span class="navbar-toggler-icon"></span>
         </button>
         <ul class="navbar-nav mr-auto">
-
             <li class="nav-appItem">
                 <a class="nav-link" href="/">Main Page</a>
             </li>
             <li class="nav-appItem " sec:authorize="isAuthenticated()">
-                <a class="nav-link" href="/userpage">Your Found Items</a>
+                <a class="nav-link" href="/categorynews">News by Category</a>
             </li>
-            <li class="nav-appItem " sec:authorize="hasAnyAuthority('ADMIN')">
-                <a class="nav-link" href="/foundadminpage">All found items</a>
+            <li class="nav-appItem " sec:authorize="isAuthenticated()">
+                <a class="nav-link" href="/topicnews">News by Topic</a>
             </li>
-            <li class="nav-appItem " sec:authorize="hasAnyAuthority('ADMIN')">
-                <a class="nav-link" href="/adminpage">Admin Page</a>
-            </li>
-
-            <li class="nav-appItem dropdown">
-
-                <a class="nav-link dropdown-toggle" href="#" id="navbarDropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                    <span sec:authorize="isAuthenticated()" sec:authentication="name"></span>
-                    <span sec:authorize="isAnonymous()">Login here</span>
-                </a>
-
-                <div class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
-                    <a sec:authorize="isAnonymous()" class="dropdown-item" href="/login">Login</a>
-                    <a sec:authorize="isAnonymous()" class="dropdown-item" href="/appuserform">Register</a>
-                    <a sec:authorize="isAuthenticated()" class="dropdown-appItem" href="/logout">Logout</a>
-                </div>
-            </li>
-            <li class="nav-appItem">
-                <form th:action="@{/search}" method="post">
-                    <input type="text" name="search">
-                    <input type="submit" value="Search">
-
-                </form>
-
+            <li class="nav-appItem " sec:authorize="isAuthenticated()">
+                <a class="nav-link" href="/userinfopage">UserPage</a>
             </li>
         </ul>
+        <ul  class="navbar-nav mr-auto" class="nav justify-content-end" >
+            <li class="nav-appItem " sec:authorize="isAnonymous()">
+                <a class="nav-link" href="/login">Login</a>
+            </li>
+            <li class="nav-appItem " sec:authorize="isAnonymous()">
+                <a class="nav-link" href="/appuserform">Register</a>
+            </li>
+            <li class="nav-appItem " sec:authorize="isAuthenticated()">
+                <a class="nav-link" href="/logout">Logout</a>
+            </li>
+            <form th:action="@{/search}" method="post">
+                <input type="text" name="search">
+                <input type="submit" value="Search">
+            </form>
+        </ul>
+
+
     </nav>
-
-
 </div>
 
 <!--<div th:fragment="footer">copyright 2018</div>-->

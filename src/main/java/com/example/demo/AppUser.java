@@ -24,22 +24,14 @@ public class AppUser {
 
     private String fullName;
 
-    private String Search;
-
+    @ManyToMany(fetch = FetchType.EAGER)
+    private Set<Interests> interests;
 
     @ManyToMany(fetch = FetchType.EAGER)
     private Set<AppRole> roles;
 
     @ManyToMany(fetch = FetchType.EAGER)
-    private Set<UserCategories> category;
-
-    public void addCategory(UserCategories categories) {
-        this.category.add(categories);
-    }
-
-    public void removeRole(UserCategories categories) {
-        this.category.remove(categories);
-    }
+    private  Set<AppCatagory> appCatagory;
 
     public void removeRole(AppRole role) {
         this.roles.remove(role);
@@ -49,9 +41,26 @@ public class AppUser {
         this.roles.add(role);
     }
 
+    public void removeIntrest(Interests interests){
+        this.interests.remove(interests);
+    }
+
+    public void addInterest(Interests interests){
+        this.interests.add(interests);
+    }
+
+    public void removeappCatagory(AppCatagory appCatagory){
+        this.appCatagory.remove(appCatagory);
+    }
+
+    public void addappCatagory(AppCatagory appCatagory){
+        this.appCatagory.add(appCatagory);
+    }
+
     public AppUser() {
         this.roles = new HashSet<>();
-        this.category = new HashSet<>();
+        this.appCatagory = new HashSet<>();
+        this.interests = new HashSet<>();
     }
 
 
@@ -103,22 +112,19 @@ public class AppUser {
         this.roles = roles;
     }
 
-
-    public Set<UserCategories> getCategory() {
-        return category;
+    public Set<Interests> getInterests() {
+        return interests;
     }
 
-    public void setCategory(Set<UserCategories> category) {
-        this.category = category;
+    public void setInterests(Set<Interests> interests) {
+        this.interests = interests;
     }
 
-    public String getSearch() {
-        return Search;
+    public Set<AppCatagory> getAppCatagory() {
+        return appCatagory;
     }
 
-    public void setSearch(AppUser user) {
-        Search = search;
-        if user.getCategory().
-        business entertainment general health science sports technology
+    public void setAppCatagory(Set<AppCatagory> appCatagory) {
+        this.appCatagory = appCatagory;
     }
 }
