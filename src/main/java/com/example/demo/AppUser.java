@@ -57,6 +57,30 @@ public class AppUser {
         this.appCatagory.add(appCatagory);
     }
 
+
+    private boolean criteriaEnglish;
+    private boolean criteriaUnemployed;
+    private boolean criteriaUnderEmployed;
+    private boolean criteriaComputerComfortable;
+    private boolean criteriaItInterest;
+    private boolean criteriaDiploma;
+    private boolean criteriaWorkInUs;
+    private boolean criteriaUnderstandOOP;
+    private boolean criteriaExperienceOOP;
+    private boolean criteriaCompSciMajor;
+    private boolean criteriaRecentGraduate;
+    private boolean criteriaCurrentEarnings;
+
+
+
+
+
+
+
+
+
+
+
     public AppUser() {
         this.roles = new HashSet<>();
         this.appCatagory = new HashSet<>();
