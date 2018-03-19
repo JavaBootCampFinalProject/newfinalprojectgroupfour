@@ -21,13 +21,24 @@ public class MainController {
     AppUserRepository appUserRepository;
 
     @Autowired
-    CategoriesRepository categoriesRepository;
+    ProgrammesRepository programmesRepository;
 
 
-    @Autowired
-    InterestsRepository interestsRepository;
 
 
+
+
+
+
+
+
+
+
+
+
+
+    //Everything under this line is for copy and paste/refrenece
+    /*
     @RequestMapping("/")
     public String frontPage(Model model) {
         RestTemplate restTemplate = new RestTemplate();
@@ -166,4 +177,6 @@ public class MainController {
         model.addAttribute("news", news);
         return "frontPage";
     }
+
+    */
 }

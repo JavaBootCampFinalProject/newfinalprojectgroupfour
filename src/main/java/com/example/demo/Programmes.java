@@ -25,6 +25,14 @@ public class Programmes {
     @ManyToMany(fetch = FetchType.EAGER)
     private Set<AppUser> userInCourse;
 
+    public void addUserApplied(AppUser user) {this.userApplied.add(user);}
+    public void addUserApproved(AppUser user) {this.userApproved.add(user);}
+    public void addUserInCourse(AppUser user) {this.userInCourse.add(user);}
+
+    public void removeUserApplied(AppUser user) {this.userApplied.remove(user);}
+    public void removeUserApproved(AppUser user) {this.userApproved.remove(user);}
+    public void removeUserInCourse(AppUser user) {this.userInCourse.remove(user);}
+
     public Programmes() {
         this.userApplied = new HashSet<>();
         this.userApproved = new HashSet<>();

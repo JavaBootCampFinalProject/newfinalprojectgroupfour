@@ -25,13 +25,16 @@ public class AppUser {
     private String fullName;
 
     @ManyToMany(fetch = FetchType.EAGER)
-    private Set<Interests> interests;
-
-    @ManyToMany(fetch = FetchType.EAGER)
     private Set<AppRole> roles;
 
-    @ManyToMany(fetch = FetchType.EAGER)
-    private  Set<AppCatagory> appCatagory;
+    @ManyToMany(mappedBy = "userApplied")
+    private Set<AppUser> applied;
+
+    @ManyToMany(mappedBy = "userApproved")
+    private Set<AppUser> approved;
+
+    @ManyToMany(mappedBy = "userInCourse")
+    private Set<AppUser> inCourse;
 
     public void removeRole(AppRole role) {
         this.roles.remove(role);
@@ -40,23 +43,6 @@ public class AppUser {
     public void addRole(AppRole role) {
         this.roles.add(role);
     }
-
-    public void removeIntrest(Interests interests){
-        this.interests.remove(interests);
-    }
-
-    public void addInterest(Interests interests){
-        this.interests.add(interests);
-    }
-
-    public void removeappCatagory(AppCatagory appCatagory){
-        this.appCatagory.remove(appCatagory);
-    }
-
-    public void addappCatagory(AppCatagory appCatagory){
-        this.appCatagory.add(appCatagory);
-    }
-
 
     private boolean criteriaEnglish;
     private boolean criteriaUnemployed;
@@ -73,18 +59,23 @@ public class AppUser {
 
 
 
-
-
-
-
-
-
-
-
     public AppUser() {
         this.roles = new HashSet<>();
-        this.appCatagory = new HashSet<>();
-        this.interests = new HashSet<>();
+        this.applied = new HashSet<>();
+        this.approved = new HashSet<>();
+        this.inCourse = new HashSet<>();
+        this.criteriaCompSciMajor = false;
+        this.criteriaComputerComfortable = false;
+        this.criteriaCurrentEarnings = false;
+        this.criteriaDiploma = false;
+        this.criteriaEnglish = false;
+        this.criteriaExperienceOOP = false;
+        this.criteriaItInterest = false;
+        this.criteriaRecentGraduate = false;
+        this.criteriaUnderstandOOP = false;
+        this.criteriaUnderEmployed = false;
+        this.criteriaUnemployed = false;
+        this.criteriaWorkInUs = false;
     }
 
 
@@ -136,19 +127,124 @@ public class AppUser {
         this.roles = roles;
     }
 
-    public Set<Interests> getInterests() {
-        return interests;
+
+    public Set<AppUser> getApplied() {
+        return applied;
     }
 
-    public void setInterests(Set<Interests> interests) {
-        this.interests = interests;
+    public void setApplied(Set<AppUser> applied) {
+        this.applied = applied;
     }
 
-    public Set<AppCatagory> getAppCatagory() {
-        return appCatagory;
+    public Set<AppUser> getApproved() {
+        return approved;
     }
 
-    public void setAppCatagory(Set<AppCatagory> appCatagory) {
-        this.appCatagory = appCatagory;
+    public void setApproved(Set<AppUser> approved) {
+        this.approved = approved;
+    }
+
+    public Set<AppUser> getInCourse() {
+        return inCourse;
+    }
+
+    public void setInCourse(Set<AppUser> inCourse) {
+        this.inCourse = inCourse;
+    }
+
+    public boolean isCriteriaEnglish() {
+        return criteriaEnglish;
+    }
+
+    public void setCriteriaEnglish(boolean criteriaEnglish) {
+        this.criteriaEnglish = criteriaEnglish;
+    }
+
+    public boolean isCriteriaUnemployed() {
+        return criteriaUnemployed;
+    }
+
+    public void setCriteriaUnemployed(boolean criteriaUnemployed) {
+        this.criteriaUnemployed = criteriaUnemployed;
+    }
+
+    public boolean isCriteriaUnderEmployed() {
+        return criteriaUnderEmployed;
+    }
+
+    public void setCriteriaUnderEmployed(boolean criteriaUnderEmployed) {
+        this.criteriaUnderEmployed = criteriaUnderEmployed;
+    }
+
+    public boolean isCriteriaComputerComfortable() {
+        return criteriaComputerComfortable;
+    }
+
+    public void setCriteriaComputerComfortable(boolean criteriaComputerComfortable) {
+        this.criteriaComputerComfortable = criteriaComputerComfortable;
+    }
+
+    public boolean isCriteriaItInterest() {
+        return criteriaItInterest;
+    }
+
+    public void setCriteriaItInterest(boolean criteriaItInterest) {
+        this.criteriaItInterest = criteriaItInterest;
+    }
+
+    public boolean isCriteriaDiploma() {
+        return criteriaDiploma;
+    }
+
+    public void setCriteriaDiploma(boolean criteriaDiploma) {
+        this.criteriaDiploma = criteriaDiploma;
+    }
+
+    public boolean isCriteriaWorkInUs() {
+        return criteriaWorkInUs;
+    }
+
+    public void setCriteriaWorkInUs(boolean criteriaWorkInUs) {
+        this.criteriaWorkInUs = criteriaWorkInUs;
+    }
+
+    public boolean isCriteriaUnderstandOOP() {
+        return criteriaUnderstandOOP;
+    }
+
+    public void setCriteriaUnderstandOOP(boolean criteriaUnderstandOOP) {
+        this.criteriaUnderstandOOP = criteriaUnderstandOOP;
+    }
+
+    public boolean isCriteriaExperienceOOP() {
+        return criteriaExperienceOOP;
+    }
+
+    public void setCriteriaExperienceOOP(boolean criteriaExperienceOOP) {
+        this.criteriaExperienceOOP = criteriaExperienceOOP;
+    }
+
+    public boolean isCriteriaCompSciMajor() {
+        return criteriaCompSciMajor;
+    }
+
+    public void setCriteriaCompSciMajor(boolean criteriaCompSciMajor) {
+        this.criteriaCompSciMajor = criteriaCompSciMajor;
+    }
+
+    public boolean isCriteriaRecentGraduate() {
+        return criteriaRecentGraduate;
+    }
+
+    public void setCriteriaRecentGraduate(boolean criteriaRecentGraduate) {
+        this.criteriaRecentGraduate = criteriaRecentGraduate;
+    }
+
+    public boolean isCriteriaCurrentEarnings() {
+        return criteriaCurrentEarnings;
+    }
+
+    public void setCriteriaCurrentEarnings(boolean criteriaCurrentEarnings) {
+        this.criteriaCurrentEarnings = criteriaCurrentEarnings;
     }
 }
