@@ -5,7 +5,7 @@ import java.util.HashSet;
 import java.util.Set;
 
 @Entity
-public class Programmes {
+public class Programs {
 
 
     @Id
@@ -33,7 +33,7 @@ public class Programmes {
     public void removeUserApproved(AppUser user) {this.userApproved.remove(user);}
     public void removeUserInCourse(AppUser user) {this.userInCourse.remove(user);}
 
-    public Programmes() {
+    public Programs() {
         this.userApplied = new HashSet<>();
         this.userApproved = new HashSet<>();
         this.userInCourse = new HashSet<>();

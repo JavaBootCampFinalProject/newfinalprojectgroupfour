@@ -6,7 +6,7 @@
     <title>Home Page</title>
 </head>
 <body>
-
+<th:block th:replace="base::navlinks"></th:block>
 <form th:action="@{/appuserform}" method="post" th:object="${appuser}">
 
     <input type="text" th:field="*{username}" placeholder="Enter name"/>
@@ -19,5 +19,9 @@
 
 </form>
 
+
+
+<th:block th:replace="base::footer"></th:block>
+<th:block th:replace="base::js"></th:block>
 </body>
 </html>

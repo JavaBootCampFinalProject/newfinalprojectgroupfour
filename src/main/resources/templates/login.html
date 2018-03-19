@@ -8,6 +8,7 @@
     <link rel="stylesheet" href="/style.css">
 </head>
 <body>
+<th:block th:replace="base::navlinks"></th:block>
 
 <div th:replace="base::navlinks"></div>
 <div th:if="${param.error}">

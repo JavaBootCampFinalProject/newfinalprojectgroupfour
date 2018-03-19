@@ -14,7 +14,7 @@ public class DataLoader implements CommandLineRunner {
     AppUserRepository appUserRepository;
 
     @Autowired
-    ProgrammesRepository programmesRepository;
+    ProgramsRepository programsRepository;
 
 
     @Override
@@ -113,17 +113,17 @@ public class DataLoader implements CommandLineRunner {
 
 
         // Course 1
-        Programmes course = new Programmes();
+        Programs course = new Programs();
         course.setCourseName("Tech Hire");
         course.setCourseDescription("fillerDescription");
         course.setCourseCriteria("fillerCriteria");
-        programmesRepository.save(course);
+        programsRepository.save(course);
         course.addUserApplied(appUserRepository.findOne(new Long(4)));
         course.addUserApproved(appUserRepository.findOne( new Long(3)));
         course.addUserInCourse(appUserRepository.findOne(new Long(5)));
-        programmesRepository.save(course);
+        programsRepository.save(course);
         //Course 2
-        course = new Programmes();
+        course = new Programs();
         course.setCourseName("Java Boot Camp");
         course.setCourseDescription("fillerDescription2");
         course.setCourseCriteria("fillerCriteria2");

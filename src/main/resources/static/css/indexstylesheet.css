@@ -1,0 +1,619 @@
+html{
+    overflow-x:hidden;
+}
+
+.navbar-fixed-top{
+    background-color:rgba(255,255,255,1) !important;
+    border-color:transparent !important;
+    background-image:none !important;
+
+}
+
+
+
+.navLink{
+    font-weight:300;
+    padding-top:1vh;
+
+
+}
+
+
+.rbsLogo{
+    height:2em;
+}
+
+
+@media only screen and (max-width: 984px){
+    .navLink{
+        padding:0vh;
+        margin:0;
+        color:#00b4cc;
+    }
+
+    .navbar-brand{
+        text-align:center;
+    }
+    .nav-item{
+        margin-top:.25em;
+        text-align:center;
+        color:#00b4cc;
+    }
+}
+
+/*--Nav topping--*/
+
+.navTopping{
+    background-color:transparent;
+    color:black;
+    position:fixed;
+    padding: 0 1.25em;
+    padding-top:5px;
+    /*z-index:*/
+}
+
+.fbIm{
+    height:1em;
+    padding: 0 2px;
+}
+
+@media only screen and (max-width: 970px) {
+    .navTopping{
+        height:0;
+    }
+}
+
+.contactUs{
+    font-weight:100;
+    display:inline;
+    color:gray;
+}
+
+
+
+.landingPage{
+    z-index:20;
+    height:95vh;
+    width:100vw;
+    background:url("https://www.ronbrown.org/Media/Default/Page/RonBrownScholarProgram-41.jpg");
+    /* Center and scale the image nicely */
+    background-attachment: fixed;
+    background-repeat: no-repeat;
+    background-size: cover;
+    background-position:center center;
+    display:flex;
+}
+
+.landingPageText{
+    color:white;
+    position:absolute;
+    margin-top:4.5em;
+    font-size:4em;
+    font-weight:lighter;
+    z-index:300 !important;
+    text-align:center;
+    width:100vw;
+    text-shadow: 2px 2px 7px rgba(0, 0, 0, 0.3);
+}
+
+.colorBut{
+    color:white;
+    background-color:white;
+    outline:white;
+}
+
+.picSpacer{
+    height:15vh;
+}
+
+@media only screen and (max-width: 994px){
+    .picSpacer{
+        height:0;
+    }
+}
+
+.quoteCredit{
+    padding-top:1em;
+    height:.95em;
+    text-align:center;
+    font-weight:300;
+}
+.overlay{
+    position:absolute;
+    width:100vw;
+    height:95vh;
+    z-index:30;
+    background-color:rgba(0,0,0,.2);
+}
+
+.buttonSpacer{
+    height:2em;
+}
+.appButton{
+    margin-top:20em;
+    background-color:transparent;
+    outline: white 2px solid;
+    color:white;
+    font-weight:100;
+    transition: 60s ease all;
+    text-shadow: 2px 2px 7px rgba(0, 0, 0, 0.09);
+
+}
+
+.appButton:hover{
+    color:#00b4cc;
+    background:white;
+    border-radius:0%;
+
+    height:2.6em;
+}
+
+/*----- Introduction Section ------*/
+
+.introPic{
+    max-width:100%;
+    max-height:100%;
+    display: flex;
+    margin: auto;
+    padding:auto;
+    height:inherit;
+    width:inherit;
+}
+
+.introDivider{
+    width:98%;
+}
+
+.introSub{
+    font-weight:200;
+    font-size: 6vh;
+}
+.introTitle{
+    font-weight:500;
+    font-size: 6vh;
+}
+
+.introText{
+    font-weight: 100;
+    font-size:1.5em;
+}
+
+
+.test1{
+
+    padding-top:9vh;
+}
+
+.test2{
+    padding-top:9vh;
+}
+.introRow{
+    height:auto;
+}
+
+
+.quoteBlock{
+    background-color:#00b4cc;
+    width:100vw;
+    padding:10vh 5vh;
+    color:white;
+}
+
+.test2{
+    padding:auto;
+    padding-bottom:0;
+    margin-bottom:0;
+}
+.quoteBlock1{
+    background-color:#00b4cc;
+    width:100vw;
+    padding:10vh 5vh;
+    color:white;
+    padding-top:0;
+    margin-top:-3.25em;
+}
+
+.quoteText{
+    font-weight:100;
+    font-size:2.5em;
+    line-height:110%;
+}
+
+/*-- What is section--*/
+
+.whatRow{
+
+    background-color: #FCFCFC;
+}
+
+.whatisDivider{
+    width:30vw;
+
+}
+.whatSSC{
+    font-size:3.5em;
+    margin-left:10px;
+    padding-left:0;
+    font-weight: 200;
+}
+
+.whatISSC{
+    margin-left:1em;
+}
+
+.what2{
+    font-weight:200;
+    font-size:2.25em;
+    width:90vw;
+    padding-left:1.2em;
+}
+
+.what3{
+    font-weight:100;
+    padding:0 2em;
+    font-size:1.5em;
+}
+
+
+
+.whatSpacer2{
+    height: .5vh;
+}
+
+.whatSpacer3{
+    height:.25vh;
+}
+
+.learnMore{
+    color:#00b4cc;
+    font-size:1.25em;
+
+}
+
+.learnMore:hover{
+    color:black;
+    text-decoration:none;
+    font-size:1.27em;
+    border: black 3px;
+}
+
+.learnLink{
+    padding-left:2.75em;
+    padding-bottom:2em;
+}
+/*---Photo Divider----*/
+.photoDivider{
+    height:60vh;
+    width:100vw;
+    background: url(' http://rbsgps.com/Content/images/ron-brown-scholar-bg.jpg');
+    background-position: center center;
+    background-attachment: fixed;
+    background-repeat: no-repeat;
+    background-size: cover;
+    z-index: -20;
+}
+
+.imgOutline{
+    background:rgba(0,0,0,.3);
+    color:white;
+    position:absolute;
+    bottom:2em;
+    max-width:80vw;
+    padding:5vh;
+}
+
+.imgCaptionSec{
+    text-shadow: 2px 2px 7px rgba(0, 0, 0, 0.5);
+}
+
+/*---Approach Section----*/
+
+.block1, .block2, .block3, .block4{
+
+    padding: 2vh 4vw;
+
+}
+
+.methodsection1{
+    margin-top:5vh;
+}
+
+
+.methodHeader{
+    font-size:1.25em;
+}
+
+.methodHead{
+    text-align:left;
+    font-weight:300;
+}
+
+.whatRow{
+    padding:3vh 2vw;
+}
+
+.whatisDivider{
+
+
+}
+.whatMethod1{
+
+    text-transform: uppercase;
+    font-weight: 200;
+    font-size:3em;
+}
+
+.whatMetth{
+    font-weight:300;
+}
+
+.whatMeth{
+    font-weight:200;
+    color:#00b4cc;
+}
+
+.methodTexxt{
+    font-weight:100;
+    font-size:1em;
+}
+
+.whatSpacer2{
+    height: .5vh;
+}
+
+.whatSpacer3{
+    height:.25vh;
+}
+
+.learnMore1{
+    color:#00b4cc;
+}
+
+.learnMore1:hover{
+    color:black;
+    text-decoration:none;
+    font-size:16px;
+    border: black 3px;
+}
+
+
+@media only screen and (max-width: 994px){
+    .methodsection{
+        text-align:center;
+        width:100vw;
+    }
+    .methodHeader{
+        text-align:center;
+    }
+
+    .methodHead{
+        text-align:center;
+    }
+
+    .methodTexxt{
+        text-align:center;
+    }
+}
+
+.methodSpacing{height:10vh;}
+
+
+/*----RBS feature section-------*/
+
+.rbsCont{
+    padding-top:10vh;
+    height:100vh;
+}
+.rbsSpace1{
+    height:10vh;
+}
+.scholarPic{
+    height:95%;
+    width:100%;
+}
+
+.imgcont{
+
+    padding:auto;
+    padding-bottom:0;
+}
+
+.rbsHeader{
+    font-size:1.3em;
+    font-weight:400;
+}
+
+.rbsDiv{
+
+}
+
+.rbsHeader{
+    padding-left:1em;
+}
+.rbsTop{
+    padding-left:1.25em;
+}
+
+.rbsSub{
+    font-size:1.3em;
+    font-weight:lighter;
+    line-height:1.4em;
+    padding-left:1.45em;
+}
+.rbsOver{
+    position:absolute;
+    bottom:15vh;
+    background-color:#00b4cc;
+    opacity:.9;
+
+}
+.rbsOverlay{
+    padding:2vh 6vw;
+    opacity:1;
+    color:white;
+    font-size:1.25em;
+    font-weight:300;
+}
+
+
+/*---COntact Styling----*/
+
+.contactForm{
+    margin-top:10vh;
+    margin-bottom:8vh;
+
+}
+
+.contactDescrip{
+
+}
+
+.contTitle{
+    font-size:1.45em;
+    padding-bottom:0;
+    padding-left:.5em;
+}
+
+
+.contDivider{
+    width:20vw;
+}
+
+.contDescrip{
+    font-size:1.5em;
+    font-weight:lighter;
+    margin-top:-.5em;
+    padding-top:0;
+
+}
+
+.scrollUp{
+    background:lightgray;
+    padding:.25vh;
+    color:white;
+    font-weight:lighter;
+}
+
+.scrollIcon{
+    color:white;
+    padding-bottom:.5em;
+    padding-top:.3em;
+    font-weight:bolder;
+}
+
+.scrollIcon:hover{
+    color:#00b4cc;
+}
+.scrollTopLink{
+    color:white;
+    font-size:1.25em;
+    margin-bottom:0;
+    padding-bottom:0;
+}
+
+.scrollTopLink:hover{
+    color:#00b4cc;
+    text-decoration:none;
+}
+
+.scrollText{
+    font-weight:300;
+}
+
+/*---FOoter---*/
+.footer{
+    padding: 2vh 3vw;
+    background:#7e7e7e ;
+}
+
+.addressList{
+    font-weight:lighter;
+}
+.Adlink{
+    padding-bottom:0;
+    padding-top:0;
+    font-size:1em;
+    line-height:1.2em;
+    font-weight:lighter;
+}
+.contactInfo{
+    list-style:none;
+    line-height:1.2em;
+    font-weight:lighter;
+    color:white;
+    padding:0;
+}
+.contactInfo1{
+    text-align:right;
+    padding:0 2vw;
+    margin-top:0;
+    margin-bottom:0;
+
+}
+.t1 {
+    padding-top:1em;
+}
+
+.submitButton{
+    color:#00b4cc;
+    background-color:transparent;
+    outline: #00b4cc 2px solid;
+
+}
+
+.submitButton:hover{
+    color:white;
+    background-color:#00b4cc;
+    border-radius:0%;
+}
+
+@media only screen and (max-width: 968px){
+    .contactInfo1, .t1{
+        text-align:center;
+
+    }
+}
+
+.connectHeader{
+    color:white;
+    font-weight:200;
+    padding-top:1em;
+}
+.contactIcons{
+    color:white;
+    border-radius:100%;
+    padding:2vh 3vw;
+    height:3em;
+}
+
+.footerBot{
+    color:white;
+    padding-top:2vh;
+    padding-bottom:1vh;
+    font-weight:lighter;
+    font-size:.75em;
+}
+
+.eduPart{
+    text-align:center;
+    font-weight:400;
+}
+
+.appSub{
+    text-align:center;
+    font-weight:300;
+}
+.eduPartButton{
+    background:transparent;
+    color:white;
+    outline:2px white solid;
+    font-weight:lighter;
+    margin-top:.5em;
+    margin:auto;
+}
+
+.eduPartButton:hover{
+    background:white;
+    color:#00b4cc;
+    border-radius:0;
+}

@@ -28,13 +28,13 @@ public class AppUser {
     private Set<AppRole> roles;
 
     @ManyToMany(mappedBy = "userApplied")
-    private Set<AppUser> applied;
+    private Set<Programs> applied;
 
     @ManyToMany(mappedBy = "userApproved")
-    private Set<AppUser> approved;
+    private Set<Programs> approved;
 
     @ManyToMany(mappedBy = "userInCourse")
-    private Set<AppUser> inCourse;
+    private Set<Programs> inCourse;
 
     public void removeRole(AppRole role) {
         this.roles.remove(role);
@@ -127,28 +127,27 @@ public class AppUser {
         this.roles = roles;
     }
 
-
-    public Set<AppUser> getApplied() {
+    public Set<Programs> getApplied() {
         return applied;
     }
 
-    public void setApplied(Set<AppUser> applied) {
+    public void setApplied(Set<Programs> applied) {
         this.applied = applied;
     }
 
-    public Set<AppUser> getApproved() {
+    public Set<Programs> getApproved() {
         return approved;
     }
 
-    public void setApproved(Set<AppUser> approved) {
+    public void setApproved(Set<Programs> approved) {
         this.approved = approved;
     }
 
-    public Set<AppUser> getInCourse() {
+    public Set<Programs> getInCourse() {
         return inCourse;
     }
 
-    public void setInCourse(Set<AppUser> inCourse) {
+    public void setInCourse(Set<Programs> inCourse) {
         this.inCourse = inCourse;
     }
 
