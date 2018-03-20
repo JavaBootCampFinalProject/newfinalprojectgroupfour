@@ -5,14 +5,45 @@
     <meta charset="UTF-8" />
     <title>Base</title>
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous"/>
+    <link rel="stylesheet" href="css/liststylesheet.css">
+    <link rel="stylesheet" href="../static/css/liststylesheet.css">
+
 <body>
 
 <th:block th:replace="base::navlinks"></th:block>
 
 
 
+<h1>programs' quota</h1>
+<div >
+    <table id="keywords" cellspacing="0" cellpadding="0" style="width:100%">
+        <thead  style="text-align: center">
+        <tr >
+            <th><span>Program</span></th>
+            <th><span>No of Applicants</span></th>
+            <th><span>No of Students</span></th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr >
+            <td>Hiring in Tech</td>
+            <td >28</td>
+            <td>13</td>
+
+        </tr>
+
+        </tbody>
+    </table>
+</div>
+
+
+
+
 
 <th:block th:replace="base::footer"></th:block>
+
+
 <th:block th:replace="base::js"></th:block>
+
 </body>
 </html>

@@ -10,12 +10,12 @@
 <div th:fragment="navlinks">
 
     <nav class="navbar navbar-expand-sm bg-light navbar-light">
-        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNavDropdown" aria-controls="navbarNavDropdown" aria-expanded="false" aria-label="Toggle navigation">
-            <span class="navbar-toggler-icon"></span>
-        </button>
+        <!--<button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNavDropdown" aria-controls="navbarNavDropdown" aria-expanded="false" aria-label="Toggle navigation">-->
+            <!--<span class="navbar-toggler-icon"></span>-->
+        <!--</button>-->
         <ul class="navbar-nav mr-auto">
             <li class="nav-appItem">
-                <a class="nav-link" href="/">home</a>
+                <a class="nav-link" href="/" sec:authorize="isAuthenticated()">home</a>
             </li>
             <li class="nav-appItem " sec:authorize="isAuthenticated()">
                 <a class="nav-link" href="/programslist">Programs List</a>
@@ -43,17 +43,16 @@
             <li class="nav-appItem " sec:authorize="isAuthenticated()">
                 <a class="nav-link" href="/logout">Logout</a>
             </li>
-            <form th:action="@{/search}" method="post">
-                <input type="text" name="search">
-                <input type="submit" value="Search">
-            </form>
+
         </ul>
 
 
     </nav>
 </div>
 
-<div th:fragment="footer">copyright 2018</div>
+<div th:fragment="footer" style="padding-top: 100%">
+
+    copyright 2018</div>
 <div th:fragment="js">
 <script
         src="http://code.jquery.com/jquery-3.3.1.min.js"
