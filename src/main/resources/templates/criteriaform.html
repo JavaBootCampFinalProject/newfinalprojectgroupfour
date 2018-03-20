@@ -17,62 +17,66 @@
 
 <div class=container>
     <h3 class="text-center  heading">Admission Criteria Form</h3>
-    <form>
-
+    <form th:action="@{/criteria}" th:object="${appUserCriteriaform}" method="post">
 
         <div class="form-group">
             <h5 for="topics"> please fill out the following criteria form </h5>
             <div class="row">
                 <div class="col">
+                    <input type="hidden" th:field="*{id}"/>
                     <div class="checkbox">
-                        <label><input type="checkbox" value="English Language Learner"><span class=paddingTopics>English Language Learner</span></label>
+                        <label><input type="checkbox" value="true" name="criteriaEnglish"><span class=paddingTopics>English Language Learner</span></label>
                     </div>
-
+                    <input type="hidden" th:field="*{username}"/>
+                    <input type="hidden" th:field="*{password}"/>
                     <div class="checkbox">
-                        <label><input type="checkbox" value="Unemployed with barriers to employment"><span class=paddingTopics>Unemployed with barriers to employment</span>
+                        <label><input type="checkbox" value="true" name="criteriaUnemployed"><span class=paddingTopics>Unemployed with barriers to employment</span>
                         </label>
                     </div>
 
                     <div class="checkbox">
-                        <label><input type="checkbox" value="Underemployed with barriers to better employment"><span class=paddingTopics>Underemployed with barriers to better employment</span></label>
+                        <label><input type="checkbox" value="true" name="criteriaUnderEmployed"><span class=paddingTopics>Underemployed with barriers to better employment</span></label>
                     </div>
 
                     <div class="checkbox">
-                        <label><input type="checkbox" value="Be comfortable using computers for everyday purposes"><span class=paddingTopics>Be comfortable using computers for everyday purposes</span></label>
+                        <label><input type="checkbox" value="true" name="criteriaComputerComfortable"><span class=paddingTopics>Be comfortable using computers for everyday purposes</span></label>
                     </div>
 
                     <div class="checkbox ">
-                        <label><input type="checkbox" value="Have a strong interest in an IT career"><span class=paddingTopics>Have a strong interest in an IT career</span></label>
+                        <label><input type="checkbox" value="true" name="criteriaItInterest"><span class=paddingTopics>Have a strong interest in an IT career</span></label>
                     </div>
 
                     <div class="checkbox ">
-                        <label><input type="checkbox" value="Be able to work in the United States"><span class=paddingTopics>Be able to work in the United States</span></label>
+                        <label><input type="checkbox" value="true" name="criteriaWorkInUs"><span class=paddingTopics>Be able to work in the United States</span></label>
                     </div>
                 </div>
 
 
                 <div class=col>
                     <div class="checkbox">
-                        <label><input type="checkbox" value="Have a high school diploma or GED"><span class=paddingTopics>Have a high school diploma or GED</span></label>
+                        <label><input type="checkbox" value="true" name="criteriaDiploma"><span class=paddingTopics>Have a high school diploma or GED</span></label>
                     </div>
 
                     <div class="checkbox">
-                        <label><input type="checkbox" value="Basic understanding of object oriented language"><span class=paddingTopics>Basic understanding of object oriented language</span></label>
+                        <label><input type="checkbox" value="true" name="criteriaUnderstandOOP"><span class=paddingTopics>Basic understanding of object oriented language</span></label>
                     </div>
 
+                    <div class="checkbox">
+                        <label><input type="checkbox" value="true" name="criteriaExperienceOOP"><span class=paddingTopics>Previous experience with an object-oriented language</span></label>
+                    </div>
 
                     <div class="checkbox">
-                        <label><input type="checkbox" value="Major in Computer Science/Information Systems"><span class=paddingTopics>Major in Computer Science/Information Systems</span></label>
+                        <label><input type="checkbox" value="true" name="criteriaCompSciMajor"><span class=paddingTopics>Major in Computer Science/Information Systems</span></label>
                     </div>
 
 
                     <div class="checkbox ">
-                        <label><input type="checkbox" value="Graduated within the last 6 years"><span class=paddingTopics>Graduated within the last 6 years</span></label>
+                        <label><input type="checkbox" value="true" name="criteriaRecentGraduate"><span class=paddingTopics>Graduated within the last 6 years</span></label>
                     </div>
 
 
                     <div class="checkbox">
-                        <label><input type="checkbox" value="Currently earning $42,000 or less"><span class=paddingTopics>Currently earning $42,000 or less</span></label>
+                        <label><input type="checkbox" value="true" name="criteriaCurrentEarnings"><span class=paddingTopics>Currently earning $42,000 or less</span></label>
                     </div>
 
 

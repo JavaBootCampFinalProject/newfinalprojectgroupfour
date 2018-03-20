@@ -44,18 +44,18 @@ public class AppUser {
         this.roles.add(role);
     }
 
-    private boolean criteriaEnglish;
-    private boolean criteriaUnemployed;
-    private boolean criteriaUnderEmployed;
-    private boolean criteriaComputerComfortable;
-    private boolean criteriaItInterest;
-    private boolean criteriaDiploma;
-    private boolean criteriaWorkInUs;
-    private boolean criteriaUnderstandOOP;
-    private boolean criteriaExperienceOOP;
-    private boolean criteriaCompSciMajor;
-    private boolean criteriaRecentGraduate;
-    private boolean criteriaCurrentEarnings;
+    private boolean criteriaEnglish=false;
+    private boolean criteriaUnemployed=false;
+    private boolean criteriaUnderEmployed=false;
+    private boolean criteriaComputerComfortable=false;
+    private boolean criteriaItInterest=false;
+    private boolean criteriaDiploma=false;
+    private boolean criteriaWorkInUs=false;
+    private boolean criteriaUnderstandOOP=false;
+    private boolean criteriaExperienceOOP=false;
+    private boolean criteriaCompSciMajor=false;
+    private boolean criteriaRecentGraduate=false;
+    private boolean criteriaCurrentEarnings=false;
 
 
 

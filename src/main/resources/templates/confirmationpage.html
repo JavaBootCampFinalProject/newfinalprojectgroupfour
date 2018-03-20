@@ -10,7 +10,14 @@
 <th:block th:replace="base::navlinks"></th:block>
 
 
+<div th:each="program:${program}">
 
+    <td th:text="${program.courseName}"></td>
+    <td th:text="${program.userApplied.username}"></td>
+
+
+    <h1>Email sent for Approval by Admin</h1>
+</div>
 
 <th:block th:replace="base::footer"></th:block>
 <th:block th:replace="base::js"></th:block>

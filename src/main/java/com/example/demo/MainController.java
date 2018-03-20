@@ -1,10 +1,15 @@
 package com.example.demo;
 
+import org.apache.tomcat.util.net.openssl.ciphers.Authentication;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.ui.Model;
+import org.springframework.validation.BindingResult;
+import org.springframework.web.bind.annotation.*;
+
+import javax.servlet.http.HttpServletRequest;
+import javax.validation.Valid;
+import java.security.Principal;
 
 @Controller
 public class MainController {
@@ -40,24 +45,52 @@ public class MainController {
     }
 
     @GetMapping("/criteria")
-    public String getCriteriaForm() {
+    public String getCriteriaForm(Model model, Principal auth) {
+//        if(auth.name()==null)
+//            return "redirect:/login";
+
+        AppUser thisUser=appUserRepository.findAppUserByUsername(auth.getName());
+        System.out.println(auth.getName());
+        appUserRepository.save(thisUser);
+        model.addAttribute("appUserCriteriaform", thisUser);
         return "criteriaform";
     }
 
     @PostMapping("/criteria")
-    public String processCriteriaForm() {
-        return "recommendedlist";
+    public String processCriteriaForm(@Valid @ModelAttribute("appUser") AppUser appUser, Model model, BindingResult result
+                                      ) {
+       if(result.hasErrors())
+            return "criteriaform";
+        appUserRepository.save(appUser);
+
+        System.out.println(appUser.isCriteriaEnglish());
+        System.out.println(appUser.isCriteriaUnemployed());
+        return "redirect:/recommendedlist";
     }
 
     @RequestMapping("/recommendedlist")
-    public String recomendedList() {
+    public String recomendedList(Principal p, Model m) {
+        AppUser thisUser=appUserRepository.findAppUserByUsername(p.getName());
+        if(thisUser.isCriteriaEnglish() && thisUser.isCriteriaUnemployed()&&thisUser.isCriteriaCompSciMajor()&&
+                thisUser.isCriteriaComputerComfortable()&&thisUser.isCriteriaCurrentEarnings()&&thisUser.isCriteriaWorkInUs()
+                &&thisUser.isCriteriaDiploma()&&thisUser.isCriteriaExperienceOOP()&&thisUser.isCriteriaItInterest()&&
+                thisUser.isCriteriaRecentGraduate()&&thisUser.isCriteriaUnderstandOOP()&&thisUser.isCriteriaUnderEmployed())
+
+
+            m.addAttribute("recomended",programsRepository.findAll() );
+
 
         return "recommendedlist";
     }
 
-    @RequestMapping("/apply")
-    public String confirmationPage() {
-
+    @RequestMapping("/apply/{id}")
+    public String confirmationPage(@PathVariable("id") long id, Model model, Principal p) {
+        Programs prog= programsRepository.findOne(id);
+        AppUser appUser=appUserRepository.findAppUserByUsername(p.getName());
+        prog.addUserApplied(appUser);
+        programsRepository.save(prog);
+//        String msg=appUser.getUsername().toString()+ " has Applied for "+ prog.getCourseName();
+        model.addAttribute("program", prog);
         return "confirmationpage";
     }
 

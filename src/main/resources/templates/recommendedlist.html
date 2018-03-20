@@ -24,10 +24,10 @@
         </tr>
         </thead>
         <tbody>
-        <tr >
+        <tr th:each="program:${recomended}">
 
-            <td >Hiring in Tech</td>
-            <td><a href="#"> Apply</a></td>
+            <td th:text="${program.courseName}"></td>
+            <td><a th:href="@{/apply/{id}(id = ${program.id})}">Apply</a></td>
 
         </tr>
 
