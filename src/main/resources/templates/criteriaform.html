@@ -5,9 +5,93 @@
     <meta charset="UTF-8" />
     <title>Base</title>
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous"/>
+    <link rel="stylesheet" href="css/criteriastylesheet.css">
+    <link rel="stylesheet" href="../static/css/criteriastylesheet.css">
+
+
 <body>
 
 <th:block th:replace="base::navlinks"></th:block>
+
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta/css/bootstrap.min.css" integrity="sha384-/Y6pD6FV/Vv2HJnA6t+vslU6fwYXjCFtcEpHbNJ0lyAFsXTsjBbfaDjzALeQsN6M" crossorigin="anonymous">
+
+<div class=container>
+    <h3 class="text-center  heading">Admission Criteria Form</h3>
+    <form>
+
+
+        <div class="form-group">
+            <h5 for="topics"> please fill out the following criteria form </h5>
+            <div class="row">
+                <div class="col">
+                    <div class="checkbox">
+                        <label><input type="checkbox" value="English Language Learner"><span class=paddingTopics>English Language Learner</span></label>
+                    </div>
+
+                    <div class="checkbox">
+                        <label><input type="checkbox" value="Unemployed with barriers to employment"><span class=paddingTopics>Unemployed with barriers to employment</span>
+                        </label>
+                    </div>
+
+                    <div class="checkbox">
+                        <label><input type="checkbox" value="Underemployed with barriers to better employment"><span class=paddingTopics>Underemployed with barriers to better employment</span></label>
+                    </div>
+
+                    <div class="checkbox">
+                        <label><input type="checkbox" value="Be comfortable using computers for everyday purposes"><span class=paddingTopics>Be comfortable using computers for everyday purposes</span></label>
+                    </div>
+
+                    <div class="checkbox ">
+                        <label><input type="checkbox" value="Have a strong interest in an IT career"><span class=paddingTopics>Have a strong interest in an IT career</span></label>
+                    </div>
+
+                    <div class="checkbox ">
+                        <label><input type="checkbox" value="Be able to work in the United States"><span class=paddingTopics>Be able to work in the United States</span></label>
+                    </div>
+                </div>
+
+
+                <div class=col>
+                    <div class="checkbox">
+                        <label><input type="checkbox" value="Have a high school diploma or GED"><span class=paddingTopics>Have a high school diploma or GED</span></label>
+                    </div>
+
+                    <div class="checkbox">
+                        <label><input type="checkbox" value="Basic understanding of object oriented language"><span class=paddingTopics>Basic understanding of object oriented language</span></label>
+                    </div>
+
+
+                    <div class="checkbox">
+                        <label><input type="checkbox" value="Major in Computer Science/Information Systems"><span class=paddingTopics>Major in Computer Science/Information Systems</span></label>
+                    </div>
+
+
+                    <div class="checkbox ">
+                        <label><input type="checkbox" value="Graduated within the last 6 years"><span class=paddingTopics>Graduated within the last 6 years</span></label>
+                    </div>
+
+
+                    <div class="checkbox">
+                        <label><input type="checkbox" value="Currently earning $42,000 or less"><span class=paddingTopics>Currently earning $42,000 or less</span></label>
+                    </div>
+
+
+                </div>
+
+
+
+            </div>
+        </div>
+
+<div style="text-align:-moz-center">
+                <button type="submit" class="btn btn-primary" align="center">Submit</button>
+</div>
+    </form>
+
+</div>
+
+
+
 
 
 
