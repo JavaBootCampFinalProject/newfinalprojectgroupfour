@@ -18,17 +18,17 @@
 <div >
     <table id="keywords" cellspacing="0" cellpadding="0" style="width:100%">
         <thead  style="text-align: center">
+
         <tr >
             <th><span>Program </span></th>
             <th><span>Action</span></th>
         </tr>
         </thead>
         <tbody>
-        <tr th:each="program:${recomended}">
 
+        <tr th:each="program:${recomended}">
             <td th:text="${program.courseName}"></td>
             <td><a th:href="@{/apply/{id}(id = ${program.id})}">Apply</a></td>
-
         </tr>
 
         </tbody>

@@ -4,6 +4,7 @@ package com.example.demo;
 import org.hibernate.validator.constraints.NotEmpty;
 
 import javax.persistence.*;
+import javax.validation.constraints.Size;
 import java.util.HashSet;
 import java.util.Set;
 
@@ -44,6 +45,7 @@ public class AppUser {
         this.roles.add(role);
     }
 
+
     private boolean criteriaEnglish=false;
     private boolean criteriaUnemployed=false;
     private boolean criteriaUnderEmployed=false;
@@ -77,6 +79,17 @@ public class AppUser {
         this.criteriaUnemployed = false;
         this.criteriaWorkInUs = false;
     }
+    boolean[] techCriteria= new boolean[7];
+
+//        boolean[] techCriteria={criteriaEnglish,criteriaUnemployed,
+//                criteriaUnderEmployed,criteriaComputerComfortable,
+//                criteriaItInterest,criteriaDiploma,criteriaWorkInUs};
+boolean[] javaCriteria=new boolean[6];
+
+//    boolean[] javaCriteria={criteriaUnderstandOOP,criteriaExperienceOOP,
+//            criteriaCompSciMajor,criteriaRecentGraduate,
+//            criteriaCurrentEarnings,criteriaWorkInUs};
+
 
 
     public long getId() {

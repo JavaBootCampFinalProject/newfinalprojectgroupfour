@@ -21,6 +21,7 @@
         <tr >
             <th><span>Applicant Name</span></th>
             <th><span>Program</span></th>
+            <th><span>Details</span></th>
             <th><span>Action</span></th>
         </tr>
         </thead>
@@ -29,6 +30,7 @@
         <tr th:each="user:${javaapplicant}">
             <td th:text="${user.username}"></td>
             <td th:text="${java.courseName}"></td>
+            <th> <a th:href="@{/qualification/{applicantid} (applicantid = ${user.id})}">   Qualifications </a></th>
             <th> <a th:href="@{/approve/{applicantid} (applicantid = ${user.id})}">   Approve </a></th>
         </tr>
         </th:block>
@@ -37,6 +39,7 @@
             <tr th:each="user:${techapplicant}">
                 <td th:text="${user.username}"></td>
                 <td th:text="${tech.courseName}"></td>
+                <th> <a th:href="@{/qualification/{applicantid} (applicantid = ${user.id})}">   Qualifications </a></th>
                 <th> <a th:href="@{/approve/{applicantid} (applicantid = ${user.id})}">   Approve </a></th>
 
             </tr>

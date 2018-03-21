@@ -63,25 +63,61 @@ public class MainController {
     @PostMapping("/criteria")
     public String processCriteriaForm(@Valid @ModelAttribute("appUser") AppUser appUser, Model model, BindingResult result
                                       ) {
-       if(result.hasErrors())
+
+
+        if(result.hasErrors())
             return "criteriaform";
+
+       appUser.techCriteria[0]=appUser.isCriteriaEnglish();
+       appUser.techCriteria[1]=appUser.isCriteriaUnemployed();
+       appUser.techCriteria[2]=appUser.isCriteriaUnderEmployed();
+        appUser.techCriteria[3]=appUser.isCriteriaComputerComfortable();
+        appUser.techCriteria[4]=appUser.isCriteriaItInterest();
+        appUser.techCriteria[5]=appUser.isCriteriaDiploma();
+        appUser.techCriteria[6]=appUser.isCriteriaWorkInUs();
+
+
+        appUser.javaCriteria[0]=appUser.isCriteriaUnderstandOOP();
+        appUser.javaCriteria[1]=appUser.isCriteriaExperienceOOP();
+        appUser.javaCriteria[2]=appUser.isCriteriaCompSciMajor();
+        appUser.javaCriteria[3]=appUser.isCriteriaRecentGraduate();
+        appUser.javaCriteria[4]=appUser.isCriteriaCurrentEarnings();
+        appUser.javaCriteria[5]=appUser.isCriteriaWorkInUs();
+
+
         appUserRepository.save(appUser);
 
-        System.out.println(appUser.isCriteriaEnglish());
-        System.out.println(appUser.isCriteriaUnemployed());
         return "redirect:/recommendedlist";
     }
 
     @RequestMapping("/recommendedlist")
     public String recomendedList(Principal p, Model m) {
-        AppUser thisUser=appUserRepository.findAppUserByUsername(p.getName());
+        AppUser currentUser=appUserRepository.findAppUserByUsername(p.getName());
 //        if(thisUser.isCriteriaEnglish() && thisUser.isCriteriaUnemployed()&&thisUser.isCriteriaCompSciMajor()&&
 //                thisUser.isCriteriaComputerComfortable()&&thisUser.isCriteriaCurrentEarnings()&&thisUser.isCriteriaWorkInUs()
 //                &&thisUser.isCriteriaDiploma()&&thisUser.isCriteriaExperienceOOP()&&thisUser.isCriteriaItInterest()&&
-//                thisUser.isCriteriaRecentGraduate()&&thisUser.isCriteriaUnderstandOOP()&&thisUser.isCriteriaUnderEmployed())
-            if(thisUser.isCriteriaEnglish())
+//
+//         thisUser.isCriteriaRecentGraduate()&&thisUser.isCriteriaUnderstandOOP()&&thisUser.isCriteriaUnderEmployed())
+        int javaCriteriaCounter=0;
+        int techCriteriaCounter=0;
+        for (int i = 0; i < currentUser.javaCriteria.length; i++) {
+            if(currentUser.javaCriteria[i])
+                javaCriteriaCounter++;
+        }
 
-        m.addAttribute("recomended",programsRepository.findAll() );
+        for (int i = 0; i < currentUser.techCriteria.length; i++) {
+            if(currentUser.techCriteria[i])
+                techCriteriaCounter++;
+        }
+            int criteriano=2;
+        if(javaCriteriaCounter>criteriano&&techCriteriaCounter>criteriano)
+            m.addAttribute("recomended",programsRepository.findAll() );
+
+        else if(javaCriteriaCounter>criteriano&&techCriteriaCounter<=criteriano)
+            m.addAttribute("recomended",programsRepository.findByCourseName("Java Boot Camp") );
+
+        else if(techCriteriaCounter>criteriano&&javaCriteriaCounter<=criteriano)
+            m.addAttribute("recomended",programsRepository.findByCourseName("Tech Hire") );
 
 
         return "recommendedlist";
@@ -137,6 +173,50 @@ public class MainController {
         programsRepository.save(course);
         model.addAttribute("program", course);
         return "approvalconfirmation";
+    }
+
+    @RequestMapping("/qualification/{applicantid}")
+    public String qualificationPage(@PathVariable("applicantid") long applicantid, Model model, Principal p) {
+        AppUser appUser= appUserRepository.findOne(applicantid);
+        StringBuilder javaString=new StringBuilder();
+        StringBuilder techString= new StringBuilder();
+        if(appUser.techCriteria[0])
+            techString.append("English Language Learner ").append("\n");
+        if(appUser.techCriteria[1])
+            techString.append("Unemployed with barriers to employment ").append("\n");
+        if(appUser.techCriteria[2])
+            techString.append("Underemployed with barriers to better employment ").append("\n");
+        if(appUser.techCriteria[3])
+            techString.append("Be comfortable using computers for everyday purposes \n").append("\n");
+        if(appUser.techCriteria[4])
+            techString.append("Have a strong interest in an IT career ").append("\n");
+        if(appUser.techCriteria[5])
+            techString.append("Have a high school diploma or GED ").append("\n");
+        if(appUser.techCriteria[6])
+            techString.append("Be able to work in the United States ").append("\n");
+
+        if(appUser.javaCriteria[0])
+            javaString.append("Basic understanding of object oriented language ").append("\n");
+        if(appUser.javaCriteria[1])
+            javaString.append("Previous experience with an object-oriented language ").append("\n");
+        if(appUser.javaCriteria[2])
+            javaString.append("Major in Computer Science/Information Systems ").append("\n");
+        if(appUser.javaCriteria[3])
+            javaString.append("Graduated within the last 6 years ").append("\n");
+        if(appUser.javaCriteria[4])
+            javaString.append("Currently earning $42,000 or less ").append("\n");
+        if(appUser.javaCriteria[5])
+            javaString.append("Be able to work in the United States ").append("\n");
+
+        System.out.println(javaString);
+        System.out.println(techString);
+
+
+        model.addAttribute("javaqualification", javaString);
+        model.addAttribute("techqualification", techString);
+
+
+        return "userqualification";
     }
 
 
