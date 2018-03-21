@@ -10,6 +10,10 @@ import org.springframework.web.bind.annotation.*;
 import javax.servlet.http.HttpServletRequest;
 import javax.validation.Valid;
 import java.security.Principal;
+import java.util.ArrayList;
+import java.util.Collection;
+import java.util.HashSet;
+import java.util.Set;
 
 @Controller
 public class MainController {
@@ -51,7 +55,7 @@ public class MainController {
 
         AppUser thisUser=appUserRepository.findAppUserByUsername(auth.getName());
         System.out.println(auth.getName());
-        appUserRepository.save(thisUser);
+//        appUserRepository.save(thisUser);
         model.addAttribute("appUserCriteriaform", thisUser);
         return "criteriaform";
     }
@@ -71,13 +75,13 @@ public class MainController {
     @RequestMapping("/recommendedlist")
     public String recomendedList(Principal p, Model m) {
         AppUser thisUser=appUserRepository.findAppUserByUsername(p.getName());
-        if(thisUser.isCriteriaEnglish() && thisUser.isCriteriaUnemployed()&&thisUser.isCriteriaCompSciMajor()&&
-                thisUser.isCriteriaComputerComfortable()&&thisUser.isCriteriaCurrentEarnings()&&thisUser.isCriteriaWorkInUs()
-                &&thisUser.isCriteriaDiploma()&&thisUser.isCriteriaExperienceOOP()&&thisUser.isCriteriaItInterest()&&
-                thisUser.isCriteriaRecentGraduate()&&thisUser.isCriteriaUnderstandOOP()&&thisUser.isCriteriaUnderEmployed())
+//        if(thisUser.isCriteriaEnglish() && thisUser.isCriteriaUnemployed()&&thisUser.isCriteriaCompSciMajor()&&
+//                thisUser.isCriteriaComputerComfortable()&&thisUser.isCriteriaCurrentEarnings()&&thisUser.isCriteriaWorkInUs()
+//                &&thisUser.isCriteriaDiploma()&&thisUser.isCriteriaExperienceOOP()&&thisUser.isCriteriaItInterest()&&
+//                thisUser.isCriteriaRecentGraduate()&&thisUser.isCriteriaUnderstandOOP()&&thisUser.isCriteriaUnderEmployed())
+            if(thisUser.isCriteriaEnglish())
 
-
-            m.addAttribute("recomended",programsRepository.findAll() );
+        m.addAttribute("recomended",programsRepository.findAll() );
 
 
         return "recommendedlist";
@@ -94,11 +98,48 @@ public class MainController {
         return "confirmationpage";
     }
 
-    @RequestMapping("/applicantslist")
-    public String applicantList() {
+
+    @RequestMapping("/applicantlist")
+    public String applicantLis(  Model model) {
+        Programs java= programsRepository.findByCourseName("Java Boot Camp");
+
+        ArrayList<AppUser> javaapplicant= new ArrayList<>();
+        for(AppUser user:java.getUserApplied())
+               javaapplicant.add(user);
+
+        Programs tech= programsRepository.findByCourseName("Tech Hire");
+
+        ArrayList<AppUser> techapplicant= new ArrayList<>();
+        for(AppUser user:tech.getUserApplied())
+            techapplicant.add(user);
+
+////        for(Programs eachprog: prog){
+////            for(AppUser user:eachprog.getUserApplied())
+////                applicant.add(user);
+////
+////        }
+//        model.addAttribute("program", prog);
+//        model.addAttribute("applicant", applicant);
+        model.addAttribute("java",java);
+        model.addAttribute("javaapplicant",javaapplicant);
+
+        model.addAttribute("tech",tech);
+        model.addAttribute("techapplicant",techapplicant);
 
         return "applicantlist";
     }
+
+    @RequestMapping("/approve/{applicantid}")
+    public String approvePage(@PathVariable("applicantid") long applicantid, Model model, Principal p) {
+        AppUser applicant= appUserRepository.findOne(applicantid);
+        Programs course = programsRepository.findByUserApplied(applicant);
+        course.addUserApproved(applicant);
+        programsRepository.save(course);
+        model.addAttribute("program", course);
+        return "approvedlist";
+    }
+
+
 
     @RequestMapping("/programslist")
     public String programList(){

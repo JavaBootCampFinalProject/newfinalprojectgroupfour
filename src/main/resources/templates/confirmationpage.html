@@ -8,15 +8,24 @@
 <body>
 
 <th:block th:replace="base::navlinks"></th:block>
+<div sec:authorize="hasAuthority ('USER')">
+<h1>Email sent for Approval by Admin</h1>
 
+<th:block th:each="program:${program}">
+<div th:each="user:${program.userApplied}" >
+   <span th:inline="text">[[${user.username}]]      [[${program.courseName}]]
+								</span>
+</div>
+</th:block>
+<div sec:authorize="hasAuthority ('ADMIN')">
+<h1>the below applicant is approved for the following course ....email</h1>
 
-<div th:each="program:${program}">
-
-    <td th:text="${program.courseName}"></td>
-    <td th:text="${program.userApplied.username}"></td>
-
-
-    <h1>Email sent for Approval by Admin</h1>
+<th:block th:each="program:${program}">
+    <div th:each="user:${program.userApproved}" >
+   <span th:inline="text">[[${user.username}]]      [[${program.courseName}]]
+								</span>
+    </div>
+</th:block>
 </div>
 
 <th:block th:replace="base::footer"></th:block>

@@ -25,12 +25,22 @@
         </tr>
         </thead>
         <tbody>
-        <tr >
-            <td>Getahun</td>
-            <td >Hiring in Tech</td>
-            <td><a href="#"> Approve</a></td>
-
+        <th:block th:object="${java}">
+        <tr th:each="user:${javaapplicant}">
+            <td th:text="${user.username}"></td>
+            <td th:text="${java.courseName}"></td>
+            <th> <a th:href="@{/approve/{applicantid} (applicantid = ${user.id})}">   Approve </a></th>
         </tr>
+        </th:block>
+
+        <th:block th:object="${tech}">
+            <tr th:each="user:${techapplicant}">
+                <td th:text="${user.username}"></td>
+                <td th:text="${tech.courseName}"></td>
+                <th> <a th:href="@{/approve/{applicantid} (applicantid = ${user.id})}">   Approve </a></th>
+
+            </tr>
+        </th:block>
 
         </tbody>
     </table>
