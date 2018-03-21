@@ -136,19 +136,57 @@ public class MainController {
         course.addUserApproved(applicant);
         programsRepository.save(course);
         model.addAttribute("program", course);
+        return "approvalconfirmation";
+    }
+
+
+
+    @RequestMapping("/approvedlist")
+    public String approvedList(Model model){
+        Programs java= programsRepository.findByCourseName("Java Boot Camp");
+
+        ArrayList<AppUser> javastudent= new ArrayList<>();
+        for(AppUser user:java.getUserApproved())
+            javastudent.add(user);
+
+        Programs tech= programsRepository.findByCourseName("Tech Hire");
+
+        ArrayList<AppUser> techstudent= new ArrayList<>();
+        for(AppUser user:tech.getUserApproved())
+            techstudent.add(user);
+
+
+        model.addAttribute("java",java);
+        model.addAttribute("javastudent",javastudent);
+
+        model.addAttribute("tech",tech);
+        model.addAttribute("techstudent",techstudent);
+
         return "approvedlist";
     }
 
 
-
     @RequestMapping("/programslist")
-    public String programList(){
+    public String programList(Model model){
 
+        Programs java= programsRepository.findByCourseName("Java Boot Camp");
+        Programs tech= programsRepository.findByCourseName("Tech Hire");
+
+        int javaapplicant=appUserRepository.countAllByApplied(java);
+        int techapplicant=appUserRepository.countAllByApplied(tech);
+
+        int javaapproved=appUserRepository.countAllByApproved(java);
+        int techapproved=appUserRepository.countAllByApproved(tech);
+
+        model.addAttribute("java",java);
+        model.addAttribute("tech",tech);
+        model.addAttribute("noOfJavaApplicants",javaapplicant );
+        model.addAttribute("noOfTechApplicants",techapplicant );
+        model.addAttribute("noOfJavaApproved",javaapproved );
+        model.addAttribute("noOfTechApproved",techapproved );
+        System.out.println(javaapplicant+ " " +techapproved );
         return "programslist";
     }
-
-
-
 
 
 

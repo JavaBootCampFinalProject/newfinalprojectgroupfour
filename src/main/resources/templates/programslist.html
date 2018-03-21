@@ -14,22 +14,27 @@
 
 
 
-<h1>programs' quota</h1>
+<h1>List of Students</h1>
 <div >
     <table id="keywords" cellspacing="0" cellpadding="0" style="width:100%">
         <thead  style="text-align: center">
         <tr >
-            <th><span>Program</span></th>
-            <th><span>No of Applicants</span></th>
-            <th><span>No of Students</span></th>
+            <th><span>Program Name</span></th>
+            <th><span>No Of Applicants</span></th>
+            <th><span>No Of Approved Applicants</span></th>
         </tr>
         </thead>
         <tbody>
-        <tr >
-            <td>Hiring in Tech</td>
-            <td >28</td>
-            <td>13</td>
+        <tr>
+            <td th:text="${java.courseName}"></td>
+            <td th:text="${noOfJavaApplicants}"></td>
+            <td th:text="${noOfJavaApproved}"></td>
 
+        </tr>
+        <tr>
+            <td th:text="${tech.courseName}"></td>
+            <td th:text="${noOfTechApplicants}"></td>
+            <td th:text="${noOfTechApproved}"></td>
         </tr>
 
         </tbody>

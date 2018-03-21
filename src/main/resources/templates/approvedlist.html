@@ -5,21 +5,55 @@
     <meta charset="UTF-8" />
     <title>Base</title>
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous"/>
+    <link rel="stylesheet" href="css/liststylesheet.css">
+    <link rel="stylesheet" href="../static/css/liststylesheet.css">
+
 <body>
 
-    <div sec:authorize="hasAuthority ('ADMIN')">
-        <h1>the below applicant is approved for the following course ....email</h1>
+<th:block th:replace="base::navlinks"></th:block>
 
-        <th:block th:each="program:${program}">
-            <div th:each="user:${program.userApproved}" >
-            <span th:inline="text">[[${user.username}]]      [[${program.courseName}]]
-								</span>
-            </div>
+
+
+<h1>List of Students</h1>
+<div >
+    <table id="keywords" cellspacing="0" cellpadding="0" style="width:100%">
+        <thead  style="text-align: center">
+        <tr >
+            <th><span>Applicant Name</span></th>
+            <th><span>Program</span></th>
+            <th><span>Action</span></th>
+        </tr>
+        </thead>
+        <tbody>
+        <th:block th:object="${java}">
+            <tr th:each="user:${javastudent}">
+                <td th:text="${user.username}"></td>
+                <td th:text="${java.courseName}"></td>
+                <td>    Approved </td>
+            </tr>
         </th:block>
-    </div>
 
-    <th:block th:replace="base::footer"></th:block>
-    <th:block th:replace="base::js"></th:block>
+        <th:block th:object="${tech}">
+            <tr th:each="user:${techstudent}">
+                <td th:text="${user.username}"></td>
+                <td th:text="${tech.courseName}"></td>
+                <td> Approved </td>
+
+            </tr>
+        </th:block>
+
+        </tbody>
+    </table>
+</div>
+
+
+
+
+
+<th:block th:replace="base::footer"></th:block>
+
+
+<th:block th:replace="base::js"></th:block>
 
 </body>
 </html>

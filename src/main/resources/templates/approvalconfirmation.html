@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="www.thymeleaf.org"
+      xmlns:sec="http://www.tymeleaf.org/thymeleaf-extras-springsecurity4">
+<head>
+    <meta charset="UTF-8" />
+    <title>Base</title>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous"/>
+<body>
+
+<div sec:authorize="hasAuthority ('ADMIN')">
+    <h1>the below applicant is approved for the following course ....email</h1>
+
+    <th:block th:each="program:${program}">
+        <div th:each="user:${program.userApproved}" >
+            <span th:inline="text">[[${user.username}]]      [[${program.courseName}]]
+								</span>
+        </div>
+    </th:block>
+</div>
+
+<th:block th:replace="base::footer"></th:block>
+<th:block th:replace="base::js"></th:block>
+
+</body>
+</html>
