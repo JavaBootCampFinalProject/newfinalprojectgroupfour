@@ -5,9 +5,8 @@
     <meta charset="UTF-8"/>
     <title>Home Page</title>
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous"/>
-    <link rel="stylesheet" href="../static/css/regstylesheet.css">
     <link rel="stylesheet" href="css/regstylesheet.css">
-
+    <link rel="stylesheet" href="../static/css/regstylesheet.css">
 
 </head>
 <body>
@@ -19,9 +18,9 @@
 
 
 
-        <form  th:action="@{/appuserform}" th:object="${appuser}" method="post">
+        <form  th:action="@{/addadmin}" th:object="${appuser}" method="post">
             <fieldset>
-                <h1>Please Register</h1>
+                <h1>Add Admin</h1>
                 <div class="form-group">
                     <input type="text" name="userEmail" id="username" class="form-control input-lg" placeholder="Email" required="true" autofocus="true"/>
                 </div>

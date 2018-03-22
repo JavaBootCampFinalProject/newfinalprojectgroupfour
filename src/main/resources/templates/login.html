@@ -5,35 +5,59 @@
     <meta charset="UTF-8" />
     <title>Login</title>
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous"/>
-    <link rel="stylesheet" href="/style.css">
+    <link rel="stylesheet" href="../static/css/loginstylesheet.css">
+    <link rel="stylesheet" href="css/loginstylesheet.css">
+
+
 </head>
 <body>
 <th:block th:replace="base::navlinks"></th:block>
 
-<div th:replace="base::navlinks"></div>
-<div th:if="${param.error}">
-    Invalid username and password.
-</div>
-<div th:if="${param.logout}">
-    You have been logged out.
-</div>
-<form th:action="@{/login}" method="post">
-    <div>
-        <label>User Name: <input type="text" name="username"/></label>
-    </div>
-    <div>
-        <label>Password: <input type="password" name="password"/></label>
-    </div>
-    <div>
-        <input type="submit" value="Sign In"/>
-    </div>
-</form>
+<div class="container" style="width:600px;text-align: center">
+    <div class="card">
+        <div class="button center">
+            <a th:href="@{/appuserform}">Create an account</a>
+        </div>
+        <form th:action="@{/login}" method="post">
 
-<script
-        src="http://code.jquery.com/jquery-3.3.1.min.js"
-        integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8="
-        crossorigin="anonymous"></script>
-<!--<script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>-->
+            <fieldset>
+                <h1>Please Sign In</h1>
+
+                <div th:if="${param.error}">
+                    <div class="alert alert-danger">
+                        Invalid username and password.
+                    </div>
+                </div>
+
+                <div th:if="${param.logout}">
+                    <div class="alert alert-info">
+                        You have been logged out.
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <input type="text" name="username" id="username" class="form-control input-lg"
+                           placeholder="UserName" required="true" autofocus="true"/>
+                </div>
+                <div class="form-group">
+                <input type="password" name="password" id="password" class="form-control input-lg"
+                       placeholder="Password" required="true"/>
+            </div>
+
+                <div class="row" align="center">
+                    <div class="col-xs-6 col-sm-6 col-md-6">
+                        <input type="submit" class="btn btn-lg btn-primary btn-block" value="Sign In"/>
+                    </div>
+                    <div class="col-xs-6 col-sm-6 col-md-6">
+                    </div>
+                </div>
+            </fieldset>
+        </form>
+
+    </div>
+</div>
+
+<script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
 <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
 </body>

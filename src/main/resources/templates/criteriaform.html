@@ -20,9 +20,10 @@
     <form th:action="@{/criteria}" th:object="${appUserCriteriaform}" method="post">
 
         <div class="form-group">
-            <h5 for="topics"> please fill out the following criteria form </h5>
+            <h5 for="topics"> please see below the criterias  and select those you qualify for and submit to apply for the following programs </h5>
             <div class="row">
                 <div class="col">
+                    <h3>Hiring in Tech</h3>
                     <input type="hidden" th:field="*{id}"/>
                     <input type="hidden" th:field="*{username}"/>
                     <input type="hidden" th:field="*{password}"/>
@@ -55,6 +56,7 @@
 
 
                 <div class=col>
+                    <h1>Promising the Future</h1>
                     <div class="checkbox">
                         <label><input type="checkbox" value="true" name="criteriaDiploma"><span class=paddingTopics>Have a high school diploma or GED</span></label>
                     </div>
@@ -81,13 +83,11 @@
                         <label><input type="checkbox" value="true" name="criteriaCurrentEarnings"><span class=paddingTopics>Currently earning $42,000 or less</span></label>
                     </div>
 
-
                 </div>
 
-
-
+                </div>
             </div>
-        </div>
+
 
 <div style="text-align:-moz-center">
                 <button type="submit" class="btn btn-primary" align="center">Submit</button>

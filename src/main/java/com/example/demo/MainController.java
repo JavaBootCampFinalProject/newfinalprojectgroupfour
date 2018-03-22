@@ -45,14 +45,43 @@ public class MainController {
     }
 
     @GetMapping("/appuserform")
-    public String getUserForm() {
+    public String getUserForm(Model model) {
+        model.addAttribute("appuser", new AppUser());
+
+
         return "appuserform";
     }
 
     @PostMapping("/appuserform")
-    public String processAppUserForm() {
-        return "login";
+    public String processUser(@Valid @ModelAttribute("appuser") AppUser appUser, BindingResult result) {
+        if (result.hasErrors()) {
+            return "appuserform";
+        }
+        appUser.addRole(appRoleRepository.findAppRoleByRoleName("USER"));
+        appUserRepository.save(appUser);
+        return "redirect:/login";
     }
+
+
+
+    @GetMapping("/addadmin")
+    public String getadminUserForm(Model model) {
+        model.addAttribute("appuser", new AppUser());
+
+
+        return "adminform";
+    }
+    @PostMapping("/addadmin")
+    public String processadminUserForm(@Valid @ModelAttribute("appuser") AppUser appUser, BindingResult result) {
+        if (result.hasErrors()) {
+            return "appuserform";
+        }
+        appUserRepository.save(appUser);
+        appUser.addRole(appRoleRepository.findAppRoleByRoleName("ADMIN"));
+        appUserRepository.save(appUser);
+        return "redirect:/";
+    }
+
 
     @GetMapping("/criteria")
     public String getCriteriaForm(Model model, Authentication auth) {
@@ -68,14 +97,14 @@ public class MainController {
 
     @PostMapping("/criteria")
     public String processCriteriaForm(@Valid @ModelAttribute("appUser") AppUser appUser, Model model, BindingResult result
-                                      ) {
+    ) {
 
 //        if(result.hasErrors())
 //            return "criteriaform";
 
-       appUser.techCriteria[0]=appUser.isCriteriaEnglish();
-       appUser.techCriteria[1]=appUser.isCriteriaUnemployed();
-       appUser.techCriteria[2]=appUser.isCriteriaUnderEmployed();
+        appUser.techCriteria[0]=appUser.isCriteriaEnglish();
+        appUser.techCriteria[1]=appUser.isCriteriaUnemployed();
+        appUser.techCriteria[2]=appUser.isCriteriaUnderEmployed();
         appUser.techCriteria[3]=appUser.isCriteriaComputerComfortable();
         appUser.techCriteria[4]=appUser.isCriteriaItInterest();
         appUser.techCriteria[5]=appUser.isCriteriaDiploma();
@@ -127,7 +156,7 @@ public class MainController {
             if(currentUser.techCriteria[i])
                 techCriteriaCounter++;
         }
-            int criteriano=2;
+        int criteriano=2;
 //        String errormessage="Please Select your skills!";
         if(javaCriteriaCounter<criteriano&&techCriteriaCounter<criteriano)
             return "redirect:/criteria";
@@ -170,7 +199,7 @@ public class MainController {
 
         ArrayList<AppUser> javaapplicant= new ArrayList<>();
         for(AppUser user:java.getUserApplied())
-               javaapplicant.add(user);
+            javaapplicant.add(user);
 
         Programs tech= programsRepository.findByCourseName("Tech Hire");
 
@@ -198,7 +227,7 @@ public class MainController {
         System.out.println(applicant.getUserEmail());
 
         try{
-        sendEmailWithoutTemplating(applicant.getUserEmail());
+            sendEmailWithoutTemplating(applicant.getUserEmail());
         } catch (UnsupportedEncodingException e){
             System.out.println("unsupported Format");
         }
@@ -319,7 +348,7 @@ public class MainController {
     public String userApprovedList(Model model, Authentication auth){
         AppUser currentUser=appUserRepository.findAppUserByUsername(auth.getName());
         Programs approvedfor=programsRepository.findByUserApproved(currentUser);
-      //  System.out.println(approvedfor.getUserApproved());
+        //  System.out.println(approvedfor.getUserApproved());
         model.addAttribute("approvedfor",approvedfor);
         return "userapprovedlist";
     }
