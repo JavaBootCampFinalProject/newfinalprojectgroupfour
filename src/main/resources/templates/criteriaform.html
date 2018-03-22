@@ -24,11 +24,13 @@
             <div class="row">
                 <div class="col">
                     <input type="hidden" th:field="*{id}"/>
+                    <input type="hidden" th:field="*{username}"/>
+                    <input type="hidden" th:field="*{password}"/>
+                    <input type="hidden" th:field="*{userEmail}"/>
+                    <input type="hidden" th:field="*{fullName}"/>
                     <div class="checkbox">
                         <label><input type="checkbox" value="true" name="criteriaEnglish"><span class=paddingTopics>English Language Learner</span></label>
                     </div>
-                    <input type="hidden" th:field="*{username}"/>
-                    <input type="hidden" th:field="*{password}"/>
                     <div class="checkbox">
                         <label><input type="checkbox" value="true" name="criteriaUnemployed"><span class=paddingTopics>Unemployed with barriers to employment</span>
                         </label>

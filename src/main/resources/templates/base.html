@@ -32,6 +32,15 @@
             <li class="nav-appItem " sec:authorize="isAuthenticated()">
                 <a class="nav-link" href="/userinfopage">UserPage</a>
             </li>
+            <li class="nav-appItem " sec:authorize="isAuthenticated()">
+                <a class="nav-link" href="/adminapprovedlist">Admin Approved List</a>
+            </li>
+            <li class="nav-appItem " sec:authorize="isAuthenticated()">
+                <a class="nav-link" href="/enrolledlist">Enrolled List</a>
+            </li>
+            <li class="nav-appItem " sec:authorize="isAuthenticated()">
+                <a class="nav-link" href="/userapprovedlist">User Approved List</a>
+            </li>
         </ul>
         <ul  class="navbar-nav mr-auto" class="nav justify-content-end" >
             <li class="nav-appItem " sec:authorize="isAnonymous()">

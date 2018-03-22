@@ -14,28 +14,21 @@
 
 
 
-<h1>List of Students</h1>
+<h1>List of Programs</h1>
 <div >
     <table id="keywords" cellspacing="0" cellpadding="0" style="width:100%">
         <thead  style="text-align: center">
-        <tr >
-            <th><span>Program Name</span></th>
-            <th><span>No Of Applicants</span></th>
-            <th><span>Enrolled Students</span></th>
+        <tr>
+            <th><span>Program</span></th>
+            <th><span>Action</span></th>
         </tr>
         </thead>
         <tbody>
-        <tr>
-            <td th:text="${java.courseName}"></td>
-            <td th:text="${noOfJavaApplicants}"></td>
-            <td th:text="${noOfJavaEnrolled}"></td>
+            <tr th:each="program:${approvedfor}">
+                <td th:text="${program.courseName}"></td>
+                <th> <a th:href="@{/enroll/{courseid} (courseid = ${program.id})}">   Enroll </a></th>
+            </tr>
 
-        </tr>
-        <tr>
-            <td th:text="${tech.courseName}"></td>
-            <td th:text="${noOfTechApplicants}"></td>
-            <td th:text="${noOfTechEnrolled}"></td>
-        </tr>
 
         </tbody>
     </table>

@@ -1,19 +1,24 @@
 package com.example.demo;
 
-import org.apache.tomcat.util.net.openssl.ciphers.Authentication;
+import com.google.common.collect.Lists;
+
+
+import it.ozimov.springboot.mail.model.Email;
+import it.ozimov.springboot.mail.model.defaultimpl.DefaultEmail;
+import it.ozimov.springboot.mail.service.EmailService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 
-import javax.servlet.http.HttpServletRequest;
+
+import javax.mail.internet.InternetAddress;
 import javax.validation.Valid;
+import java.io.UnsupportedEncodingException;
 import java.security.Principal;
 import java.util.ArrayList;
-import java.util.Collection;
-import java.util.HashSet;
-import java.util.Set;
 
 @Controller
 public class MainController {
@@ -25,7 +30,8 @@ public class MainController {
 
     @Autowired
     ProgramsRepository programsRepository;
-
+    @Autowired
+    public EmailService emailService;
 
     @RequestMapping("/")
     public String index() {
@@ -49,7 +55,7 @@ public class MainController {
     }
 
     @GetMapping("/criteria")
-    public String getCriteriaForm(Model model, Principal auth) {
+    public String getCriteriaForm(Model model, Authentication auth) {
 //        if(auth.name()==null)
 //            return "redirect:/login";
 
@@ -64,9 +70,8 @@ public class MainController {
     public String processCriteriaForm(@Valid @ModelAttribute("appUser") AppUser appUser, Model model, BindingResult result
                                       ) {
 
-
-        if(result.hasErrors())
-            return "criteriaform";
+//        if(result.hasErrors())
+//            return "criteriaform";
 
        appUser.techCriteria[0]=appUser.isCriteriaEnglish();
        appUser.techCriteria[1]=appUser.isCriteriaUnemployed();
@@ -83,8 +88,21 @@ public class MainController {
         appUser.javaCriteria[3]=appUser.isCriteriaRecentGraduate();
         appUser.javaCriteria[4]=appUser.isCriteriaCurrentEarnings();
         appUser.javaCriteria[5]=appUser.isCriteriaWorkInUs();
+        boolean techqual=false;
+        boolean javaqual=false;
+        for (int i = 0; i < appUser.techCriteria.length; i++) {
+            techqual=appUser.techCriteria[i];
+            if(techqual)
+                break;
+        }
+        for (int i = 0; i < appUser.javaCriteria.length; i++) {
+            javaqual=appUser.javaCriteria[i];
+            if(javaqual)
+                break;
+        }
 
-
+        if(!techqual&&!javaqual)
+            return "redirect:/criteria";
         appUserRepository.save(appUser);
 
         return "redirect:/recommendedlist";
@@ -110,17 +128,21 @@ public class MainController {
                 techCriteriaCounter++;
         }
             int criteriano=2;
-        if(javaCriteriaCounter>criteriano&&techCriteriaCounter>criteriano)
-            m.addAttribute("recomended",programsRepository.findAll() );
+//        String errormessage="Please Select your skills!";
+        if(javaCriteriaCounter<criteriano&&techCriteriaCounter<criteriano)
+            return "redirect:/criteria";
+        else {
+            if (javaCriteriaCounter >= criteriano && techCriteriaCounter >= criteriano)
+                m.addAttribute("recomended", programsRepository.findAll());
 
-        else if(javaCriteriaCounter>criteriano&&techCriteriaCounter<=criteriano)
-            m.addAttribute("recomended",programsRepository.findByCourseName("Java Boot Camp") );
+            else if (javaCriteriaCounter >= criteriano && techCriteriaCounter <criteriano)
+                m.addAttribute("recomended", programsRepository.findByCourseName("Java Boot Camp"));
 
-        else if(techCriteriaCounter>criteriano&&javaCriteriaCounter<=criteriano)
-            m.addAttribute("recomended",programsRepository.findByCourseName("Tech Hire") );
+            else if (techCriteriaCounter >= criteriano && javaCriteriaCounter < criteriano)
+                m.addAttribute("recomended", programsRepository.findByCourseName("Tech Hire"));
 
-
-        return "recommendedlist";
+            return "recommendedlist";
+        }
     }
 
     @RequestMapping("/apply/{id}")
@@ -129,11 +151,18 @@ public class MainController {
         AppUser appUser=appUserRepository.findAppUserByUsername(p.getName());
         prog.addUserApplied(appUser);
         programsRepository.save(prog);
-//        String msg=appUser.getUsername().toString()+ " has Applied for "+ prog.getCourseName();
         model.addAttribute("program", prog);
         return "confirmationpage";
     }
-
+    @RequestMapping("/enroll/{courseid}")
+    public String enrolledlist(@PathVariable("courseid") long courseid, Model model, Authentication auth) {
+        Programs prog= programsRepository.findOne(courseid);
+        AppUser appUser=appUserRepository.findAppUserByUsername(auth.getName());
+        prog.addUserInCourse(appUser);
+        programsRepository.save(prog);
+        model.addAttribute("program", prog);
+        return "enrollementconfirmation";
+    }
 
     @RequestMapping("/applicantlist")
     public String applicantLis(  Model model) {
@@ -149,13 +178,6 @@ public class MainController {
         for(AppUser user:tech.getUserApplied())
             techapplicant.add(user);
 
-////        for(Programs eachprog: prog){
-////            for(AppUser user:eachprog.getUserApplied())
-////                applicant.add(user);
-////
-////        }
-//        model.addAttribute("program", prog);
-//        model.addAttribute("applicant", applicant);
         model.addAttribute("java",java);
         model.addAttribute("javaapplicant",javaapplicant);
 
@@ -172,8 +194,35 @@ public class MainController {
         course.addUserApproved(applicant);
         programsRepository.save(course);
         model.addAttribute("program", course);
+        System.out.println(applicant.getUsername());
+        System.out.println(applicant.getUserEmail());
+
+        try{
+        sendEmailWithoutTemplating(applicant.getUserEmail());
+        } catch (UnsupportedEncodingException e){
+            System.out.println("unsupported Format");
+        }
         return "approvalconfirmation";
     }
+
+//    @RequestMapping("/approve/{applicantid}/{programid}")
+//    public String approvePage(@PathVariable("applicantid") long applicantid, Model model, Principal p) {
+//        AppUser applicant= appUserRepository.findOne(applicantid);
+//        Programs course = programsRepository.findByUserApplied(applicant);
+//        course.addUserApproved(applicant);
+//        programsRepository.save(course);
+//        model.addAttribute("program", course);
+//        System.out.println(applicant.getUsername());
+//        System.out.println(applicant.getUserEmail());
+//
+//        try{
+//            sendEmailWithoutTemplating(applicant.getUserEmail());
+//        } catch (UnsupportedEncodingException e){
+//            System.out.println("unsupported Format");
+//        }
+//        return "approvalconfirmation";
+//    }
+
 
     @RequestMapping("/qualification/{applicantid}")
     public String qualificationPage(@PathVariable("applicantid") long applicantid, Model model, Principal p) {
@@ -219,10 +268,32 @@ public class MainController {
         return "userqualification";
     }
 
+    @RequestMapping("/enrolledlist")
+    public String enrolledList(Model model){
+        Programs java= programsRepository.findByCourseName("Java Boot Camp");
+
+        ArrayList<AppUser> javastudent= new ArrayList<>();
+        for(AppUser user:java.getUserInCourse())
+            javastudent.add(user);
+
+        Programs tech= programsRepository.findByCourseName("Tech Hire");
+
+        ArrayList<AppUser> techstudent= new ArrayList<>();
+        for(AppUser user:tech.getUserInCourse())
+            techstudent.add(user);
 
 
-    @RequestMapping("/approvedlist")
-    public String approvedList(Model model){
+        model.addAttribute("java",java);
+        model.addAttribute("javastudent",javastudent);
+
+        model.addAttribute("tech",tech);
+        model.addAttribute("techstudent",techstudent);
+
+        return "enrolledlist";
+    }
+
+    @RequestMapping("/adminapprovedlist")
+    public String adminApprovedList(Model model){
         Programs java= programsRepository.findByCourseName("Java Boot Camp");
 
         ArrayList<AppUser> javastudent= new ArrayList<>();
@@ -242,9 +313,16 @@ public class MainController {
         model.addAttribute("tech",tech);
         model.addAttribute("techstudent",techstudent);
 
-        return "approvedlist";
+        return "adminapprovedlist";
     }
-
+    @RequestMapping("/userapprovedlist")
+    public String userApprovedList(Model model, Authentication auth){
+        AppUser currentUser=appUserRepository.findAppUserByUsername(auth.getName());
+        Programs approvedfor=programsRepository.findByUserApproved(currentUser);
+      //  System.out.println(approvedfor.getUserApproved());
+        model.addAttribute("approvedfor",approvedfor);
+        return "userapprovedlist";
+    }
 
     @RequestMapping("/programslist")
     public String programList(Model model){
@@ -255,16 +333,16 @@ public class MainController {
         int javaapplicant=appUserRepository.countAllByApplied(java);
         int techapplicant=appUserRepository.countAllByApplied(tech);
 
-        int javaapproved=appUserRepository.countAllByApproved(java);
-        int techapproved=appUserRepository.countAllByApproved(tech);
+        int javaenrolled=appUserRepository.countAllByInCourse(java);
+        int techenrolled=appUserRepository.countAllByInCourse(tech);
 
         model.addAttribute("java",java);
         model.addAttribute("tech",tech);
         model.addAttribute("noOfJavaApplicants",javaapplicant );
         model.addAttribute("noOfTechApplicants",techapplicant );
-        model.addAttribute("noOfJavaApproved",javaapproved );
-        model.addAttribute("noOfTechApproved",techapproved );
-        System.out.println(javaapplicant+ " " +techapproved );
+        model.addAttribute("noOfJavaEnrolled",javaenrolled );
+        model.addAttribute("noOfTechEnrolled",techenrolled );
+
         return "programslist";
     }
 
@@ -272,151 +350,16 @@ public class MainController {
 
 
 
+    public void sendEmailWithoutTemplating(String useremail)throws UnsupportedEncodingException {
+        final Email email =  DefaultEmail.builder()
+                .from(new InternetAddress("mcjavabootcamp@gmail.com", "ba bute "))
+                .to(Lists.newArrayList(new InternetAddress(useremail, "Pomponius Attĭcus")))
+                .subject("Laelius de amicitia")
+                .body("You are approved for the course you applied... " +
+                        "reply soon if u want to enroll!!!")
+                .encoding("UTF-8").build();
 
-
-
-
-
-    //Everything under this line is for copy and paste/refrenece
-    /*
-    @RequestMapping("/")
-    public String frontPage(Model model) {
-        RestTemplate restTemplate = new RestTemplate();
-        News news = restTemplate.getForObject("https://newsapi.org/v2/top-headlines?country=us&apiKey=895d727e71cf4321a9bbcf319375aa47", News.class);
-        model.addAttribute("news", news);
-        return "frontPage";
+        emailService.send(email);
     }
 
-    @RequestMapping("/topicnews")
-    public String topicPage(Model model, Authentication authentication) {
-        AppUser appUser = appUserRepository.findAppUserByUsername(authentication.getName());
-        RestTemplate restTemplate = new RestTemplate();
-        News newsStore = new News();
-        for (Interests interests : appUser.getInterests()) { //Loops through the users to check for "user" Found Item, and upon finding it sets the item as a found item.
-            News news = restTemplate.getForObject("https://newsapi.org/v2/top-headlines?q=" + interests.getInterestName() + "&sortBy=publishedAt&apiKey=895d727e71cf4321a9bbcf319375aa47", News.class);
-            for (Articles articles : news.getArticles()) {
-                newsStore.addArticles(articles);
-            }
-        }
-        model.addAttribute("news", newsStore);
-        return "frontPage";
-    }
-
-    @RequestMapping("/categorynews")
-    public String catagoryPage(Model model, Authentication authentication) {
-        AppUser appUser = appUserRepository.findAppUserByUsername(authentication.getName());
-        RestTemplate restTemplate = new RestTemplate();
-        News newsStore = new News();
-        for (AppCatagory appCatagory : appUser.getAppCatagory()) {
-            News news = restTemplate.getForObject("https://newsapi.org/v2/top-headlines?country=us&category=" + appCatagory.getCatagoryName() + "&apiKey=895d727e71cf4321a9bbcf319375aa47", News.class);
-            for (Articles articles : news.getArticles()) {
-                newsStore.addArticles(articles);
-            }
-        }
-        model.addAttribute("news", newsStore);
-        return "frontPage";
-    }
-
-    @GetMapping("/login")
-    public String login() {
-        return "login";
-    }
-
-    @GetMapping("/userinfopage") //The admin page contains all items and several commands that only the admin has
-    public String userInfoPage(Model model, Authentication authentication) {
-        model.addAttribute("appUser", appUserRepository.findAppUserByUsername(authentication.getName()));
-        return "userInfoPage";
-    }
-
-    @RequestMapping("/removeTopic/{id}")
-    //This swaps the status of an item from lost to found via the admin page and then returns there (Find a way to save position on the page?)
-    public String removeTopic(@PathVariable("id") long id, Model model, Authentication auth) {
-        AppUser appUser = appUserRepository.findAppUserByUsername(auth.getName());
-        appUser.removeIntrest(interestsRepository.findOne(id));
-        appUserRepository.save(appUser);
-        model.addAttribute("appUser", appUser);
-        return "userInfoPage";
-    }
-
-    @RequestMapping("/removeCategory/{id}")
-    //This swaps the status of an item from lost to found via the admin page and then returns there (Find a way to save position on the page?)
-    public String removeCategory(@PathVariable("id") long id, Model model, Authentication auth) {
-        AppUser appUser = appUserRepository.findAppUserByUsername(auth.getName());
-        appUser.removeappCatagory(categoriesRepository.findOne(id));
-        appUserRepository.save(appUser);
-        model.addAttribute("appUser", appUser);
-        return "userInfoPage";
-    }
-
-    @RequestMapping("/appuserform")  //For registration and creation of a new user
-    public String userRegistration(Model model) {
-        model.addAttribute("appuser", new AppUser());
-        return "appuserform";
-    }
-
-    @RequestMapping(value = "/appuserform", method = RequestMethod.POST)
-    //Retrieves the user information from the html page and processes it into the repository
-    public String processRegistrationPage(@Valid @ModelAttribute("appuser") AppUser appuser, BindingResult result, Model model) {
-        model.addAttribute("appuser", appuser);
-        if (result.hasErrors()) {
-            return "appuserform";
-        } else {
-            model.addAttribute("message", "User Account Successfully Created");
-            appUserRepository.save(appuser);
-        }
-        return "redirect:/";
-    }
-
-    @GetMapping("/addusertopics")
-    public String addusertopics(Model model) {
-        model.addAttribute("item", new Interests());
-        return "topic";
-    }
-
-
-    @PostMapping("/addusertopics")
-    public String addusertopics(@Valid @ModelAttribute("item") Interests item,
-                                BindingResult result, Authentication auth) {
-
-        if (result.hasErrors())
-            return "topic";
-        interestsRepository.save(item);
-        AppUser appUser = appUserRepository.findAppUserByUsername(auth.getName());
-        appUser.addInterest(item);
-        appUserRepository.save(appUser);
-        return "redirect:/userinfopage";
-    }
-
-    @GetMapping("/addusercategories")
-    public String addusercategories(Model model) {
-
-        model.addAttribute("item", new AppCatagory());
-        return "categories";
-    }
-
-
-    @PostMapping("/addusercategories")
-    public String addusercategories(@Valid @ModelAttribute("item") AppCatagory item,
-                                    BindingResult result, Authentication auth) {
-
-        if (result.hasErrors())
-            return "categories";
-        categoriesRepository.save(item);
-        AppUser appUser = appUserRepository.findAppUserByUsername(auth.getName());
-        appUser.addappCatagory(item);
-        appUserRepository.save(appUser);
-        return "redirect:/userinfopage";
-    }
-
-    @PostMapping("/search")
-    public String search(HttpServletRequest request, Model model) {
-
-        String searchString = request.getParameter("search");
-        RestTemplate restTemplate = new RestTemplate();
-        News news = restTemplate.getForObject("https://newsapi.org/v2/top-headlines?q=" + searchString + "&sortBy=publishedAt&apiKey=895d727e71cf4321a9bbcf319375aa47", News.class);
-        model.addAttribute("news", news);
-        return "frontPage";
-    }
-
-    */
 }

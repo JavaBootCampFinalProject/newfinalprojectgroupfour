@@ -6,5 +6,5 @@ public interface AppUserRepository  extends CrudRepository<AppUser,Long> {
 
     AppUser findAppUserByUsername(String username);
     int countAllByApplied(Programs prog);
-    int countAllByApproved(Programs prog);
+    int countAllByInCourse(Programs prog);
 }

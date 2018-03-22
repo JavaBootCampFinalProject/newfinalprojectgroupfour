@@ -21,7 +21,7 @@
         <tr >
             <th><span>Applicant Name</span></th>
             <th><span>Program</span></th>
-            <th><span>Action</span></th>
+            <th><span>Status</span></th>
         </tr>
         </thead>
         <tbody>
@@ -29,7 +29,7 @@
             <tr th:each="user:${javastudent}">
                 <td th:text="${user.username}"></td>
                 <td th:text="${java.courseName}"></td>
-                <td>    Approved </td>
+                <td>  Enrolled </td>
             </tr>
         </th:block>
 
@@ -37,7 +37,7 @@
             <tr th:each="user:${techstudent}">
                 <td th:text="${user.username}"></td>
                 <td th:text="${tech.courseName}"></td>
-                <td> Approved </td>
+                <td> Enrolled </td>
 
             </tr>
         </th:block>
@@ -45,9 +45,6 @@
         </tbody>
     </table>
 </div>
-
-
-
 
 
 <th:block th:replace="base::footer"></th:block>

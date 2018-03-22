@@ -66,31 +66,9 @@ public class AppUser {
         this.applied = new HashSet<>();
         this.approved = new HashSet<>();
         this.inCourse = new HashSet<>();
-        this.criteriaCompSciMajor = false;
-        this.criteriaComputerComfortable = false;
-        this.criteriaCurrentEarnings = false;
-        this.criteriaDiploma = false;
-        this.criteriaEnglish = false;
-        this.criteriaExperienceOOP = false;
-        this.criteriaItInterest = false;
-        this.criteriaRecentGraduate = false;
-        this.criteriaUnderstandOOP = false;
-        this.criteriaUnderEmployed = false;
-        this.criteriaUnemployed = false;
-        this.criteriaWorkInUs = false;
     }
     boolean[] techCriteria= new boolean[7];
-
-//        boolean[] techCriteria={criteriaEnglish,criteriaUnemployed,
-//                criteriaUnderEmployed,criteriaComputerComfortable,
-//                criteriaItInterest,criteriaDiploma,criteriaWorkInUs};
-boolean[] javaCriteria=new boolean[6];
-
-//    boolean[] javaCriteria={criteriaUnderstandOOP,criteriaExperienceOOP,
-//            criteriaCompSciMajor,criteriaRecentGraduate,
-//            criteriaCurrentEarnings,criteriaWorkInUs};
-
-
+    boolean[] javaCriteria=new boolean[6];
 
     public long getId() {
         return id;
