@@ -46,8 +46,6 @@ public class MainController {
     @GetMapping("/appuserform")
     public String getUserForm(Model model) {
         model.addAttribute("appuser", new AppUser());
-
-
         return "appuserform";
     }
 
@@ -61,15 +59,12 @@ public class MainController {
         return "redirect:/login";
     }
 
-
-
     @GetMapping("/addadmin")
     public String getadminUserForm(Model model) {
         model.addAttribute("appuser", new AppUser());
-
-
         return "adminform";
     }
+
     @PostMapping("/addadmin")
     public String processadminUserForm(@Valid @ModelAttribute("appuser") AppUser appUser, BindingResult result) {
         if (result.hasErrors()) {
@@ -85,7 +80,6 @@ public class MainController {
     @GetMapping("/criteria")
     public String getCriteriaForm(Model model, Authentication auth) {
         AppUser thisUser=appUserRepository.findAppUserByUsername(auth.getName());
-        System.out.println(auth.getName());
         model.addAttribute("appUserCriteriaform", thisUser);
         return "criteriaform";
     }
@@ -93,40 +87,12 @@ public class MainController {
     @PostMapping("/criteria")
     public String processCriteriaForm(@Valid @ModelAttribute("appUser") AppUser appUser, Model model, BindingResult result
     ) {
-
-//        if(result.hasErrors())
-//            return "criteriaform";
-
-        appUser.techCriteria[0]=appUser.isCriteriaEnglish();
-        appUser.techCriteria[1]=appUser.isCriteriaUnemployed();
-        appUser.techCriteria[2]=appUser.isCriteriaUnderEmployed();
-        appUser.techCriteria[3]=appUser.isCriteriaComputerComfortable();
-        appUser.techCriteria[4]=appUser.isCriteriaItInterest();
-        appUser.techCriteria[5]=appUser.isCriteriaDiploma();
-        appUser.techCriteria[6]=appUser.isCriteriaWorkInUs();
-
-
-        appUser.javaCriteria[0]=appUser.isCriteriaUnderstandOOP();
-        appUser.javaCriteria[1]=appUser.isCriteriaExperienceOOP();
-        appUser.javaCriteria[2]=appUser.isCriteriaCompSciMajor();
-        appUser.javaCriteria[3]=appUser.isCriteriaRecentGraduate();
-        appUser.javaCriteria[4]=appUser.isCriteriaCurrentEarnings();
-        appUser.javaCriteria[5]=appUser.isCriteriaWorkInUs();
-        boolean techqual=false;
-        boolean javaqual=false;
-        for (int i = 0; i < appUser.techCriteria.length; i++) {
-            techqual=appUser.techCriteria[i];
-            if(techqual)
-                break;
-        }
-        for (int i = 0; i < appUser.javaCriteria.length; i++) {
-            javaqual=appUser.javaCriteria[i];
-            if(javaqual)
-                break;
-        }
-
-//        if(!techqual&&!javaqual)
-//            return "redirect:/criteria";
+        if(result.hasErrors())
+            return "criteriaform";
+        appUser.isCheckTechCriteria();
+        appUser.isCheckJavaCriteria();
+        if(!appUser.isCheckJavaCriteria()&&!appUser.isCheckJavaCriteria())
+            return "redirect:/criteria";
         appUserRepository.save(appUser);
 
         return "redirect:/recommendedlist";
@@ -147,7 +113,7 @@ public class MainController {
             if(currentUser.techCriteria[i])
                 techCriteriaCounter++;
         }
-        int criteriano=2;
+        int criteriano=3;
         if(javaCriteriaCounter<criteriano&&techCriteriaCounter<criteriano)
             return "redirect:/criteria";
         else {
@@ -165,9 +131,9 @@ public class MainController {
     }
 
     @RequestMapping("/apply/{id}")
-    public String confirmationPage(@PathVariable("id") long id, Model model, Principal p) {
+    public String confirmationPage(@PathVariable("id") long id, Model model, Authentication auth) {
         Programs prog= programsRepository.findOne(id);
-        AppUser appUser=appUserRepository.findAppUserByUsername(p.getName());
+        AppUser appUser=appUserRepository.findAppUserByUsername(auth.getName());
         prog.addUserApplied(appUser);
         programsRepository.save(prog);
         model.addAttribute("program", prog);
@@ -178,6 +144,7 @@ public class MainController {
         Programs prog= programsRepository.findOne(courseid);
         AppUser appUser=appUserRepository.findAppUserByUsername(auth.getName());
         prog.addUserInCourse(appUser);
+        prog.removeUserApproved(appUser);
         programsRepository.save(prog);
         model.addAttribute("program", prog);
         return "enrollementconfirmation";
@@ -189,23 +156,15 @@ public class MainController {
         return "newapplicantlist";
     }
 
-
-
-
-
     @GetMapping("/approve/{courseid}/{applicantid}")
-    public String approvePage(Model model,
-                              final RedirectAttributes redirectAttributes,
-                              @PathVariable("courseid") long courseid
-            ,@PathVariable("applicantid") long applicantid){
-        Programs course = programsRepository.findOne(new Long(courseid).longValue());
-        AppUser applicant= appUserRepository.findOne(new Long(applicantid).longValue());
+    public String approvePage(Model model, final RedirectAttributes redirectAttributes, @PathVariable("courseid") long courseid,@PathVariable("applicantid") long applicantid){
+        Programs course = programsRepository.findOne(courseid);
+        AppUser applicant= appUserRepository.findOne(applicantid);
 
         course.addUserApproved(applicant);
+        course.removeUserApplied(applicant);
         programsRepository.save(course);
         model.addAttribute("program", course);
-        System.out.println(applicant.getUsername());
-        System.out.println(applicant.getUserEmail());
 
         try{
             sendEmailWithoutTemplating(applicant.getUserEmail());
@@ -252,10 +211,8 @@ public class MainController {
         System.out.println(javaString);
         System.out.println(techString);
 
-
         model.addAttribute("javaqualification", javaString);
         model.addAttribute("techqualification", techString);
-
 
         return "userqualification";
     }
@@ -274,7 +231,6 @@ public class MainController {
         for(AppUser user:tech.getUserInCourse())
             techstudent.add(user);
 
-
         model.addAttribute("java",java);
         model.addAttribute("javastudent",javastudent);
 
@@ -284,9 +240,9 @@ public class MainController {
         return "enrolledlist";
     }
 
-    @RequestMapping("/adminapprovedlist")
+    @RequestMapping("/adminapprovedlist") //List of approved student, no button here
     public String adminApprovedList(Model model){
-        Programs java= programsRepository.findByCourseName("Java Boot Camp");
+   /*     Programs java= programsRepository.findByCourseName("Java Boot Camp");
 
         ArrayList<AppUser> javastudent= new ArrayList<>();
         for(AppUser user:java.getUserApproved())
@@ -303,14 +259,14 @@ public class MainController {
         model.addAttribute("javastudent",javastudent);
 
         model.addAttribute("tech",tech);
-        model.addAttribute("techstudent",techstudent);
+        model.addAttribute("techstudent",techstudent);*/
+        model.addAttribute("courses", programsRepository.findAll());
 
         return "adminapprovedlist";
     }
-    @RequestMapping("/userapprovedlist")
+    @RequestMapping("/userapprovedlist") //List of courses approved for current user + button to enroll
     public String userApprovedList(Model model, Authentication auth){
-        AppUser currentUser=appUserRepository.findAppUserByUsername(auth.getName());
-        Programs approvedfor=programsRepository.findByUserApproved(currentUser);
+        Programs approvedfor=programsRepository.findByUserApproved(appUserRepository.findAppUserByUsername(auth.getName()));
         model.addAttribute("approvedfor",approvedfor);
         return "userapprovedlist";
     }
@@ -337,10 +293,6 @@ public class MainController {
         return "programslist";
     }
 
-
-
-
-
     public void sendEmailWithoutTemplating(String useremail)throws UnsupportedEncodingException {
         final Email email =  DefaultEmail.builder()
                 .from(new InternetAddress("mcjavabootcamp@gmail.com", "ba bute "))
@@ -352,6 +304,4 @@ public class MainController {
 
         emailService.send(email);
     }
-
-
 }

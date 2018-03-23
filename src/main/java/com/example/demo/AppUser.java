@@ -58,7 +58,8 @@ public class AppUser {
     private boolean criteriaCompSciMajor=false;
     private boolean criteriaRecentGraduate=false;
     private boolean criteriaCurrentEarnings=false;
-
+    boolean[] techCriteria= new boolean[7];
+    boolean[] javaCriteria= new boolean[6];
 
 
     public AppUser() {
@@ -66,9 +67,25 @@ public class AppUser {
         this.applied = new HashSet<>();
         this.approved = new HashSet<>();
         this.inCourse = new HashSet<>();
+
+        /*this.techCriteria[0]=this.isCriteriaEnglish();
+        this.techCriteria[1]=this.isCriteriaUnemployed();
+        this.techCriteria[2]=this.isCriteriaUnderEmployed();
+        this.techCriteria[3]=this.isCriteriaComputerComfortable();
+        this.techCriteria[4]=this.isCriteriaItInterest();
+        this.techCriteria[5]=this.isCriteriaDiploma();
+        this.techCriteria[6]=this.isCriteriaWorkInUs();
+
+
+        this.javaCriteria[0]=this.isCriteriaUnderstandOOP();
+        this.javaCriteria[1]=this.isCriteriaExperienceOOP();
+        this.javaCriteria[2]=this.isCriteriaCompSciMajor();
+        this.javaCriteria[3]=this.isCriteriaRecentGraduate();
+        this.javaCriteria[4]=this.isCriteriaCurrentEarnings();
+        this.javaCriteria[5]=this.isCriteriaWorkInUs();*/
     }
-    boolean[] techCriteria= new boolean[7];
-    boolean[] javaCriteria=new boolean[6];
+
+
 
     public long getId() {
         return id;
@@ -236,5 +253,40 @@ public class AppUser {
 
     public void setCriteriaCurrentEarnings(boolean criteriaCurrentEarnings) {
         this.criteriaCurrentEarnings = criteriaCurrentEarnings;
+    }
+
+    public boolean isCheckTechCriteria() {
+        this.techCriteria[0] = this.isCriteriaEnglish();
+        this.techCriteria[1] = this.isCriteriaUnemployed();
+        this.techCriteria[2] = this.isCriteriaUnderEmployed();
+        this.techCriteria[3] = this.isCriteriaComputerComfortable();
+        this.techCriteria[4] = this.isCriteriaItInterest();
+        this.techCriteria[5] = this.isCriteriaDiploma();
+        this.techCriteria[6] = this.isCriteriaWorkInUs();
+        boolean techqual = false;
+        for (int i = 0; i < this.techCriteria.length; i++) {
+            techqual = this.techCriteria[i];
+            if (techqual)
+                return true;
+        }
+        return false;
+    }
+
+    public boolean isCheckJavaCriteria() {
+        this.javaCriteria[0]=this.isCriteriaUnderstandOOP();
+        this.javaCriteria[1]=this.isCriteriaExperienceOOP();
+        this.javaCriteria[2]=this.isCriteriaCompSciMajor();
+        this.javaCriteria[3]=this.isCriteriaRecentGraduate();
+        this.javaCriteria[4]=this.isCriteriaCurrentEarnings();
+        this.javaCriteria[5]=this.isCriteriaWorkInUs();
+        boolean javaqual=false;
+
+
+        for (int i = 0; i < this.javaCriteria.length; i++) {
+            javaqual=this.javaCriteria[i];
+            if(javaqual)
+                return true;
+        }
+        return false;
     }
 }
