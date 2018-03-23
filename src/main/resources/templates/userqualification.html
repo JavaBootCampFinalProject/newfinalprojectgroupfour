@@ -11,11 +11,14 @@
     <h1>User Qualifications</h1>
 
 
-        <p th:text="${techqualification}">
-        </p>
 
-        <p th:text="${javaqualification}">
-         </p>
+
+
+        <div th:utext="${#strings.replace(techqualification,newLineChar, '&lt;br /&gt;')}">
+        </div>
+
+    <div th:utext="${#strings.replace(javaqualification,newLineChar, '&lt;br /&gt;')}">
+    </div>
 
 </div>
 

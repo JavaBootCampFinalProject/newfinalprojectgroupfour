@@ -26,25 +26,14 @@
         </tr>
         </thead>
         <tbody>
-        <th:block th:object="${java}">
-        <tr th:each="user:${javaapplicant}">
+        <th:block th:each="course:${courses}">
+        <tr th:each="user:${course.userApplied}">
             <td th:text="${user.username}"></td>
-            <td th:text="${java.courseName}"></td>
+            <td th:text="${course.courseName}"></td>
             <th> <a th:href="@{/qualification/{applicantid} (applicantid = ${user.id})}">   Qualifications </a></th>
-            <th> <a th:href="@{/approve/{applicantid} (applicantid = ${user.id})}">   Approve </a></th>
+            <th> <a th:href="@{/approve/{applicantid}/{courseid} (applicantid = ${user.id}, courseid = ${course.id})}">   Approve </a></th>
         </tr>
         </th:block>
-
-        <th:block th:object="${tech}">
-            <tr th:each="user:${techapplicant}">
-                <td th:text="${user.username}"></td>
-                <td th:text="${tech.courseName}"></td>
-                <th> <a th:href="@{/qualification/{applicantid} (applicantid = ${user.id})}">   Qualifications </a></th>
-                <th> <a th:href="@{/approve/{applicantid} (applicantid = ${user.id})}">   Approve </a></th>
-
-            </tr>
-        </th:block>
-
         </tbody>
     </table>
 </div>

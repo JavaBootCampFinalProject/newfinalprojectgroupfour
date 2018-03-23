@@ -90,6 +90,8 @@ public class MainController {
 
         AppUser thisUser=appUserRepository.findAppUserByUsername(auth.getName());
         System.out.println(auth.getName());
+        System.out.println(thisUser.getRoles());
+      //thisUser.addRole(appRoleRepository.findAppRoleByRoleName("USER"));
 //        appUserRepository.save(thisUser);
         model.addAttribute("appUserCriteriaform", thisUser);
         return "criteriaform";
@@ -99,8 +101,8 @@ public class MainController {
     public String processCriteriaForm(@Valid @ModelAttribute("appUser") AppUser appUser, Model model, BindingResult result
     ) {
 
-//        if(result.hasErrors())
-//            return "criteriaform";
+        if(result.hasErrors())
+            return "criteriaform";
 
         appUser.techCriteria[0]=appUser.isCriteriaEnglish();
         appUser.techCriteria[1]=appUser.isCriteriaUnemployed();
@@ -140,12 +142,7 @@ public class MainController {
     @RequestMapping("/recommendedlist")
     public String recomendedList(Principal p, Model m) {
         AppUser currentUser=appUserRepository.findAppUserByUsername(p.getName());
-//        if(thisUser.isCriteriaEnglish() && thisUser.isCriteriaUnemployed()&&thisUser.isCriteriaCompSciMajor()&&
-//                thisUser.isCriteriaComputerComfortable()&&thisUser.isCriteriaCurrentEarnings()&&thisUser.isCriteriaWorkInUs()
-//                &&thisUser.isCriteriaDiploma()&&thisUser.isCriteriaExperienceOOP()&&thisUser.isCriteriaItInterest()&&
-//
-//         thisUser.isCriteriaRecentGraduate()&&thisUser.isCriteriaUnderstandOOP()&&thisUser.isCriteriaUnderEmployed())
-        int javaCriteriaCounter=0;
+      int javaCriteriaCounter=0;
         int techCriteriaCounter=0;
         for (int i = 0; i < currentUser.javaCriteria.length; i++) {
             if(currentUser.javaCriteria[i])
@@ -156,19 +153,31 @@ public class MainController {
             if(currentUser.techCriteria[i])
                 techCriteriaCounter++;
         }
-        int criteriano=2;
-//        String errormessage="Please Select your skills!";
-        if(javaCriteriaCounter<criteriano&&techCriteriaCounter<criteriano)
+
+        if(javaCriteriaCounter==0&&techCriteriaCounter==0)
             return "redirect:/criteria";
         else {
-            if (javaCriteriaCounter >= criteriano && techCriteriaCounter >= criteriano)
+            if (javaCriteriaCounter > 0 && techCriteriaCounter > 0)
                 m.addAttribute("recomended", programsRepository.findAll());
-
-            else if (javaCriteriaCounter >= criteriano && techCriteriaCounter <criteriano)
+                else if (javaCriteriaCounter > 0 && techCriteriaCounter == 0)
                 m.addAttribute("recomended", programsRepository.findByCourseName("Java Boot Camp"));
-
-            else if (techCriteriaCounter >= criteriano && javaCriteriaCounter < criteriano)
+                else if (techCriteriaCounter > 0 && javaCriteriaCounter == 0)
                 m.addAttribute("recomended", programsRepository.findByCourseName("Tech Hire"));
+
+
+//        int criteriano=2;
+////        String errormessage="Please Select your skills!";
+//        if(javaCriteriaCounter<criteriano&&techCriteriaCounter<criteriano)
+//            return "redirect:/criteria";
+//        else {
+//            if (javaCriteriaCounter >= criteriano && techCriteriaCounter >= criteriano)
+//                m.addAttribute("recomended", programsRepository.findAll());
+//
+//            else if (javaCriteriaCounter >= criteriano && techCriteriaCounter <criteriano)
+//                m.addAttribute("recomended", programsRepository.findByCourseName("Java Boot Camp"));
+//
+//            else if (techCriteriaCounter >= criteriano && javaCriteriaCounter < criteriano)
+//                m.addAttribute("recomended", programsRepository.findByCourseName("Tech Hire"));
 
             return "recommendedlist";
         }
@@ -194,32 +203,15 @@ public class MainController {
     }
 
     @RequestMapping("/applicantlist")
-    public String applicantLis(  Model model) {
-        Programs java= programsRepository.findByCourseName("Java Boot Camp");
-
-        ArrayList<AppUser> javaapplicant= new ArrayList<>();
-        for(AppUser user:java.getUserApplied())
-            javaapplicant.add(user);
-
-        Programs tech= programsRepository.findByCourseName("Tech Hire");
-
-        ArrayList<AppUser> techapplicant= new ArrayList<>();
-        for(AppUser user:tech.getUserApplied())
-            techapplicant.add(user);
-
-        model.addAttribute("java",java);
-        model.addAttribute("javaapplicant",javaapplicant);
-
-        model.addAttribute("tech",tech);
-        model.addAttribute("techapplicant",techapplicant);
-
-        return "applicantlist";
+    public String applicantList(  Model model) {
+       model.addAttribute("courses",programsRepository.findAll() ) ;
+       return "applicantlist";
     }
 
-    @RequestMapping("/approve/{applicantid}")
-    public String approvePage(@PathVariable("applicantid") long applicantid, Model model, Principal p) {
+    @RequestMapping("/approve/{applicantid}/{courseid}")
+    public String approvePage(@PathVariable("applicantid") long applicantid, @PathVariable("courseid") long courseid, Model model, Principal p) {
         AppUser applicant= appUserRepository.findOne(applicantid);
-        Programs course = programsRepository.findByUserApplied(applicant);
+        Programs course = programsRepository.findOne(courseid);
         course.addUserApproved(applicant);
         programsRepository.save(course);
         model.addAttribute("program", course);
@@ -259,19 +251,18 @@ public class MainController {
         StringBuilder javaString=new StringBuilder();
         StringBuilder techString= new StringBuilder();
         if(appUser.techCriteria[0])
-            techString.append("English Language Learner ").append("\n");
-        if(appUser.techCriteria[1])
-            techString.append("Unemployed with barriers to employment ").append("\n");
+            techString.append("English Language Learner \n");
+            techString.append("Unemployed with barriers to employment \n");
         if(appUser.techCriteria[2])
-            techString.append("Underemployed with barriers to better employment ").append("\n");
+            techString.append("Underemployed with barriers to better employment \n");
         if(appUser.techCriteria[3])
-            techString.append("Be comfortable using computers for everyday purposes \n").append("\n");
+            techString.append("Be comfortable using computers for everyday purposes \n");
         if(appUser.techCriteria[4])
-            techString.append("Have a strong interest in an IT career ").append("\n");
+            techString.append("Have a strong interest in an IT career \n");
         if(appUser.techCriteria[5])
-            techString.append("Have a high school diploma or GED ").append("\n");
+            techString.append("Have a high school diploma or GED \n");
         if(appUser.techCriteria[6])
-            techString.append("Be able to work in the United States ").append("\n");
+            techString.append("Be able to work in the United States \n").append("\n");
 
         if(appUser.javaCriteria[0])
             javaString.append("Basic understanding of object oriented language ").append("\n");
@@ -289,7 +280,7 @@ public class MainController {
         System.out.println(javaString);
         System.out.println(techString);
 
-
+        model.addAttribute("newLineChar", '\n');
         model.addAttribute("javaqualification", javaString);
         model.addAttribute("techqualification", techString);
 
@@ -347,7 +338,7 @@ public class MainController {
     @RequestMapping("/userapprovedlist")
     public String userApprovedList(Model model, Authentication auth){
         AppUser currentUser=appUserRepository.findAppUserByUsername(auth.getName());
-        Programs approvedfor=programsRepository.findByUserApproved(currentUser);
+        Iterable<Programs> approvedfor=programsRepository.findByUserApproved(currentUser);
         //  System.out.println(approvedfor.getUserApproved());
         model.addAttribute("approvedfor",approvedfor);
         return "userapprovedlist";
