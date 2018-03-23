@@ -18,6 +18,7 @@ import javax.validation.Valid;
 import java.io.UnsupportedEncodingException;
 import java.security.Principal;
 import java.util.ArrayList;
+
 @Controller
 public class MainController {
 
@@ -101,8 +102,7 @@ public class MainController {
     @RequestMapping("/recommendedlist")
     public String recomendedList(Principal p, Model m) {
         AppUser currentUser=appUserRepository.findAppUserByUsername(p.getName());
-
-        int javaCriteriaCounter=0;
+      int javaCriteriaCounter=0;
         int techCriteriaCounter=0;
         for (int i = 0; i < currentUser.javaCriteria.length; i++) {
             if(currentUser.javaCriteria[i])
@@ -113,17 +113,15 @@ public class MainController {
             if(currentUser.techCriteria[i])
                 techCriteriaCounter++;
         }
-        int criteriano=3;
-        if(javaCriteriaCounter<criteriano&&techCriteriaCounter<criteriano)
+
+        if(javaCriteriaCounter==0&&techCriteriaCounter==0)
             return "redirect:/criteria";
         else {
-            if (javaCriteriaCounter >= criteriano && techCriteriaCounter >= criteriano)
+            if (javaCriteriaCounter > 0 && techCriteriaCounter > 0)
                 m.addAttribute("recomended", programsRepository.findAll());
-
-            else if (javaCriteriaCounter >= criteriano && techCriteriaCounter <criteriano)
+                else if (javaCriteriaCounter > 0 && techCriteriaCounter == 0)
                 m.addAttribute("recomended", programsRepository.findByCourseName("Java Boot Camp"));
-
-            else if (techCriteriaCounter >= criteriano && javaCriteriaCounter < criteriano)
+                else if (techCriteriaCounter > 0 && javaCriteriaCounter == 0)
                 m.addAttribute("recomended", programsRepository.findByCourseName("Tech Hire"));
 
             return "recommendedlist";
@@ -181,19 +179,18 @@ public class MainController {
         StringBuilder javaString=new StringBuilder();
         StringBuilder techString= new StringBuilder();
         if(appUser.techCriteria[0])
-            techString.append("English Language Learner ").append("\n");
-        if(appUser.techCriteria[1])
-            techString.append("Unemployed with barriers to employment ").append("\n");
+            techString.append("English Language Learner \n");
+            techString.append("Unemployed with barriers to employment \n");
         if(appUser.techCriteria[2])
-            techString.append("Underemployed with barriers to better employment ").append("\n");
+            techString.append("Underemployed with barriers to better employment \n");
         if(appUser.techCriteria[3])
-            techString.append("Be comfortable using computers for everyday purposes \n").append("\n");
+            techString.append("Be comfortable using computers for everyday purposes \n");
         if(appUser.techCriteria[4])
-            techString.append("Have a strong interest in an IT career ").append("\n");
+            techString.append("Have a strong interest in an IT career \n");
         if(appUser.techCriteria[5])
-            techString.append("Have a high school diploma or GED ").append("\n");
+            techString.append("Have a high school diploma or GED \n");
         if(appUser.techCriteria[6])
-            techString.append("Be able to work in the United States ").append("\n");
+            techString.append("Be able to work in the United States \n").append("\n");
 
         if(appUser.javaCriteria[0])
             javaString.append("Basic understanding of object oriented language ").append("\n");
@@ -211,6 +208,7 @@ public class MainController {
         System.out.println(javaString);
         System.out.println(techString);
 
+        model.addAttribute("newLineChar", '\n');
         model.addAttribute("javaqualification", javaString);
         model.addAttribute("techqualification", techString);
 
@@ -266,7 +264,9 @@ public class MainController {
     }
     @RequestMapping("/userapprovedlist") //List of courses approved for current user + button to enroll
     public String userApprovedList(Model model, Authentication auth){
-        Programs approvedfor=programsRepository.findByUserApproved(appUserRepository.findAppUserByUsername(auth.getName()));
+        AppUser currentUser=appUserRepository.findAppUserByUsername(auth.getName());
+        Iterable<Programs> approvedfor=programsRepository.findByUserApproved(currentUser);
+        //  System.out.println(approvedfor.getUserApproved());
         model.addAttribute("approvedfor",approvedfor);
         return "userapprovedlist";
     }
@@ -304,4 +304,5 @@ public class MainController {
 
         emailService.send(email);
     }
+
 }
