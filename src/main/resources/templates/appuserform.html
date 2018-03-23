@@ -8,7 +8,6 @@
     <link rel="stylesheet" href="../static/css/regstylesheet.css">
     <link rel="stylesheet" href="css/regstylesheet.css">
 
-
 </head>
 <body>
 
@@ -16,9 +15,6 @@
 
 <div class="container" style="width:600px;text-align: center">
     <div class="card">
-
-
-
         <form  th:action="@{/appuserform}" th:object="${appuser}" method="post">
             <fieldset>
                 <h1>Please Register</h1>
@@ -35,7 +31,7 @@
                     <input type="password" name="password" id="password" class="form-control input-lg" placeholder="Password" required="true"/>
                 </div>
                 <div class="row" align="center">
-                    <div class="col-xs-6 col-sm-6 col-md-6" style="padding-top: 15px;">
+                    <div class="col-xs-6 col-sm-6 col-md-6" style="padding-top: 15px">
                         <input type="submit" class="btn btn-lg btn-primary btn-block" value="Register"/>
                     </div>
                     <div class="col-xs-6 col-sm-6 col-md-6">

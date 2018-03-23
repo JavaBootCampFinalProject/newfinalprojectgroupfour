@@ -4,57 +4,58 @@
 <head>
     <meta charset="UTF-8" />
     <title>Base</title>
-    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous"/>
+    <link rel="stylesheet" href="../static/css/navbarstylesheet.css">
+    <!--<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous"/>-->
+
 </head>
 <body>
 <div th:fragment="navlinks">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta/css/bootstrap.min.css" integrity="sha384-/Y6pD6FV/Vv2HJnA6t+vslU6fwYXjCFtcEpHbNJ0lyAFsXTsjBbfaDjzALeQsN6M" crossorigin="anonymous">
 
-    <nav class="navbar navbar-expand-sm bg-light navbar-light" style="padding: auto">
+    <nav class="navbar navbar-expand-lg navbar-light bg-light navbar-custom">
 
-        <ul class="navbar-nav mr-auto"  class="nav justify-content" >
+        <ul class="navbar-nav mr-auto" >
             <li class="nav-appItem" style="padding-bottom: auto">
-                <a class="nav-link" href="/">home</a>
+                <a class="nav-link" href="/" style="color:dodgerblue" >Home</a>
             </li>
             <li class="nav-appItem " sec:authorize="hasAuthority('ADMIN')">
-                <a class="nav-link" href="/programslist">Programs List</a>
+                <a class="nav-link" href="/programslist" style="color:dodgerblue">Programs List</a>
             </li>
 
             <li class="nav-appItem " sec:authorize="hasAuthority('ADMIN')">
-                <a class="nav-link" href="/applicantlist">Applicants List</a>
+                <a class="nav-link" href="/applicantlist" style="color:dodgerblue">Applicants List</a>
             </li>
             <li class="nav-appItem " sec:authorize="hasAuthority('USER')">
-                <a class="nav-link" href="/recommendedlist">Recommended Programs</a>
+                <a class="nav-link" href="/recommendedlist" style="color:dodgerblue">Recommended Programs</a>
             </li>
 
             <li class="nav-appItem " sec:authorize="hasAuthority('ADMIN')">
-                <a class="nav-link" href="/adminapprovedlist">Approved List</a>
+                <a class="nav-link" href="/adminapprovedlist" style="color:dodgerblue">Approved List</a>
             </li>
             <li class="nav-appItem " sec:authorize="hasAuthority('ADMIN')">
-                <a class="nav-link" href="/enrolledlist">Enrolled List</a>
+                <a class="nav-link" href="/enrolledlist" style="color:dodgerblue">Enrolled List</a>
             </li>
             <li class="nav-appItem " sec:authorize="hasAuthority('USER')">
-                <a class="nav-link" href="/userapprovedlist">Approved List</a>
+                <a class="nav-link" href="/userapprovedlist" style="color:dodgerblue">Approved List</a>
             </li>
         </ul>
-        <ul  class="navbar-nav mr-auto" class="nav justify-content-end" >
-            <li class="nav-appItem " sec:authorize="isAnonymous()">
-                <a class="nav-link" href="/login">Login</a>
+
+        <ul  class="navbar-nav">
+            <li class="nav-appItem " sec:authorize="isAnonymous()" style="color:dodgerblue">
+                <a class="nav-link" href="/login" style="color:dodgerblue">Login</a>
             </li>
             <li class="nav-appItem " sec:authorize="isAnonymous()">
-                <a class="nav-link" href="/appuserform">Register</a>
+                <a class="nav-link" href="/appuserform" style="color:dodgerblue">Register</a>
             </li>
             <li class="nav-appItem " sec:authorize="hasAuthority('ADMIN')">
-                <a class="nav-link" href="/addadmin">Add Admin</a>
+                <a class="nav-link" href="/addadmin" style="color:dodgerblue">Add Admin</a>
             </li>
             <li class="nav-appItem " sec:authorize="isAuthenticated()">
-                <a class="nav-link" href="/logout">Logout</a>
+                <a class="nav-link" href="/logout" style="color:dodgerblue">Logout</a>
             </li>
-
         </ul>
+        </div>
     </nav>
-
-
-
 
 
 </div>
@@ -67,7 +68,7 @@
             src="http://code.jquery.com/jquery-3.3.1.min.js"
             integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8="
             crossorigin="anonymous"></script>
-    <!--<script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>-->
+    <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
 </div>
