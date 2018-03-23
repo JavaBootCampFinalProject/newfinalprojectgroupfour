@@ -20,21 +20,16 @@
         <thead  style="text-align: center">
         <tr >
             <th><span>Program Name</span></th>
-            <th><span>No Of Applicants</span></th>
+            <th><span>No Of Applicantions</span></th>
             <th><span>Enrolled Students</span></th>
         </tr>
         </thead>
         <tbody>
-        <tr>
-            <td th:text="${java.courseName}"></td>
-            <td th:text="${noOfJavaApplicants}"></td>
-            <td th:text="${noOfJavaEnrolled}"></td>
+        <tr th:each="course:${courses}">
+            <td th:text="${course.courseName}"></td>
+            <td th:text="${course.noofapplications}"></td>
+            <td th:text="${course.noofstudents}"></td>
 
-        </tr>
-        <tr>
-            <td th:text="${tech.courseName}"></td>
-            <td th:text="${noOfTechApplicants}"></td>
-            <td th:text="${noOfTechEnrolled}"></td>
         </tr>
 
         </tbody>

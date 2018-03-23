@@ -28,15 +28,15 @@ public class DataLoader implements CommandLineRunner {
         role.setRoleName("ADMIN");
         appRoleRepository.save(role);
 
-        // A few users
+
         // Admin 1
         AppUser user = new AppUser();
-        user.setUsername("John");
-        user.setPassword("password1");
+        user.setUsername("john");
+        user.setPassword("john");
         user.setFullName("John Doe");
         user.setUserEmail("g1@gmail.com");
         appUserRepository.save(user);
-        user.addRole(appRoleRepository.findAppRoleByRoleName("USER"));
+        user.addRole(appRoleRepository.findAppRoleByRoleName("ADMIN"));
         appUserRepository.save(user);
         // Admin 2
         user = new AppUser();
@@ -49,22 +49,10 @@ public class DataLoader implements CommandLineRunner {
         appUserRepository.save(user);
         // User 1
         user = new AppUser();
-        user.setUsername("Joe");
-        user.setPassword("password3");
+        user.setUsername("joe");
+        user.setPassword("joe");
         user.setFullName("Joe Blow");
         user.setUserEmail("g3@gmail.com");
-//        user.setCriteriaCompSciMajor(true);
-//        user.setCriteriaComputerComfortable(true);
-//        user.setCriteriaCurrentEarnings(true);
-//        user.setCriteriaDiploma(true);
-//        user.setCriteriaEnglish(true);
-//        user.setCriteriaExperienceOOP(true);
-//        user.setCriteriaItInterest(true);
-//        user.setCriteriaRecentGraduate(true);
-//        user.setCriteriaUnderEmployed(true);
-//        user.setCriteriaUnderstandOOP(true);
-//        user.setCriteriaUnemployed(true);
-//        user.setCriteriaWorkInUs(true);
 
         appUserRepository.save(user);
         user.addRole(appRoleRepository.findAppRoleByRoleName("USER"));
@@ -75,18 +63,7 @@ public class DataLoader implements CommandLineRunner {
         user.setPassword("jane");
         user.setFullName("Jane Pane");
         user.setUserEmail("g4@gmail.com");
-//        user.setCriteriaCompSciMajor(false);
-//        user.setCriteriaComputerComfortable(true);
-//        user.setCriteriaCurrentEarnings(true);
-//        user.setCriteriaDiploma(false);
-//        user.setCriteriaEnglish(true);
-//        user.setCriteriaExperienceOOP(true);
-//        user.setCriteriaItInterest(true);
-//        user.setCriteriaRecentGraduate(true);
-//        user.setCriteriaUnderEmployed(true);
-//        user.setCriteriaUnderstandOOP(true);
-//        user.setCriteriaUnemployed(true);
-//        user.setCriteriaWorkInUs(true);
+
         appUserRepository.save(user);
         user.addRole(appRoleRepository.findAppRoleByRoleName("USER"));
         appUserRepository.save(user);
@@ -137,11 +114,7 @@ public class DataLoader implements CommandLineRunner {
         course.setCourseDescription("fillerDescription");
         course.setCourseCriteria("fillerCriteria");
         programsRepository.save(course);
-//        course.addUserApplied(appUserRepository.findOne(new Long(4)));
-//        course.addUserApproved(appUserRepository.findOne( new Long(3)));
-//        course.addUserInCourse(appUserRepository.findOne(new Long(5)));
-//        programsRepository.save(course);
-        //Course 2
+     //Course 2
         course = new Programs();
         course.setCourseName("Java Boot Camp");
         course.setCourseDescription("fillerDescription2");

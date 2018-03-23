@@ -90,40 +90,34 @@ public class MainController {
     ) {
         if(result.hasErrors())
             return "criteriaform";
-        appUser.isCheckTechCriteria();
-        appUser.isCheckJavaCriteria();
-        if(!appUser.isCheckJavaCriteria()&&!appUser.isCheckJavaCriteria())
-            return "redirect:/criteria";
-        appUserRepository.save(appUser);
+
+        if(!appUser.isCheckTechCriteria()&&!appUser.isCheckJavaCriteria())
+            return "redirect:/selectcriteria";
+       appUserRepository.save(appUser);
 
         return "redirect:/recommendedlist";
     }
 
+    @RequestMapping("/selectcriteria")
+    public String selectCriteria() {
+        return "selectcriteria";
+    }
+
     @RequestMapping("/recommendedlist")
     public String recomendedList(Principal p, Model m) {
+        System.out.println("hi");
         AppUser currentUser=appUserRepository.findAppUserByUsername(p.getName());
-      int javaCriteriaCounter=0;
-        int techCriteriaCounter=0;
-        for (int i = 0; i < currentUser.javaCriteria.length; i++) {
-            if(currentUser.javaCriteria[i])
-                javaCriteriaCounter++;
-        }
 
-        for (int i = 0; i < currentUser.techCriteria.length; i++) {
-            if(currentUser.techCriteria[i])
-                techCriteriaCounter++;
-        }
 
-        if(javaCriteriaCounter==0&&techCriteriaCounter==0)
-            return "redirect:/criteria";
+        if(!currentUser.isCheckJavaCriteria()&&!currentUser.isCheckTechCriteria())
+            return "redirect:/selectcriteria";
         else {
-            if (javaCriteriaCounter > 0 && techCriteriaCounter > 0)
+            if (currentUser.isCheckJavaCriteria() && currentUser.isCheckTechCriteria())
                 m.addAttribute("recomended", programsRepository.findAll());
-                else if (javaCriteriaCounter > 0 && techCriteriaCounter == 0)
-                m.addAttribute("recomended", programsRepository.findByCourseName("Java Boot Camp"));
-                else if (techCriteriaCounter > 0 && javaCriteriaCounter == 0)
+            else if (!currentUser.isCheckJavaCriteria()&& currentUser.isCheckTechCriteria())
                 m.addAttribute("recomended", programsRepository.findByCourseName("Tech Hire"));
-
+            else
+                 m.addAttribute("recomended", programsRepository.findByCourseName("Java Boot Camp"));
             return "recommendedlist";
         }
     }
@@ -133,8 +127,10 @@ public class MainController {
         Programs prog= programsRepository.findOne(id);
         AppUser appUser=appUserRepository.findAppUserByUsername(auth.getName());
         prog.addUserApplied(appUser);
+        prog.setNoofapplications(prog.getNoofapplications()+1);
         programsRepository.save(prog);
-        model.addAttribute("program", prog);
+        model.addAttribute("course",prog);
+        model.addAttribute("user", appUser);
         return "confirmationpage";
     }
     @RequestMapping("/enroll/{courseid}")
@@ -142,6 +138,7 @@ public class MainController {
         Programs prog= programsRepository.findOne(courseid);
         AppUser appUser=appUserRepository.findAppUserByUsername(auth.getName());
         prog.addUserInCourse(appUser);
+        prog.setNoofstudents(prog.getNoofstudents()+1);
         prog.removeUserApproved(appUser);
         programsRepository.save(prog);
         model.addAttribute("program", prog);
@@ -162,7 +159,8 @@ public class MainController {
         course.addUserApproved(applicant);
         course.removeUserApplied(applicant);
         programsRepository.save(course);
-        model.addAttribute("program", course);
+        model.addAttribute("user",applicant);
+        model.addAttribute("course", course);
 
         try{
             sendEmailWithoutTemplating(applicant.getUserEmail());
@@ -180,6 +178,7 @@ public class MainController {
         StringBuilder techString= new StringBuilder();
         if(appUser.techCriteria[0])
             techString.append("English Language Learner \n");
+        if(appUser.techCriteria[1])
             techString.append("Unemployed with barriers to employment \n");
         if(appUser.techCriteria[2])
             techString.append("Underemployed with barriers to better employment \n");
@@ -219,77 +218,26 @@ public class MainController {
     public String enrolledList(Model model){
         Programs java= programsRepository.findByCourseName("Java Boot Camp");
 
-        ArrayList<AppUser> javastudent= new ArrayList<>();
-        for(AppUser user:java.getUserInCourse())
-            javastudent.add(user);
-
-        Programs tech= programsRepository.findByCourseName("Tech Hire");
-
-        ArrayList<AppUser> techstudent= new ArrayList<>();
-        for(AppUser user:tech.getUserInCourse())
-            techstudent.add(user);
-
-        model.addAttribute("java",java);
-        model.addAttribute("javastudent",javastudent);
-
-        model.addAttribute("tech",tech);
-        model.addAttribute("techstudent",techstudent);
-
+        model.addAttribute("courses", programsRepository.findAll());
         return "enrolledlist";
     }
 
     @RequestMapping("/adminapprovedlist") //List of approved student, no button here
     public String adminApprovedList(Model model){
-   /*     Programs java= programsRepository.findByCourseName("Java Boot Camp");
-
-        ArrayList<AppUser> javastudent= new ArrayList<>();
-        for(AppUser user:java.getUserApproved())
-            javastudent.add(user);
-
-        Programs tech= programsRepository.findByCourseName("Tech Hire");
-
-        ArrayList<AppUser> techstudent= new ArrayList<>();
-        for(AppUser user:tech.getUserApproved())
-            techstudent.add(user);
-
-
-        model.addAttribute("java",java);
-        model.addAttribute("javastudent",javastudent);
-
-        model.addAttribute("tech",tech);
-        model.addAttribute("techstudent",techstudent);*/
         model.addAttribute("courses", programsRepository.findAll());
-
         return "adminapprovedlist";
     }
     @RequestMapping("/userapprovedlist") //List of courses approved for current user + button to enroll
     public String userApprovedList(Model model, Authentication auth){
         AppUser currentUser=appUserRepository.findAppUserByUsername(auth.getName());
         Iterable<Programs> approvedfor=programsRepository.findByUserApproved(currentUser);
-        //  System.out.println(approvedfor.getUserApproved());
         model.addAttribute("approvedfor",approvedfor);
         return "userapprovedlist";
     }
 
     @RequestMapping("/programslist")
     public String programList(Model model){
-
-        Programs java= programsRepository.findByCourseName("Java Boot Camp");
-        Programs tech= programsRepository.findByCourseName("Tech Hire");
-
-        int javaapplicant=appUserRepository.countAllByApplied(java);
-        int techapplicant=appUserRepository.countAllByApplied(tech);
-
-        int javaenrolled=appUserRepository.countAllByInCourse(java);
-        int techenrolled=appUserRepository.countAllByInCourse(tech);
-
-        model.addAttribute("java",java);
-        model.addAttribute("tech",tech);
-        model.addAttribute("noOfJavaApplicants",javaapplicant );
-        model.addAttribute("noOfTechApplicants",techapplicant );
-        model.addAttribute("noOfJavaEnrolled",javaenrolled );
-        model.addAttribute("noOfTechEnrolled",techenrolled );
-
+        model.addAttribute("courses", programsRepository.findAll());
         return "programslist";
     }
 
@@ -304,5 +252,4 @@ public class MainController {
 
         emailService.send(email);
     }
-
 }

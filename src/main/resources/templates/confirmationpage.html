@@ -11,12 +11,13 @@
 <div sec:authorize="hasAuthority ('USER')">
     <h1 style="text-align: center;color:dodgerblue">Confirmation</h1>
 
-    <th:block th:each="program:${program}">
-        <div th:each="user:${program.userApplied}" >
-            <h3 th:inline="text" style="text-align: center">Hey [[${user.username}]], you have applied for [[${program.courseName}]]
+
+        <div th:each="user:${user}" >
+            <div th:each="course:${course}"
+            <h3 th:inline="text" style="text-align: center">Hey [[${user.username}]], you have applied for [[${course.courseName}]]
                 we will contact you back soon via your email.</h3>
         </div>
-    </th:block>
+
     <div sec:authorize="hasAuthority ('ADMIN')">
         <h1>the below applicant is approved for the following course ....email</h1>
 

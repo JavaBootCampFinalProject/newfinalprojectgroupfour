@@ -269,7 +269,7 @@ public class AppUser {
             if (techqual)
                 return true;
         }
-        return false;
+        return techqual;
     }
 
     public boolean isCheckJavaCriteria() {
@@ -281,12 +281,11 @@ public class AppUser {
         this.javaCriteria[5]=this.isCriteriaWorkInUs();
         boolean javaqual=false;
 
-
         for (int i = 0; i < this.javaCriteria.length; i++) {
             javaqual=this.javaCriteria[i];
             if(javaqual)
                 return true;
         }
-        return false;
+        return javaqual;
     }
 }

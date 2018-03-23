@@ -25,6 +25,9 @@ public class Programs {
     @ManyToMany(fetch = FetchType.EAGER)
     private Set<AppUser> userInCourse;
 
+    private int noofapplications=0;
+    private int noofstudents=0;
+
     public void addUserApplied(AppUser user) {this.userApplied.add(user);}
     public void addUserApproved(AppUser user) {this.userApproved.add(user);}
     public void addUserInCourse(AppUser user) {this.userInCourse.add(user);}
@@ -94,4 +97,12 @@ public class Programs {
     public void setUserInCourse(Set<AppUser> userInCourse) {
         this.userInCourse = userInCourse;
     }
+
+    public int getNoofapplications() { return noofapplications; }
+
+    public void setNoofapplications(int noofapplications) { this.noofapplications = noofapplications; }
+
+    public int getNoofstudents() { return noofstudents; }
+
+    public void setNoofstudents(int noofstudents) {this.noofstudents = noofstudents;  }
 }

@@ -10,13 +10,8 @@
 <div sec:authorize="hasAuthority ('ADMIN')">
     <h1>User Qualifications</h1>
 
-
-
-
-
         <div th:utext="${#strings.replace(techqualification,newLineChar, '&lt;br /&gt;')}">
         </div>
-
     <div th:utext="${#strings.replace(javaqualification,newLineChar, '&lt;br /&gt;')}">
     </div>
 

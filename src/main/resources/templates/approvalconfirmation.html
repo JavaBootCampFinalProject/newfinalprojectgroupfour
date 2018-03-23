@@ -8,14 +8,13 @@
 <body>
 
 <div sec:authorize="hasAuthority ('ADMIN')">
-    <h1>the below applicant is approved for the following course ....email</h1>
 
-    <th:block th:each="program:${program}">
-        <div th:each="user:${program.userApproved}" >
-            <span th:inline="text">[[${user.username}]]      [[${program.courseName}]]
+    <div th:object="${user}">
+        <div th:object="${course}" >
+            <span th:inline="text"> [[${user.username}]] is are approved for [[${course.courseName}]] and email sent!
 								</span>
         </div>
-    </th:block>
+    </div>
 </div>
 
 <th:block th:replace="base::footer"></th:block>
