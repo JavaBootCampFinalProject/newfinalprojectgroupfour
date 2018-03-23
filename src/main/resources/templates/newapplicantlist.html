@@ -14,7 +14,7 @@
 
 
 
-    <h1>List of Applicants</h1>
+<h1>List of Applicants</h1>
 <div >
     <table id="keywords" cellspacing="0" cellpadding="0" style="width:100%">
         <thead  style="text-align: center">
@@ -25,24 +25,21 @@
             <th><span>Action</span></th>
         </tr>
         </thead>
-        <tbody>
-        <th:block th:object="${java}">
-        <tr th:each="user:${javaapplicant}">
-            <td th:text="${user.username}"></td>
-            <td th:text="${java.courseName}"></td>
-            <th> <a th:href="@{/qualification/{applicantid} (applicantid = ${user.id})}">   Qualifications </a></th>
-            <th> <a th:href="@{/approve/ (applicantid = ${user.id}), (courseid = ${java.id})}">   Approve </a></th>
-        </tr>
-        </th:block>
+        <tbody  th:each="course:${courses}">
 
-        <th:block th:object="${tech}">
-            <tr th:each="user:${techapplicant}">
+            <tr th:each="user:${course.userApplied}">
                 <td th:text="${user.username}"></td>
-                <td th:text="${tech.courseName}"></td>
-                <th> <a th:href="@{/qualification/{applicantid} (applicantid = ${user.id})}">   Qualifications </a></th>
-                <th> <a th:href="@{/approve/(applicantid = ${user.id}), (courseid = ${tech.id})}">   Approve </a></th>
+                <td th:text="${course.courseName}"></td>
+                <td> <a th:href="@{/qualification/{applicantid} (applicantid = ${user.id})}">   Qualifications </a></td>
+                <!--th:href="@{/classesTable/saveProfessor/{professorId}/{classesId} (professorId=${professor.id}, classesId=${classes.id})}"-->
+
+                <!--<a th:href="@{/fleetcompany/workorders/proposals/selected/{id}/{id2}(id=${proposal.‌​bidID}, id2=${proposal.woNumber})}">SELECT</a>.-->
+
+                <td> <a th:href="@{/approve/{courseid}/{applicantid}(courseid=${course.id},applicantid=${user.id})}">   Approve </a></td>
             </tr>
-        </th:block>
+
+
+
 
         </tbody>
     </table>

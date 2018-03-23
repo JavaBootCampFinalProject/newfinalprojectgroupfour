@@ -1,8 +1,6 @@
 package com.example.demo;
 
 import com.google.common.collect.Lists;
-
-
 import it.ozimov.springboot.mail.model.Email;
 import it.ozimov.springboot.mail.model.defaultimpl.DefaultEmail;
 import it.ozimov.springboot.mail.service.EmailService;
@@ -12,16 +10,17 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
-
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import javax.mail.internet.InternetAddress;
+import javax.servlet.http.HttpServletRequest;
 import javax.validation.Valid;
 import java.io.UnsupportedEncodingException;
 import java.security.Principal;
 import java.util.ArrayList;
-
 @Controller
 public class MainController {
+
     @Autowired
     AppRoleRepository appRoleRepository;
 
@@ -85,12 +84,8 @@ public class MainController {
 
     @GetMapping("/criteria")
     public String getCriteriaForm(Model model, Authentication auth) {
-//        if(auth.name()==null)
-//            return "redirect:/login";
-
         AppUser thisUser=appUserRepository.findAppUserByUsername(auth.getName());
         System.out.println(auth.getName());
-//        appUserRepository.save(thisUser);
         model.addAttribute("appUserCriteriaform", thisUser);
         return "criteriaform";
     }
@@ -130,8 +125,8 @@ public class MainController {
                 break;
         }
 
-        if(!techqual&&!javaqual)
-            return "redirect:/criteria";
+//        if(!techqual&&!javaqual)
+//            return "redirect:/criteria";
         appUserRepository.save(appUser);
 
         return "redirect:/recommendedlist";
@@ -140,11 +135,7 @@ public class MainController {
     @RequestMapping("/recommendedlist")
     public String recomendedList(Principal p, Model m) {
         AppUser currentUser=appUserRepository.findAppUserByUsername(p.getName());
-//        if(thisUser.isCriteriaEnglish() && thisUser.isCriteriaUnemployed()&&thisUser.isCriteriaCompSciMajor()&&
-//                thisUser.isCriteriaComputerComfortable()&&thisUser.isCriteriaCurrentEarnings()&&thisUser.isCriteriaWorkInUs()
-//                &&thisUser.isCriteriaDiploma()&&thisUser.isCriteriaExperienceOOP()&&thisUser.isCriteriaItInterest()&&
-//
-//         thisUser.isCriteriaRecentGraduate()&&thisUser.isCriteriaUnderstandOOP()&&thisUser.isCriteriaUnderEmployed())
+
         int javaCriteriaCounter=0;
         int techCriteriaCounter=0;
         for (int i = 0; i < currentUser.javaCriteria.length; i++) {
@@ -157,7 +148,6 @@ public class MainController {
                 techCriteriaCounter++;
         }
         int criteriano=2;
-//        String errormessage="Please Select your skills!";
         if(javaCriteriaCounter<criteriano&&techCriteriaCounter<criteriano)
             return "redirect:/criteria";
         else {
@@ -195,31 +185,22 @@ public class MainController {
 
     @RequestMapping("/applicantlist")
     public String applicantLis(  Model model) {
-        Programs java= programsRepository.findByCourseName("Java Boot Camp");
-
-        ArrayList<AppUser> javaapplicant= new ArrayList<>();
-        for(AppUser user:java.getUserApplied())
-            javaapplicant.add(user);
-
-        Programs tech= programsRepository.findByCourseName("Tech Hire");
-
-        ArrayList<AppUser> techapplicant= new ArrayList<>();
-        for(AppUser user:tech.getUserApplied())
-            techapplicant.add(user);
-
-        model.addAttribute("java",java);
-        model.addAttribute("javaapplicant",javaapplicant);
-
-        model.addAttribute("tech",tech);
-        model.addAttribute("techapplicant",techapplicant);
-
-        return "applicantlist";
+        model.addAttribute("courses", programsRepository.findAll());
+        return "newapplicantlist";
     }
 
-    @RequestMapping("/approve/{applicantid}")
-    public String approvePage(@PathVariable("applicantid") long applicantid, Model model, Principal p) {
-        AppUser applicant= appUserRepository.findOne(applicantid);
-        Programs course = programsRepository.findByUserApplied(applicant);
+
+
+
+
+    @GetMapping("/approve/{courseid}/{applicantid}")
+    public String approvePage(Model model,
+                              final RedirectAttributes redirectAttributes,
+                              @PathVariable("courseid") long courseid
+            ,@PathVariable("applicantid") long applicantid){
+        Programs course = programsRepository.findOne(new Long(courseid).longValue());
+        AppUser applicant= appUserRepository.findOne(new Long(applicantid).longValue());
+
         course.addUserApproved(applicant);
         programsRepository.save(course);
         model.addAttribute("program", course);
@@ -233,24 +214,6 @@ public class MainController {
         }
         return "approvalconfirmation";
     }
-
-//    @RequestMapping("/approve/{applicantid}/{programid}")
-//    public String approvePage(@PathVariable("applicantid") long applicantid, Model model, Principal p) {
-//        AppUser applicant= appUserRepository.findOne(applicantid);
-//        Programs course = programsRepository.findByUserApplied(applicant);
-//        course.addUserApproved(applicant);
-//        programsRepository.save(course);
-//        model.addAttribute("program", course);
-//        System.out.println(applicant.getUsername());
-//        System.out.println(applicant.getUserEmail());
-//
-//        try{
-//            sendEmailWithoutTemplating(applicant.getUserEmail());
-//        } catch (UnsupportedEncodingException e){
-//            System.out.println("unsupported Format");
-//        }
-//        return "approvalconfirmation";
-//    }
 
 
     @RequestMapping("/qualification/{applicantid}")
@@ -348,7 +311,6 @@ public class MainController {
     public String userApprovedList(Model model, Authentication auth){
         AppUser currentUser=appUserRepository.findAppUserByUsername(auth.getName());
         Programs approvedfor=programsRepository.findByUserApproved(currentUser);
-        //  System.out.println(approvedfor.getUserApproved());
         model.addAttribute("approvedfor",approvedfor);
         return "userapprovedlist";
     }
@@ -383,12 +345,13 @@ public class MainController {
         final Email email =  DefaultEmail.builder()
                 .from(new InternetAddress("mcjavabootcamp@gmail.com", "ba bute "))
                 .to(Lists.newArrayList(new InternetAddress(useremail, "Pomponius Attĭcus")))
-                .subject("Laelius de amicitia")
-                .body("You are approved for the course you applied... " +
-                        "reply soon if u want to enroll!!!")
+                .subject("Admission")
+                .body("Hello, you have been approved for the course you applied to... " +
+                        "please confirm back as soon as possible to enroll in the course!!!")
                 .encoding("UTF-8").build();
 
         emailService.send(email);
     }
+
 
 }
