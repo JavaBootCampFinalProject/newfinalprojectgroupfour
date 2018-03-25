@@ -7,13 +7,10 @@
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous"/>
     <link rel="stylesheet" href="css/liststylesheet.css">
     <link rel="stylesheet" href="../static/css/liststylesheet.css">
-
+</head>
 <body>
 
 <th:block th:replace="base::navlinks"></th:block>
-
-
-
 <h1>List of Applicants</h1>
 <div >
     <table id="keywords" cellspacing="0" cellpadding="0" style="width:100%">
@@ -31,28 +28,12 @@
                 <td th:text="${user.username}"></td>
                 <td th:text="${course.courseName}"></td>
                 <td> <a th:href="@{/qualification/{applicantid} (applicantid = ${user.id})}">   Qualifications </a></td>
-                <!--th:href="@{/classesTable/saveProfessor/{professorId}/{classesId} (professorId=${professor.id}, classesId=${classes.id})}"-->
-
-                <!--<a th:href="@{/fleetcompany/workorders/proposals/selected/{id}/{id2}(id=${proposal.‌​bidID}, id2=${proposal.woNumber})}">SELECT</a>.-->
-
                 <td> <a th:href="@{/approve/{courseid}/{applicantid}(courseid=${course.id},applicantid=${user.id})}">   Approve </a></td>
             </tr>
-
-
-
-
         </tbody>
     </table>
 </div>
-
-
-
-
-
 <th:block th:replace="base::footer"></th:block>
-
-
 <th:block th:replace="base::js"></th:block>
-
 </body>
 </html>

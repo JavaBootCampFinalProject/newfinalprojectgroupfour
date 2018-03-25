@@ -5,15 +5,18 @@
     <meta charset="UTF-8" />
     <title>Base</title>
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous"/>
+</head>
 <body>
+<th:block th:replace="base::navlinks"></th:block>
 
-<div sec:authorize="hasAuthority ('ADMIN')">
-    <h1>User Qualifications</h1>
+<div sec:authorize="hasAuthority ('ADMIN')" style="text-align: center">
+    <h1>User Qualifications for Techhire</h1>
 
-        <div th:utext="${#strings.replace(techqualification,newLineChar, '&lt;br /&gt;')}">
-        </div>
-    <div th:utext="${#strings.replace(javaqualification,newLineChar, '&lt;br /&gt;')}">
-    </div>
+
+    <p th:text="${techqualification}">&bull;</p><br/>
+    <h1>User Qualifications for Java Bootcamp</h1>
+    <p th:text="${javaqualification}">&bull;</p><br/>
+
 
 </div>
 
