@@ -41,6 +41,7 @@ public class MainController {
 
     @GetMapping("/login")
     public String login() {
+
         return "login";
     }
 
@@ -100,7 +101,9 @@ public class MainController {
     }
 
     @RequestMapping("/selectcriteria")
-    public String selectCriteria() {
+    public String selectCriteria(Model m, Authentication auth) {
+        AppUser appUser= appUserRepository.findAppUserByUsername(auth.getName());
+        m.addAttribute("user", appUser);
         return "selectcriteria";
     }
 
@@ -316,6 +319,7 @@ public class MainController {
     }
     @RequestMapping("/edit/{id}")
     public String editlostItem(@PathVariable("id") long id, Model model){
+
 
          AppUser appUser = appUserRepository.findOne(id);
         model.addAttribute("appUserCriteriaform", appUser);

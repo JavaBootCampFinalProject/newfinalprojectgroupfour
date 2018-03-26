@@ -11,9 +11,9 @@
 
 <div th:object="${appUserCriteriaform}">
     <h1 style="text-align: center">User Qualifications for Techhire</h1>
-    <div th:utext="${#strings.replace(techqualification,newLineChar, '&lt;br /&gt;')}" style="text-align: center">&bull;</div>
+    <div th:utext="${#strings.replace(techqualification,newLineChar, '&lt;br /&gt;')}" style="text-align: center"></div>
     <h1 style="text-align: center">User Qualifications for Java Bootcamp</h1>
-    <div th:utext="${#strings.replace(javaqualification,newLineChar, '&lt;br /&gt;')}" style="text-align: center">&bull;</div>
+    <div &bull; th:utext="${#strings.replace(javaqualification,newLineChar, '&lt;br /&gt;')}" style="text-align: center"></div>
 
 
 <div sec:authorize="hasAnyAuthority('USER')"><a  th:href="@{/edit/{id} (id=${appUserCriteriaform.id})}">Edit Qualifications</a></div>

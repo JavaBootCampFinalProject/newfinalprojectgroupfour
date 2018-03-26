@@ -14,7 +14,7 @@
 
 
         <div th:each="user:${user}" >
-            <div th:each="course:${course}"
+            <div th:each="course:${course}">
             <h3 th:inline="text" style="text-align: center">Hey [[${user.username}]], you have applied for [[${course.courseName}]]
                 we will contact you back soon via your email.</h3>
         </div>

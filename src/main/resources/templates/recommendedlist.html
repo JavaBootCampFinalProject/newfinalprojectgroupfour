@@ -11,15 +11,15 @@
 <th:block th:replace="base::navlinks"></th:block>
 <h1>List of Recommended Programs</h1>
 <div >
-    <table id="keywords" cellspacing="0" cellpadding="0" style="width:100%">
-        <thead  style="text-align: center">
+    <table id="keywords" cellspacing="0" cellpadding="0" style="width:30%" style="text-align: center">
+        <thead style="text-align: left">
 
-        <tr >
+        <tr>
             <th><span>Program </span></th>
             <th><span>Action</span></th>
         </tr>
         </thead>
-        <tbody>
+        <tbody style="text-align: left">
 
         <tr th:each="program:${recomended}">
             <td th:text="${program.courseName}"></td>
