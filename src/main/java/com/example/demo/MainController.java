@@ -106,10 +106,8 @@ public class MainController {
 
     @RequestMapping("/recommendedlist")
     public String recomendedList(Principal p, Model m) {
-        System.out.println("hi");
         AppUser currentUser=appUserRepository.findAppUserByUsername(p.getName());
-
-
+        
         if(!currentUser.isCheckJavaCriteria()&&!currentUser.isCheckTechCriteria())
             return "redirect:/selectcriteria";
         else {

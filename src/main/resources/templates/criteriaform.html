@@ -30,65 +30,61 @@
                     <input type="hidden" th:field="*{fullName}"/>
                     <input type="hidden" th:field="*{roles}"/>
                     <div class="checkbox">
-                        <label><input type="checkbox" value="true" name="criteriaEnglish"><span class=paddingTopics>English Language Learner</span></label>
-                    </div>
-                    <div class="checkbox">
-                        <label><input type="checkbox" value="true" name="criteriaUnemployed"><span class=paddingTopics>Unemployed with barriers to employment</span>
-                        </label>
+                        <div th:if="${appUserCriteriaform.criteriaEnglish}"><label><input type="checkbox" value="true" name="criteriaEnglish" checked><span class=paddingTopics>English Language Learner</span></label></div>
+                        <div th:unless="${appUserCriteriaform.criteriaEnglish}"><label><input type="checkbox" value="true" name="criteriaEnglish"><span class=paddingTopics>English Language Learner</span></label></div>
                     </div>
 
                     <div class="checkbox">
-                        <label><input type="checkbox" value="true" name="criteriaUnderEmployed"><span class=paddingTopics>Underemployed with barriers to better employment</span></label>
-                    </div>
-
-                    <div class="checkbox">
-                        <label><input type="checkbox" value="true" name="criteriaComputerComfortable"><span class=paddingTopics>Be comfortable using computers for everyday purposes</span></label>
-                    </div>
-
-                    <div class="checkbox ">
-                        <label><input type="checkbox" value="true" name="criteriaItInterest"><span class=paddingTopics>Have a strong interest in an IT career</span></label>
+                        <div th:if="${appUserCriteriaform.criteriaUnemployed}"><label><input type="checkbox" value="true" name="criteriaUnemployed" checked><span class=paddingTopics>Unemployed with barriers to employment</span></label></div>
+                        <div th:unless="${appUserCriteriaform.criteriaUnemployed}"><label><input type="checkbox" value="true" name="criteriaUnemployed"><span class=paddingTopics>Unemployed with barriers to employment</span></label></div>
                     </div>
                     <div class="checkbox">
-                        <label><input type="checkbox" value="true" name="criteriaDiploma"><span class=paddingTopics>Have a high school diploma or GED</span></label>
+                        <div th:if="${appUserCriteriaform.criteriaUnderEmployed}"><label><input type="checkbox" value="true" name="criteriaUnderEmployed" checked><span class=paddingTopics>Underemployed with barriers to better employment</span></label></div>
+                        <div th:unless="${appUserCriteriaform.criteriaUnderEmployed}"><label><input type="checkbox" value="true" name="criteriaUnderEmployed"><span class=paddingTopics>Underemployed with barriers to better employment</span></label></div>
                     </div>
-
-                    <div class="checkbox ">
-                        <label><input type="checkbox" value="true" name="criteriaWorkInUs"><span class=paddingTopics>Be able to work in the United States</span></label>
+                    <div class="checkbox">
+                        <div th:if="${appUserCriteriaform.criteriaComputerComfortable}"><label><input type="checkbox" value="true" name="criteriaComputerComfortable" checked><span class=paddingTopics>Be comfortable using computers for everyday purposes</span></label></div>
+                        <div th:unless="${appUserCriteriaform.criteriaComputerComfortable}"><label><input type="checkbox" value="true" name="criteriaComputerComfortable"><span class=paddingTopics>Be comfortable using computers for everyday purposes</span></label></div>
                     </div>
-
+                    <div class="checkbox">
+                        <div th:if="${appUserCriteriaform.criteriaItInterest}"><label><input type="checkbox" value="true" name="criteriaItInterest" checked><span class=paddingTopics>Have a strong interest in an IT career</span></label></div>
+                        <div th:unless="${appUserCriteriaform.criteriaItInterest}"><label><input type="checkbox" value="true" name="criteriaItInterest"><span class=paddingTopics>Have a strong interest in an IT career</span></label></div>
+                    </div>
+                    <div class="checkbox">
+                        <div th:if="${appUserCriteriaform.criteriaDiploma}"><label><input type="checkbox" value="true" name="criteriaDiploma" checked><span class=paddingTopics>Have a high school diploma or GED</span></label></div>
+                        <div th:unless="${appUserCriteriaform.criteriaDiploma}"><label><input type="checkbox" value="true" name="criteriaDiploma"><span class=paddingTopics>Have a high school diploma or GED</span></label></div>
+                    </div>
+                    <div class="checkbox">
+                        <div th:if="${appUserCriteriaform.criteriaWorkInUs}"><label><input type="checkbox" value="true" name="criteriaWorkInUs" checked><span class=paddingTopics>Be able to work in the United States</span></label></div>
+                        <div th:unless="${appUserCriteriaform.criteriaWorkInUs}"><label><input type="checkbox" value="true" name="criteriaWorkInUs"><span class=paddingTopics>Be able to work in the United States</span></label></div>
+                    </div>
                 </div>
-
-
                 <div class=col>
                     <h1>Promising the Future</h1>
 
-
                     <div class="checkbox">
-                        <label><input type="checkbox" value="true" name="criteriaUnderstandOOP"><span class=paddingTopics>Basic understanding of object oriented language</span></label>
+                        <div th:if="${appUserCriteriaform.criteriaUnderstandOOP}"><label><input type="checkbox" value="true" name="criteriaUnderstandOOP" checked><span class=paddingTopics>Basic understanding of object oriented language</span></label></div>
+                        <div th:unless="${appUserCriteriaform.criteriaUnderstandOOP}"><label><input type="checkbox" value="true" name="criteriaUnderstandOOP"><span class=paddingTopics>Basic understanding of object oriented language</span></label></div>
                     </div>
-
                     <div class="checkbox">
-                        <label><input type="checkbox" value="true" name="criteriaExperienceOOP"><span class=paddingTopics>Previous experience with an object-oriented language</span></label>
+                        <div th:if="${appUserCriteriaform.criteriaExperienceOOP}"><label><input type="checkbox" value="true" name="criteriaExperienceOOP" checked><span class=paddingTopics>Previous experience with an object-oriented language</span></label></div>
+                        <div th:unless="${appUserCriteriaform.criteriaExperienceOOP}"><label><input type="checkbox" value="true" name="criteriaExperienceOOP"><span class=paddingTopics>Previous experience with an object-oriented language</span></label></div>
                     </div>
-
                     <div class="checkbox">
-                        <label><input type="checkbox" value="true" name="criteriaCompSciMajor"><span class=paddingTopics>Major in Computer Science/Information Systems</span></label>
+                        <div th:if="${appUserCriteriaform.criteriaCompSciMajor}"><label><label><input type="checkbox" value="true" name="criteriaCompSciMajor" checked><span class=paddingTopics>Major in Computer Science/Information Systems</span></label></div>
+                        <div th:unless="${appUserCriteriaform.criteriaCompSciMajor}"><label><input type="checkbox" value="true" name="criteriaCompSciMajor"><span class=paddingTopics>Major in Computer Science/Information Systems</span></label></div>
                     </div>
-
-
-                    <div class="checkbox ">
-                        <label><input type="checkbox" value="true" name="criteriaRecentGraduate"><span class=paddingTopics>Graduated within the last 6 years</span></label>
-                    </div>
-
-
                     <div class="checkbox">
-                        <label><input type="checkbox" value="true" name="criteriaCurrentEarnings"><span class=paddingTopics>Currently earning $42,000 or less</span></label>
+                        <div th:if="${appUserCriteriaform.criteriaRecentGraduate}"><label><input type="checkbox" value="true" name="criteriaRecentGraduate" checked><span class=paddingTopics>Graduated within the last 6 years</span></label></div>
+                        <div th:unless="${appUserCriteriaform.criteriaRecentGraduate}"><label><input type="checkbox" value="true" name="criteriaRecentGraduate"><span class=paddingTopics>Graduated within the last 6 years</span></label></div>
                     </div>
-
-                </div>
-
+                    <div class="checkbox">
+                        <div th:if="${appUserCriteriaform.criteriaCurrentEarnings}"><label><input type="checkbox" value="true" name="criteriaCurrentEarnings" checked><span class=paddingTopics>Currently earning $42,000 or less</span></label></div>
+                        <div th:unless="${appUserCriteriaform.criteriaCurrentEarnings}"><label><input type="checkbox" value="true" name="criteriaCurrentEarnings"><span class=paddingTopics>Currently earning $42,000 or less</span></label></div>
+                    </div>
                 </div>
             </div>
+        </div>
 
 
 <div style="text-align:-moz-center">
