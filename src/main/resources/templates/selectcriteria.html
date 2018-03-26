@@ -8,9 +8,9 @@
 <body>
 <th:block th:replace="base::navlinks"></th:block>
 <div th:each="user:${user}" style="text-align: center ;padding-top:5%">
-            <h4 th:inline="text"> [[${user.username}]] Please select one or more of the criterias....
+    <h3 th:inline="text"> Hello <strong>[[${user.username}]]</strong>, Please select one or more of the criterias....
                 <a th:href="@{/criteria}">Go Back</a>
-								</h4>
+								</h3>
 </div>
 
 <th:block th:replace="base::footer"></th:block>

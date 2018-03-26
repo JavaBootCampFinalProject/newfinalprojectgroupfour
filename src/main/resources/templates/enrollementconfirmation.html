@@ -7,29 +7,18 @@
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous"/>
 </head>
 <body>
-
 <th:block th:replace="base::navlinks"></th:block>
-
-    <h1>You Are Enrolled suceessfully...For below Program.</h1>
+<h1 style="text-align: center;color:dodgerblue">Confirmation</h1>
+<div style="text-align:center;padding-top: 5%">
 
     <div th:each="program:${program}">
 
-   <span th:inline="text"><h3>Welcome! [[${#authentication.name}]], You Are Enrolled suceessfully for [[${program.courseName}]]</h3>
+        <span th:inline="text"><h3>Hello <strong>[[${#authentication.name}]]</strong>, You are Enrolled suceessfully for <strong>[[${program.courseName}]].</strong></h3>
 								</span>
 
     </div>
-    <!--<p>Welcome!! </p>-->
-    <!--<div sec:authorize="hasAuthority ('ADMIN')">-->
-        <!--<h1>the below applicant is approved for the following course ....email</h1>-->
 
-        <!--<th:block th:each="program:${program}">-->
-            <!--<div th:each="user:${program.userApproved}" >-->
-   <!--<span th:inline="text">[[${user.username}]]      [[${program.courseName}]]-->
-								<!--</span>-->
-            <!--</div>-->
-        <!--</th:block>-->
-    <!--</div>-->
-
+</div>
     <th:block th:replace="base::footer"></th:block>
     <th:block th:replace="base::js"></th:block>
 

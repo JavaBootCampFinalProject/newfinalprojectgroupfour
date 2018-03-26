@@ -7,12 +7,12 @@
 </head>
 <body>
 <th:block th:replace="base::navlinks"></th:block>
+<h1 style="text-align: center;color:dodgerblue">Confirmation</h1>
 <div sec:authorize="hasAuthority ('ADMIN')">
 
     <div th:object="${user}">
-        <div th:object="${course}" >
-            <span th:inline="text"> [[${user.username}]] is are approved for [[${course.courseName}]] and email sent!
-								</span>
+        <div th:object="${course}" style="text-align: center">
+            <h3 th:inline="text" style="padding-top: 5%"> <strong>[[${user.username}]]</strong> is approved for <strong>[[${course.courseName}]]</strong> and  an email has been sent.</h3>
         </div>
     </div>
 </div>

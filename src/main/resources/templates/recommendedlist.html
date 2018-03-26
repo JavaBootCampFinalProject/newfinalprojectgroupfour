@@ -9,9 +9,9 @@
 </head>
 <body>
 <th:block th:replace="base::navlinks"></th:block>
-<h1>List of Recommended Programs</h1>
+<h1 style="text-align: center;color:dodgerblue">List of Recommended Programs</h1>
 <div >
-    <table id="keywords" cellspacing="0" cellpadding="0" style="width:30%" style="text-align: center">
+    <table id="keywords" cellspacing="0" cellpadding="0" style="width:40%" style="text-align: center">
         <thead style="text-align: left">
 
         <tr>
@@ -22,10 +22,14 @@
         <tbody style="text-align: left">
 
         <tr th:each="program:${recomended}">
+            <div th:object="${user}">
             <td th:text="${program.courseName}"></td>
-            <td><a th:href="@{/apply/{id}(id = ${program.id})}">Apply</a></td>
+            <td th:if="${#lists.contains(program.userApplied,user)}"> Applied</td>
+            <td th:if="${#lists.contains(program.userApproved,user)}"> Approved</td>
+           <td th:if="${#lists.contains(program.userInCourse,user)}"> Enrolled</td>
+            <td th:if="!(${#lists.contains(program.userApplied,user)}) and !(${#lists.contains(program.userInCourse,user)}) and !(${#lists.contains(program.userApproved,user)})"><a th:href="@{/apply/{id}(id = ${program.id})}">Apply</a></td>
+            </div>
         </tr>
-
         </tbody>
     </table>
 </div>

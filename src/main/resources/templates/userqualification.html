@@ -10,17 +10,24 @@
 <th:block th:replace="base::navlinks"></th:block>
 
 <div th:object="${appUserCriteriaform}">
-    <h1 style="text-align: center">User Qualifications for Techhire</h1>
-    <div th:utext="${#strings.replace(techqualification,newLineChar, '&lt;br /&gt;')}" style="text-align: center"></div>
-    <h1 style="text-align: center">User Qualifications for Java Bootcamp</h1>
-    <div &bull; th:utext="${#strings.replace(javaqualification,newLineChar, '&lt;br /&gt;')}" style="text-align: center"></div>
+    <h1 style="text-align: left;padding-left:30%">User Qualifications for Techhire</h1><br/>
+    <div th:utext="${#strings.replace(techqualification,newLineChar, '&lt;br /&gt;')}" style="text-align: left;padding-left:30%"></div><br/>
+    <h1 style="text-align: left;padding-left:30%">User Qualifications for Java Bootcamp</h1><br/>
+    <div &bull; th:utext="${#strings.replace(javaqualification,newLineChar, '&lt;br /&gt;')}" style="text-align: left;padding-left:30%"></div><br/>
 
 
-<div sec:authorize="hasAnyAuthority('USER')"><a  th:href="@{/edit/{id} (id=${appUserCriteriaform.id})}">Edit Qualifications</a></div>
+<div sec:authorize="hasAnyAuthority('USER')" style="text-align: left;padding-left:30%"><a th:href="@{/edit/{id} (id=${appUserCriteriaform.id})}" class="btn btn-success"><i class="fa fa-arrow-circle-o-left"></i>&nbsp;Edit Qualification</a></div>
 </div>
+
 </div>
 <th:block th:replace="base::footer"></th:block>
 <th:block th:replace="base::js"></th:block>
+
+<link href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" rel="stylesheet"/>
+<link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet"/>
+
+
+<!--<a href="@Url.Action("Index")" class="btn btn-success"> <i class="fa fa-arrow-circle-o-left"></i>&nbsp;Back to List</a>-->
 
 </body>
 </html>

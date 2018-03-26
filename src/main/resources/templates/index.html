@@ -31,7 +31,11 @@
 <div class="overlay text-center">
     <h1 class="landingPageText ">Java Bootcamp</h1>
     <div class="buttonSpacer"></div>
-    <a href="/criteria" class="btn btn-outline-* btn-lg text-center pull-center appButton">Join Now!</a>
+    <a sec:authorize="isAnonymous()"href="/login" class="btn btn-outline-* btn-lg text-center pull-center appButton">Join Now!</a>
+    <a sec:authorize="hasAuthority('USER')"href="/criteria" class="btn btn-outline-* btn-lg text-center pull-center appButton">Apply Now!</a>
+
+
+
 </div>
 
 

@@ -14,19 +14,19 @@
 
 
 
-<h1>List of Programs</h1>
+<h1 style="text-align: center;color:dodgerblue">List of Approved Programs</h1>
 <div >
-    <table id="keywords" cellspacing="0" cellpadding="0" style="width:100%">
+    <table id="keywords" cellspacing="0" cellpadding="0" style="width:40%">
         <thead  style="text-align: center">
         <tr>
             <th><span>Program</span></th>
             <th><span>Action</span></th>
         </tr>
         </thead>
-        <tbody>
+        <tbody style="text-align: center">
             <tr th:each="program:${approvedfor}">
                 <td th:text="${program.courseName}"></td>
-                <th> <a th:href="@{/enroll/{courseid} (courseid = ${program.id})}">   Enroll </a></th>
+                <td> <a th:href="@{/enroll/{courseid} (courseid = ${program.id})}">Enroll </a></td>
             </tr>
 
 

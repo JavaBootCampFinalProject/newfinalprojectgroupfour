@@ -113,7 +113,9 @@ public class MainController {
         
         if(!currentUser.isCheckJavaCriteria()&&!currentUser.isCheckTechCriteria())
             return "redirect:/selectcriteria";
+
         else {
+            m.addAttribute("user", currentUser);
             if (currentUser.isCheckJavaCriteria() && currentUser.isCheckTechCriteria())
                 m.addAttribute("recomended", programsRepository.findAll());
             else if (!currentUser.isCheckJavaCriteria()&& currentUser.isCheckTechCriteria())
@@ -324,4 +326,7 @@ public class MainController {
 
         return "criteriaform";
     }
+
+
+
 }
