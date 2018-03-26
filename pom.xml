@@ -98,6 +98,11 @@
 			<artifactId>spring-context</artifactId>
 			<version>4.3.13.RELEASE</version>
 		</dependency>
+		<dependency>
+			<groupId>org.postgresql</groupId>
+			<artifactId>postgresql</artifactId>
+			<version>9.4-1201-jdbc4</version>
+		</dependency>
 	</dependencies>
 
 	<build>
