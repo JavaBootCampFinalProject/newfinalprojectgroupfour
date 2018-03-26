@@ -9,17 +9,16 @@
 <body>
 <th:block th:replace="base::navlinks"></th:block>
 
-<div sec:authorize="hasAuthority ('ADMIN')" style="text-align: center">
-    <h1>User Qualifications for Techhire</h1>
+<div th:object="${appUserCriteriaform}">
+    <h1 style="text-align: center">User Qualifications for Techhire</h1>
+    <div th:utext="${#strings.replace(techqualification,newLineChar, '&lt;br /&gt;')}" style="text-align: center">&bull;</div>
+    <h1 style="text-align: center">User Qualifications for Java Bootcamp</h1>
+    <div th:utext="${#strings.replace(javaqualification,newLineChar, '&lt;br /&gt;')}" style="text-align: center">&bull;</div>
 
 
-    <p th:text="${techqualification}">&bull;</p><br/>
-    <h1>User Qualifications for Java Bootcamp</h1>
-    <p th:text="${javaqualification}">&bull;</p><br/>
-
-
+<div sec:authorize="hasAnyAuthority('USER')"><a  th:href="@{/edit/{id} (id=${appUserCriteriaform.id})}">Edit Qualifications</a></div>
 </div>
-
+</div>
 <th:block th:replace="base::footer"></th:block>
 <th:block th:replace="base::js"></th:block>
 

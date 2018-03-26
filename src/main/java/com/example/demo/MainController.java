@@ -93,6 +93,7 @@ public class MainController {
 
         if(!appUser.isCheckTechCriteria()&&!appUser.isCheckJavaCriteria())
             return "redirect:/selectcriteria";
+        saveappusercriteria(appUser);
        appUserRepository.save(appUser);
 
         return "redirect:/recommendedlist";
@@ -121,6 +122,50 @@ public class MainController {
             return "recommendedlist";
         }
     }
+
+
+    @RequestMapping("/myqualifications")
+    public String myQualification(Principal p, Model model) {
+        AppUser appUser=appUserRepository.findAppUserByUsername(p.getName());
+
+        StringBuilder javaString=new StringBuilder();
+        StringBuilder techString= new StringBuilder();
+        if(appUser.isCriteriaEnglish())
+            techString.append("English Language Learner \n");
+        if(appUser.isCriteriaUnemployed())
+            techString.append("Unemployed with barriers to employment \n");
+        if(appUser.isCriteriaUnderEmployed())
+            techString.append("Underemployed with barriers to better employment \n");
+        if(appUser.isCriteriaComputerComfortable())
+            techString.append("Be comfortable using computers for everyday purposes \n");
+        if(appUser.isCriteriaItInterest())
+            techString.append("Have a strong interest in an IT career \n");
+        if(appUser.isCriteriaDiploma())
+            techString.append("Have a high school diploma or GED \n");
+        if(appUser.isCriteriaWorkInUs())
+            techString.append("Be able to work in the United States \n").append("\n");
+
+        if(appUser.isCriteriaUnderstandOOP())
+            javaString.append("Basic understanding of object oriented language ").append("\n");
+        if(appUser.isCriteriaExperienceOOP())
+            javaString.append("Previous experience with an object-oriented language ").append("\n");
+        if(appUser.isCriteriaCompSciMajor())
+            javaString.append("Major in Computer Science/Information Systems ").append("\n");
+        if(appUser.isCriteriaRecentGraduate())
+            javaString.append("Graduated within the last 6 years ").append("\n");
+        if(appUser.isCriteriaCurrentEarnings())
+            javaString.append("Currently earning $42,000 or less ").append("\n");
+        if(appUser.isCriteriaWorkInUs())
+            javaString.append("Be able to work in the United States ").append("\n");
+        model.addAttribute("appUserCriteriaform",appUser);
+        model.addAttribute("newLineChar", '\n');
+        model.addAttribute("javaqualification", javaString);
+        model.addAttribute("techqualification", techString);
+
+        return "userqualification";
+
+    }
+
 
     @RequestMapping("/apply/{id}")
     public String confirmationPage(@PathVariable("id") long id, Model model, Authentication auth) {
@@ -176,37 +221,34 @@ public class MainController {
         AppUser appUser= appUserRepository.findOne(applicantid);
         StringBuilder javaString=new StringBuilder();
         StringBuilder techString= new StringBuilder();
-        if(appUser.techCriteria[0])
+        if(appUser.isCriteriaEnglish())
             techString.append("English Language Learner \n");
-        if(appUser.techCriteria[1])
+        if(appUser.isCriteriaUnemployed())
             techString.append("Unemployed with barriers to employment \n");
-        if(appUser.techCriteria[2])
+        if(appUser.isCriteriaUnderEmployed())
             techString.append("Underemployed with barriers to better employment \n");
-        if(appUser.techCriteria[3])
+        if(appUser.isCriteriaComputerComfortable())
             techString.append("Be comfortable using computers for everyday purposes \n");
-        if(appUser.techCriteria[4])
+        if(appUser.isCriteriaItInterest())
             techString.append("Have a strong interest in an IT career \n");
-        if(appUser.techCriteria[5])
+        if(appUser.isCriteriaDiploma())
             techString.append("Have a high school diploma or GED \n");
-        if(appUser.techCriteria[6])
+        if(appUser.isCriteriaWorkInUs())
             techString.append("Be able to work in the United States \n").append("\n");
 
-        if(appUser.javaCriteria[0])
+        if(appUser.isCriteriaUnderstandOOP())
             javaString.append("Basic understanding of object oriented language ").append("\n");
-        if(appUser.javaCriteria[1])
+        if(appUser.isCriteriaExperienceOOP())
             javaString.append("Previous experience with an object-oriented language ").append("\n");
-        if(appUser.javaCriteria[2])
+        if(appUser.isCriteriaCompSciMajor())
             javaString.append("Major in Computer Science/Information Systems ").append("\n");
-        if(appUser.javaCriteria[3])
+        if(appUser.isCriteriaRecentGraduate())
             javaString.append("Graduated within the last 6 years ").append("\n");
-        if(appUser.javaCriteria[4])
+        if(appUser.isCriteriaCurrentEarnings())
             javaString.append("Currently earning $42,000 or less ").append("\n");
-        if(appUser.javaCriteria[5])
+        if(appUser.isCriteriaWorkInUs())
             javaString.append("Be able to work in the United States ").append("\n");
-
-        System.out.println(javaString);
-        System.out.println(techString);
-
+        model.addAttribute("appUserCriteriaform", appUser);
         model.addAttribute("newLineChar", '\n');
         model.addAttribute("javaqualification", javaString);
         model.addAttribute("techqualification", techString);
@@ -251,5 +293,33 @@ public class MainController {
                 .encoding("UTF-8").build();
 
         emailService.send(email);
+    }
+
+    public void saveappusercriteria(AppUser appUser){
+
+        appUser.techCriteria[0]=appUser.isCriteriaEnglish();
+        appUser.techCriteria[1]=appUser.isCriteriaUnemployed();
+        appUser.techCriteria[2]=appUser.isCriteriaUnderEmployed();
+        appUser.techCriteria[3]=appUser.isCriteriaComputerComfortable();
+        appUser.techCriteria[4]=appUser.isCriteriaItInterest();
+        appUser.techCriteria[5]=appUser.isCriteriaDiploma();
+        appUser.techCriteria[6]=appUser.isCriteriaWorkInUs();
+
+        appUser.javaCriteria[0]=appUser.isCriteriaUnderstandOOP();
+        appUser.javaCriteria[1]=appUser.isCriteriaExperienceOOP();
+        appUser.javaCriteria[2]=appUser.isCriteriaCompSciMajor();
+        appUser.javaCriteria[3]=appUser.isCriteriaRecentGraduate();
+        appUser.javaCriteria[4]=appUser.isCriteriaCurrentEarnings();
+        appUser.javaCriteria[5]=appUser.isCriteriaWorkInUs();
+
+
+    }
+    @RequestMapping("/edit/{id}")
+    public String editlostItem(@PathVariable("id") long id, Model model){
+
+         AppUser appUser = appUserRepository.findOne(id);
+        model.addAttribute("appUserCriteriaform", appUser);
+
+        return "criteriaform";
     }
 }

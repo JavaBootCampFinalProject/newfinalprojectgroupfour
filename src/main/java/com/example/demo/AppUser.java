@@ -61,14 +61,13 @@ public class AppUser {
     boolean[] techCriteria= new boolean[7];
     boolean[] javaCriteria= new boolean[6];
 
-
     public AppUser() {
         this.roles = new HashSet<>();
         this.applied = new HashSet<>();
         this.approved = new HashSet<>();
         this.inCourse = new HashSet<>();
 
-        /*this.techCriteria[0]=this.isCriteriaEnglish();
+        this.techCriteria[0]=this.isCriteriaEnglish();
         this.techCriteria[1]=this.isCriteriaUnemployed();
         this.techCriteria[2]=this.isCriteriaUnderEmployed();
         this.techCriteria[3]=this.isCriteriaComputerComfortable();
@@ -82,10 +81,24 @@ public class AppUser {
         this.javaCriteria[2]=this.isCriteriaCompSciMajor();
         this.javaCriteria[3]=this.isCriteriaRecentGraduate();
         this.javaCriteria[4]=this.isCriteriaCurrentEarnings();
-        this.javaCriteria[5]=this.isCriteriaWorkInUs();*/
+        this.javaCriteria[5]=this.isCriteriaWorkInUs();
     }
 
+    public boolean[] getTechCriteria() {
+        return techCriteria;
+    }
 
+    public void setTechCriteria(boolean[] techCriteria) {
+        this.techCriteria = techCriteria;
+    }
+
+    public boolean[] getJavaCriteria() {
+        return javaCriteria;
+    }
+
+    public void setJavaCriteria(boolean[] javaCriteria) {
+        this.javaCriteria = javaCriteria;
+    }
 
     public long getId() {
         return id;
@@ -288,4 +301,5 @@ public class AppUser {
         }
         return javaqual;
     }
+
 }
