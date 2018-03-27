@@ -109,7 +109,7 @@ public class MainController {
         AppUser currentUser=appUserRepository.findAppUserByUsername(p.getName());
         
         if(!currentUser.isCheckJavaCriteria()&&!currentUser.isCheckTechCriteria())
-            return "redirect:/criteria";
+            return "redirect:/selectcriteria";
 
         model.addAttribute("user", currentUser);
             if (currentUser.isCheckJavaCriteria() && currentUser.isCheckTechCriteria())  //If they meet the criteria for both courses add both
