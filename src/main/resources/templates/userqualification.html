@@ -11,12 +11,12 @@
 
 <div th:object="${appUserCriteriaform}">
     <h1 style="text-align: left;padding-left:30%;color:dodgerblue">User Qualifications for Techhire</h1><br/>
-    <div th:utext="${#strings.replace(techqualification,newLineChar, '&lt;br /&gt;')}" style="text-align: left;padding-left:30%"></div><br/>
+    <div th:utext="${techqualification}" style="text-align: left;padding-left:30%"></div><br/>
     <h1 style="text-align: left;padding-left:30%;color:dodgerblue">User Qualifications for Java Bootcamp</h1><br/>
-    <div &bull; th:utext="${#strings.replace(javaqualification,newLineChar, '&lt;br /&gt;')}" style="text-align: left;padding-left:30%"></div><br/>
+    <div &bull; th:utext="${javaqualification}" style="text-align: left;padding-left:30%"></div><br/>
 
 
-<div sec:authorize="hasAnyAuthority('USER')" style="text-align: left;padding-left:30%"><a th:href="@{/edit/{id} (id=${appUserCriteriaform.id})}" class="btn btn-success"><i class="fa fa-arrow-circle-o-left"></i>&nbsp;Edit Qualification</a></div>
+<div sec:authorize="hasAnyAuthority('USER')" style="text-align: left;padding-left:30%"><a th:href="@{criteria}" class="btn btn-success"><i class="fa fa-arrow-circle-o-left"></i>&nbsp;Edit Qualification</a></div>
 </div>
 
 </div>
