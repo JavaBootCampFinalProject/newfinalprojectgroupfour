@@ -319,11 +319,8 @@ public class MainController {
     }
     @RequestMapping("/edit/{id}")
     public String editQualification(@PathVariable("id") long id, Model model){
-
-
          AppUser appUser = appUserRepository.findOne(id);
         model.addAttribute("appUserCriteriaform", appUser);
-
         return "criteriaform";
     }
 
