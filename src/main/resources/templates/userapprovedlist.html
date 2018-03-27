@@ -26,7 +26,7 @@
         <tbody style="text-align: center">
             <tr th:each="program:${approvedfor}">
                 <td th:text="${program.courseName}"></td>
-                <td> <a th:href="@{/enroll/{courseid} (courseid = ${program.id})}">Enroll </a></td>
+                <td> <a th:href="@{/enroll/{courseid} (courseid = ${program.id})}"class="btn btn-success"><i class="fa fa-arrow-circle-o-left"></i>&nbsp;Enroll </a></td>
             </tr>
 
 

@@ -39,7 +39,7 @@
 .button {
     display: block;
     height: 36px;
-    min-width: 88px;
+    min-width: 68px;
     font-size: 14px;
     font-weight: 500;
     text-decoration: none;
@@ -85,7 +85,9 @@
     text-align: center;
 }
 .row{
-    margin-left: 65px;
+    padding-left: 100px;
+    padding-top: 20px;
+    margin-right: -45px;
 
 }
 
