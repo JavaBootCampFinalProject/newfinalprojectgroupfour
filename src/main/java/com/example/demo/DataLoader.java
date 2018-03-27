@@ -111,14 +111,10 @@ public class DataLoader implements CommandLineRunner {
         // Course 1
         Programs course = new Programs();
         course.setCourseName("Tech Hire");
-        course.setCourseDescription("fillerDescription");
-        course.setCourseCriteria("fillerCriteria");
         programsRepository.save(course);
      //Course 2
         course = new Programs();
         course.setCourseName("Java Boot Camp");
-        course.setCourseDescription("fillerDescription2");
-        course.setCourseCriteria("fillerCriteria2");
         programsRepository.save(course);
         }
 }

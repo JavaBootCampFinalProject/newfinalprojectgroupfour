@@ -13,8 +13,6 @@ public class Programs {
     private long id;
 
     private String courseName;
-    private String courseDescription;
-    private String courseCriteria;
 
     @ManyToMany(fetch = FetchType.EAGER)
     private Set<AppUser> userApplied;
@@ -34,7 +32,6 @@ public class Programs {
 
     public void removeUserApplied(AppUser user) {this.userApplied.remove(user);}
     public void removeUserApproved(AppUser user) {this.userApproved.remove(user);}
-    public void removeUserInCourse(AppUser user) {this.userInCourse.remove(user);}
 
     public Programs() {
         this.userApplied = new HashSet<>();
@@ -56,22 +53,6 @@ public class Programs {
 
     public void setCourseName(String courseName) {
         this.courseName = courseName;
-    }
-
-    public String getCourseDescription() {
-        return courseDescription;
-    }
-
-    public void setCourseDescription(String courseDescription) {
-        this.courseDescription = courseDescription;
-    }
-
-    public String getCourseCriteria() {
-        return courseCriteria;
-    }
-
-    public void setCourseCriteria(String courseCriteria) {
-        this.courseCriteria = courseCriteria;
     }
 
     public Set<AppUser> getUserApplied() {

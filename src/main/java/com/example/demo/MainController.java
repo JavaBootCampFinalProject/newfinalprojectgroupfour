@@ -27,6 +27,7 @@ public class MainController {
 
     @Autowired
     ProgramsRepository programsRepository;
+
     @Autowired
     public EmailService emailService;
 
@@ -69,7 +70,6 @@ public class MainController {
         if (result.hasErrors()) {
             return "appuserform";
         }
-      //  appUserRepository.save(appUser);
         appUser.addRole(appRoleRepository.findAppRoleByRoleName("ADMIN"));
         appUserRepository.save(appUser);
         return "redirect:/";
@@ -84,7 +84,7 @@ public class MainController {
     }
 
     @PostMapping("/criteria") //Checks criteria data data for errors or lack of information and pass it to the correct place in response
-    public String processCriteriaForm(@Valid @ModelAttribute("appUser") AppUser appUser, Model model, BindingResult result
+    public String processCriteriaForm(@Valid @ModelAttribute("appUser") AppUser appUser, BindingResult result
     ) {
         if(result.hasErrors())
             return "criteriaform";
@@ -105,19 +105,19 @@ public class MainController {
     }
 
     @RequestMapping("/recommendedlist") //Checks to see which courses current user should be reccomended
-    public String recomendedList(Principal p, Model m) {
+    public String recomendedList(Principal p, Model model) {
         AppUser currentUser=appUserRepository.findAppUserByUsername(p.getName());
         
-//        if(!currentUser.isCheckJavaCriteria()&&!currentUser.isCheckTechCriteria())
-//            return "redirect:/selectcriteria";
+        if(!currentUser.isCheckJavaCriteria()&&!currentUser.isCheckTechCriteria())
+            return "redirect:/criteria";
 
-            m.addAttribute("user", currentUser);
+        model.addAttribute("user", currentUser);
             if (currentUser.isCheckJavaCriteria() && currentUser.isCheckTechCriteria())  //If they meet the criteria for both courses add both
-                m.addAttribute("recomended", programsRepository.findAll());
+                model.addAttribute("recomended", programsRepository.findAll());
             else if (!currentUser.isCheckJavaCriteria()&& currentUser.isCheckTechCriteria())  //Otherwise only recommend the one they met the criteria for
-                m.addAttribute("recomended", programsRepository.findByCourseName("Tech Hire"));
+                model.addAttribute("recomended", programsRepository.findByCourseName("Tech Hire"));
             else
-                 m.addAttribute("recomended", programsRepository.findByCourseName("Java Boot Camp"));
+                model.addAttribute("recomended", programsRepository.findByCourseName("Java Boot Camp"));
             return "recommendedlist";
 
     }
@@ -137,7 +137,7 @@ public class MainController {
         Programs prog= programsRepository.findOne(id);
         AppUser appUser=appUserRepository.findAppUserByUsername(auth.getName());
         prog.addUserApplied(appUser);
-        prog.setNoofapplications(prog.getNoofapplications()+1); //Incriments a counter so that the total number of applications for a course can be displayed
+        prog.setNoofapplications(prog.getNoofapplications()+1); //Increments a counter so that the total number of applications for a course can be displayed
         programsRepository.save(prog);
         model.addAttribute("course",prog);
         model.addAttribute("user", appUser);
@@ -162,6 +162,7 @@ public class MainController {
         }
         return "approvalconfirmation";
     }
+
     @RequestMapping("/enroll/{courseid}")  //The user officially becomes enrolled in the course as they are moved into the final set
     public String enrolledlist(@PathVariable("courseid") long courseid, Model model, Authentication auth) {
         Programs prog= programsRepository.findOne(courseid);
@@ -216,7 +217,7 @@ public class MainController {
         return "programslist";
     }
 
-    public void sendEmailWithoutTemplating(AppUser appUser)throws UnsupportedEncodingException { //Code for sending an Email to users when they enroll
+    private void sendEmailWithoutTemplating(AppUser appUser)throws UnsupportedEncodingException { //Code for sending an Email to users when they enroll
         final Email email =  DefaultEmail.builder()
                 .from(new InternetAddress("mcjavabootcamp@gmail.com", "Program Admin"))
                 .to(Lists.newArrayList(new InternetAddress(appUser.getUserEmail(), appUser.getFullName())))
@@ -228,7 +229,7 @@ public class MainController {
         emailService.send(email);
     }
 
-    public void saveappusercriteria(AppUser appUser){
+    private void saveappusercriteria(AppUser appUser){ //Saves user criteria to a set for easier use
 
         appUser.techCriteria[0]=appUser.isCriteriaEnglish();
         appUser.techCriteria[1]=appUser.isCriteriaUnemployed();
@@ -246,7 +247,7 @@ public class MainController {
         appUser.javaCriteria[5]=appUser.isCriteriaWorkInUs();
     }
 
-    public StringBuilder createjavastring(AppUser appUser) {
+    private StringBuilder createjavastring(AppUser appUser) { //creates user qualification string for Java class
         StringBuilder javaString = new StringBuilder();
         if (appUser.isCriteriaUnderstandOOP())
             javaString.append("Basic understanding of object oriented language <br/>");
@@ -263,7 +264,7 @@ public class MainController {
         return javaString;
     }
 
-    public StringBuilder createtechstring(AppUser appUser) {
+    private StringBuilder createtechstring(AppUser appUser) { //Creates future qualifications string for user
         StringBuilder techString= new StringBuilder();
         if(appUser.isCriteriaEnglish())
             techString.append("English Language Learner <br/>");

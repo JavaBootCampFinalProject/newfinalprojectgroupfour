@@ -4,7 +4,6 @@ package com.example.demo;
 import org.hibernate.validator.constraints.NotEmpty;
 
 import javax.persistence.*;
-import javax.validation.constraints.Size;
 import java.util.HashSet;
 import java.util.Set;
 
@@ -37,14 +36,9 @@ public class AppUser {
     @ManyToMany(mappedBy = "userInCourse")
     private Set<Programs> inCourse;
 
-    public void removeRole(AppRole role) {
-        this.roles.remove(role);
-    }
-
     public void addRole(AppRole role) {
         this.roles.add(role);
     }
-
 
     private boolean criteriaEnglish=false;
     private boolean criteriaUnemployed=false;
@@ -301,5 +295,4 @@ public class AppUser {
         }
         return javaqual;
     }
-
 }
