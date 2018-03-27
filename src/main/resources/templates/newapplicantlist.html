@@ -13,7 +13,7 @@
 <th:block th:replace="base::navlinks"></th:block>
 <h1 style="text-align: center;color:dodgerblue">List of Applicants</h1>
 <div >
-    <table id="keywords" cellspacing="0" cellpadding="0" style="width:40%">
+    <table id="keywords" cellspacing="0" cellpadding="0" style="width:50%">
         <thead  style="text-align: center">
         <tr >
             <th><span>Applicant Name</span></th>
@@ -27,8 +27,8 @@
             <tr th:each="user:${course.userApplied}">
                 <td th:text="${user.username}"></td>
                 <td th:text="${course.courseName}"></td>
-                <td> <a th:href="@{/qualification/{applicantid} (applicantid = ${user.id})}">   Qualifications </a></td>
-                <td> <a th:href="@{/approve/{courseid}/{applicantid}(courseid=${course.id},applicantid=${user.id})}">   Approve </a></td>
+                <td> <a th:href="@{/qualification/{applicantid} (applicantid = ${user.id})}"class="btn btn-success"><i class="fa fa-arrow-circle-o-left"></i>&nbsp;Qualifications </a></td>
+                <td> <a th:href="@{/approve/{courseid}/{applicantid}(courseid=${course.id},applicantid=${user.id})}" class="btn btn-success"><i class="fa fa-arrow-circle-o-left"></i>&nbsp;  Approve </a></td>
             </tr>
         </tbody>
     </table>
